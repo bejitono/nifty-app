@@ -51,3 +51,14 @@ final class URLParser: TokenURIParseable, MediaURLParseable {
         return url
     }
 }
+
+
+// on cloudfare sometimes get: video streaming is not allowed
+//—> support different gateways
+
+//export default helper(function hitUrls([hit]/*, hash*/) {
+//  return [
+//    `https://gateway.ipfs.io/ipfs/${hit.hash}`,
+//    `https://clowdflare-ipfs.com/ipfs/${hit.hash}`
+//  ];
+//});

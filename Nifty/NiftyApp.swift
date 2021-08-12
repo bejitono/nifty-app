@@ -12,6 +12,7 @@ struct NiftyApp: App {
     var body: some Scene {
         WindowGroup {
             NFTListView()
+                .background(Color.white)
         }
     }
 }
