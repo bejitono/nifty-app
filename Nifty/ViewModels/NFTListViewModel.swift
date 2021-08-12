@@ -19,18 +19,24 @@ final class NFTListViewModel: ObservableObject {
     private let metadataRepository: MetadataFetcheable
     private let web3Repository: ERC721TokenURIFetcheable
     private let mediaRepository: MediaFetcheable
+    private let tokenURIParser: TokenURIParseable
+    private let mediaURLParser: MediaURLParseable
     private var disposables = Set<AnyCancellable>()
     
     init(
         etherscanRepository: NFTFetcheable = EtherscanRepository(),
         metadataRepository: MetadataFetcheable = MetadataRepository(),
         web3Repository: ERC721TokenURIFetcheable = Web3Repository(),
-        mediaRepository: MediaFetcheable = MediaRepository()
+        mediaRepository: MediaFetcheable = MediaRepository(),
+        tokenURIParser: TokenURIParseable = URLParser(),
+        mediaURLParser: MediaURLParseable = URLParser()
     ) {
         self.etherscanRepository = etherscanRepository
         self.metadataRepository = metadataRepository
         self.web3Repository = web3Repository
         self.mediaRepository = mediaRepository
+        self.tokenURIParser = tokenURIParser
+        self.mediaURLParser = mediaURLParser
         fetchNFTs()
     }
     
@@ -119,37 +125,20 @@ final class NFTListViewModel: ObservableObject {
     func mediaPublisher(for nft: NFT) -> AnyPublisher<(nft: NFT, media: Media), Error> {
         web3Repository.fetchTokenURI(contractAddress: nft.contractAddress, tokenId: nft.tokenID)
             .flatMap { [weak self] url -> AnyPublisher<ERC721Metadata, Error> in
-                print("**token uri: \(url)")
-                var url = url
-                // Should probably route all urls to gateways
-                // e.g. https://gateway.pinata.cloud/ipfs/QmZuKciW2Amabd8aZDKEXawTEJFDeNbtjtN5B4swMtcqTK
-                // too many requests error
-                
-                // once received only QmWXENbdrQBcEXtyfAtZfWJDpn3e3Kzz4d4SpiBDQtS5Kp as url
-                // --> need to check if valid ipfs hash https://github.com/ipfs-shipyard/is-ipfs/blob/master/src/index.js
-                if url.host == "ipfs", let cloudflareURL = URL(string: "https://cloudflare-ipfs.com/ipfs") {
-                    url = cloudflareURL.appendingPathComponent(url.path)
-                } else if url.scheme == "ipfs", let cloudflareURL = URL(string: "https://cloudflare-ipfs.com/ipfs") {
-                    // ipfs://QmZANhgW1EaNz8CKN22uHrUpL62xcJEs3iawjYzACCmVsc/3
-                    url = cloudflareURL
-                        .appendingPathComponent(url.host ?? "")
-                        .appendingPathComponent(url.path)
+                guard let self = self else {
+                    return Fail(error: NFTError.couldNotParseTokenURI(url))
+                        .eraseToAnyPublisher()
                 }
-                return self!.metadataRepository.fetchMetadata(url: url)
+                print("**token uri: \(url)")
+                return self.metadataRepository.fetchMetadata(url: url)
             }.print()
             .flatMap { [weak self] metadata -> AnyPublisher<Media, Error> in
-                var imageURL = URL(string: metadata.image)!
-                if imageURL.host?.contains("ipfs") ?? false, let cloudflareURL = URL(string: "https://cloudflare-ipfs.com/ipfs") {
-                    let path = imageURL.path.replacingOccurrences(of: "/ipfs", with: "")
-                    imageURL = cloudflareURL.appendingPathComponent(path)
-                } else if imageURL.scheme == "ipfs", let cloudflareURL = URL(string: "https://cloudflare-ipfs.com/ipfs") {
-                    // ipfs://QmZANhgW1EaNz8CKN22uHrUpL62xcJEs3iawjYzACCmVsc/3
-                    imageURL = cloudflareURL
-                        .appendingPathComponent(imageURL.host ?? "")
-                        .appendingPathComponent(imageURL.path)
+                guard let self = self, let mediaURL = self.mediaURLParser.parseMediaURLString(metadata.image) else {
+                    return Fail(error: NFTError.couldNotParseMediaURLString(metadata.image))
+                        .eraseToAnyPublisher()
                 }
-                print("**image url: \(imageURL)")
-                return self!.mediaRepository.fetchImageData(from: imageURL) //"https://gateway.ipfs.io/ipfs/QmVNNeGjsBsc8fJiKZwzs8KiQmAu6hVavJ49d3BSziNoKY/nft.mp4")!)
+                print("**image url: \(mediaURL)")
+                return self.mediaRepository.fetchImageData(from: mediaURL) //"https://gateway.ipfs.io/ipfs/QmVNNeGjsBsc8fJiKZwzs8KiQmAu6hVavJ49d3BSziNoKY/nft.mp4")!)
             }.print()
             .flatMap { media in
                 Just((nft, media)).eraseToAnyPublisher()
@@ -158,6 +147,11 @@ final class NFTListViewModel: ObservableObject {
     }
 }
 
+enum NFTError: Error {
+    case viewModelDeallocated
+    case couldNotParseMediaURLString(_ url: String)
+    case couldNotParseTokenURI(_ url: URL)
+}
 
 // on cloudfare sometimes get: video streaming is not allowed
 //—> support different gateways
