@@ -115,28 +115,24 @@ final class NFTListViewModel: ObservableObject {
 
     func mediaPublisher(for nft: NFT) -> AnyPublisher<(nft: NFT, media: Media), Error> {
         web3Repository.fetchTokenURI(contractAddress: nft.contractAddress, tokenId: nft.tokenID)
-            .flatMap { [weak self] url -> AnyPublisher<ERC721Metadata, Error> in
-                guard let self = self else {
-                    return Fail(error: NFTError.couldNotParseTokenURI(url))
-                        .eraseToAnyPublisher()
-                }
-                let tokenURI = self.tokenURIParser.parseTokenURI(url)
-                print("**token uri: \(tokenURI)")
-                return self.metadataRepository.fetchMetadata(url: tokenURI)
-            }
-            .flatMap { [weak self] metadata -> AnyPublisher<Media, Error> in
-                guard let self = self, let mediaURL = self.mediaURLParser.parseMediaURLString(metadata.image) else {
+            .map(tokenURIParser.parseTokenURI)
+            .flatMap(metadataRepository.fetchMetadata)
+            .flatMap { [mediaURLParser] metadata ->  AnyPublisher<URL, Error> in // directly capture parser to avoid self retain cycle
+                guard let mediaURL = mediaURLParser.parseMediaURLString(metadata.image) else {
                     return Fail(error: NFTError.couldNotParseMediaURLString(metadata.image))
                         .eraseToAnyPublisher()
                 }
-                print("**image url: \(mediaURL)")
-                return self.mediaRepository.fetchImageData(from: mediaURL) //"https://gateway.ipfs.io/ipfs/QmVNNeGjsBsc8fJiKZwzs8KiQmAu6hVavJ49d3BSziNoKY/nft.mp4")!)
+                return Just(mediaURL)
+                    .setFailureType(to: Error.self)
+                    .eraseToAnyPublisher()
             }
+            .flatMap(mediaRepository.fetchImageData)
             .flatMap { media in
                 Just((nft, media)).eraseToAnyPublisher()
             }
             .eraseToAnyPublisher()
     }
+    
 }
 
 enum NFTError: Error {
