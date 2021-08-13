@@ -17,6 +17,9 @@
 		3D86BF0C26C4F8E300BF2FB0 /* MediaViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D86BF0B26C4F8E300BF2FB0 /* MediaViewModel.swift */; };
 		3D86BF0E26C4F8F300BF2FB0 /* NFTViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D86BF0D26C4F8F300BF2FB0 /* NFTViewModel.swift */; };
 		3D86BF1126C4FB9300BF2FB0 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D86BF1026C4FB9300BF2FB0 /* Constants.swift */; };
+		3D86BF1326C500E800BF2FB0 /* URLParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D86BF1226C500E800BF2FB0 /* URLParser.swift */; };
+		3D86BF1626C50BA900BF2FB0 /* SkeletonUI in Frameworks */ = {isa = PBXBuildFile; productRef = 3D86BF1526C50BA900BF2FB0 /* SkeletonUI */; };
+		3D86BF1926C51DBF00BF2FB0 /* UserCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D86BF1826C51DBF00BF2FB0 /* UserCache.swift */; };
 		3DF9F48926BF6D6500C23005 /* NiftyApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DF9F48826BF6D6500C23005 /* NiftyApp.swift */; };
 		3DF9F48B26BF6D6500C23005 /* NFTListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DF9F48A26BF6D6500C23005 /* NFTListView.swift */; };
 		3DF9F48D26BF6D6600C23005 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3DF9F48C26BF6D6600C23005 /* Assets.xcassets */; };
@@ -59,6 +62,8 @@
 		3D86BF0B26C4F8E300BF2FB0 /* MediaViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaViewModel.swift; sourceTree = "<group>"; };
 		3D86BF0D26C4F8F300BF2FB0 /* NFTViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NFTViewModel.swift; sourceTree = "<group>"; };
 		3D86BF1026C4FB9300BF2FB0 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		3D86BF1226C500E800BF2FB0 /* URLParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLParser.swift; sourceTree = "<group>"; };
+		3D86BF1826C51DBF00BF2FB0 /* UserCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCache.swift; sourceTree = "<group>"; };
 		3DF9F48526BF6D6500C23005 /* Nifty.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Nifty.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3DF9F48826BF6D6500C23005 /* NiftyApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NiftyApp.swift; sourceTree = "<group>"; };
 		3DF9F48A26BF6D6500C23005 /* NFTListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NFTListView.swift; sourceTree = "<group>"; };
@@ -83,6 +88,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3DF9F4C826BFE59600C23005 /* Web3ContractABI in Frameworks */,
+				3D86BF1626C50BA900BF2FB0 /* SkeletonUI in Frameworks */,
 				3DF9F4CA26BFE59600C23005 /* Web3 in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -158,8 +164,17 @@
 			isa = PBXGroup;
 			children = (
 				3D86BF1026C4FB9300BF2FB0 /* Constants.swift */,
+				3D86BF1226C500E800BF2FB0 /* URLParser.swift */,
 			);
 			path = Utils;
+			sourceTree = "<group>";
+		};
+		3D86BF1726C51DB100BF2FB0 /* Persistence */ = {
+			isa = PBXGroup;
+			children = (
+				3D86BF1826C51DBF00BF2FB0 /* UserCache.swift */,
+			);
+			path = Persistence;
 			sourceTree = "<group>";
 		};
 		3DF9F47C26BF6D6500C23005 = {
@@ -192,6 +207,7 @@
 				3D86BF0426C4F7C500BF2FB0 /* ViewModels */,
 				3D86BF0526C4F7CB00BF2FB0 /* Models */,
 				3D86BEFF26C4F74900BF2FB0 /* Networking */,
+				3D86BF1726C51DB100BF2FB0 /* Persistence */,
 				3D86BEFE26C4F6D100BF2FB0 /* Repositories */,
 				3D86BF0F26C4FB8300BF2FB0 /* Utils */,
 			);
@@ -243,6 +259,7 @@
 			packageProductDependencies = (
 				3DF9F4C726BFE59600C23005 /* Web3ContractABI */,
 				3DF9F4C926BFE59600C23005 /* Web3 */,
+				3D86BF1526C50BA900BF2FB0 /* SkeletonUI */,
 			);
 			productName = Nifty;
 			productReference = 3DF9F48526BF6D6500C23005 /* Nifty.app */;
@@ -317,6 +334,7 @@
 			mainGroup = 3DF9F47C26BF6D6500C23005;
 			packageReferences = (
 				3DF9F4C626BFE59600C23005 /* XCRemoteSwiftPackageReference "Web3" */,
+				3D86BF1426C50BA900BF2FB0 /* XCRemoteSwiftPackageReference "SkeletonUI" */,
 			);
 			productRefGroup = 3DF9F48626BF6D6500C23005 /* Products */;
 			projectDirPath = "";
@@ -361,9 +379,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				3D86BEFD26C4B6B800BF2FB0 /* NFTView.swift in Sources */,
+				3D86BF1926C51DBF00BF2FB0 /* UserCache.swift in Sources */,
 				3D86BF0126C4F76200BF2FB0 /* NetworkClient.swift in Sources */,
 				3DF9F4CE26C012C400C23005 /* MetadataRepository.swift in Sources */,
 				3D86BF0C26C4F8E300BF2FB0 /* MediaViewModel.swift in Sources */,
+				3D86BF1326C500E800BF2FB0 /* URLParser.swift in Sources */,
 				3DF9F4D026C018F700C23005 /* MediaRepository.swift in Sources */,
 				3DF9F48B26BF6D6500C23005 /* NFTListView.swift in Sources */,
 				3D86BEF926C4B10900BF2FB0 /* NFT.swift in Sources */,
@@ -697,6 +717,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		3D86BF1426C50BA900BF2FB0 /* XCRemoteSwiftPackageReference "SkeletonUI" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/CSolanaM/SkeletonUI.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.5;
+			};
+		};
 		3DF9F4C626BFE59600C23005 /* XCRemoteSwiftPackageReference "Web3" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/Boilertalk/Web3.swift";
@@ -708,6 +736,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		3D86BF1526C50BA900BF2FB0 /* SkeletonUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 3D86BF1426C50BA900BF2FB0 /* XCRemoteSwiftPackageReference "SkeletonUI" */;
+			productName = SkeletonUI;
+		};
 		3DF9F4C726BFE59600C23005 /* Web3ContractABI */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 3DF9F4C626BFE59600C23005 /* XCRemoteSwiftPackageReference "Web3" */;
