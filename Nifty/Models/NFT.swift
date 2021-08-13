@@ -19,6 +19,17 @@ struct NFT: Equatable {
     let transactionIndex: String
 }
 
+extension NFT: Hashable { // todo: remove hashable
+    
+    var hash: String {
+        SHA256.hash(data: Data((contractAddress + tokenID).utf8))
+            .compactMap { String(format: "%02x", $0) }
+            .joined()
+    }
+}
+
+typealias NFTHash = String
+
 extension NFT {
     
     init(_ dto: NFTDto) {
