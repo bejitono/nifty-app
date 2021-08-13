@@ -18,15 +18,25 @@ struct NFT: Equatable {
     let tokenSymbol: String
     let tokenDecimal: String
     let transactionIndex: String
+    var metadata: ERC721Metadata?
+    var media: Media?
 }
 
-extension NFT: Hashable { // todo: remove hashable
+extension NFT {
     
     var hash: String {
         SHA256.hash(data: Data((contractAddress + tokenID).utf8))
             .compactMap { String(format: "%02x", $0) }
             .joined()
     }
+    
+    // TODO
+//    mutating func appendFailureMedia() {
+//        media = Media(
+//            url: URL(string: "failure_ape")!,
+//            type: .staticImage,
+//            fileType: .jpg)
+//    }
 }
 
 typealias NFTHash = String

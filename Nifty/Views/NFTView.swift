@@ -45,7 +45,6 @@ struct NFTView: View {
                     maxHeight: 350,
                     alignment: .center
                 )
-//                nft.isLoading ? Image("ape_icon") : nil
             }
             Text(nft.tokenId)
             Text(nft.name)

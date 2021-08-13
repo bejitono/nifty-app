@@ -71,9 +71,9 @@ final class NFTListViewModel: ObservableObject {
                 guard let self = self else { return }
                 print("****** received value: \(value)")
                 self.nftsViewModel = self.nftsViewModel.map { nft in
-                    if nft.tokenId == value.nft.tokenID && nft.contractAddress == nft.contractAddress {
+                    if let media = value.media, nft.tokenId == value.tokenID && nft.contractAddress == value.contractAddress {
                         var nft = nft
-                        nft.media = MediaViewModel(value.media)
+                        nft.media = MediaViewModel(media)
                         nft.isLoading = false
                         return nft
                     }
@@ -92,26 +92,17 @@ final class NFTListViewModel: ObservableObject {
             .store(in: &disposables)
     }
     
-    func mediaPublisher(for nfts: [NFT]) -> AnyPublisher<(nft: NFT, media: Media), Error> {
-        Publishers.Sequence(sequence: nfts.map { (nft: $0, media: self.mediaPublisher(for: $0)) })
-            .flatMap(maxPublishers: .max(1)) {
-                // continue upon failure
-                $0.media
-                .replaceError(with:
-                    ($0.nft, Media(
-                        url: URL(
-                            string: "https://publish.one37pm.net/wp-content/uploads/2021/02/punks.png")!,
-                        type: .image,
-                        fileType: .jpg
-                    ))
-                ) // add failure image
-            }
+    func mediaPublisher(for nfts: [NFT]) -> AnyPublisher<NFT, Error> {
+        Publishers.Sequence(sequence: nfts.map { self.mediaPublisher(for: $0).replaceError(with: $0) }) // add failure image
+            .flatMap(maxPublishers: .max(1)) { $0 }
             .eraseToAnyPublisher()
     }
 
-    func mediaPublisher(for nft: NFT) -> AnyPublisher<(nft: NFT, media: Media), Error> {
+    func mediaPublisher(for nft: NFT) -> AnyPublisher<NFT, Error> {
         if let media = mediaRepository.fetchMediaFromPersistenceStore(from: nft.hash) {
-            return Just((nft, media))
+            var fetchedNFT = nft
+            fetchedNFT.media = media
+            return Just(fetchedNFT)
                 .setFailureType(to: Error.self)
                 .eraseToAnyPublisher()
         }
@@ -130,8 +121,10 @@ final class NFTListViewModel: ObservableObject {
                     .eraseToAnyPublisher()
             }
             .flatMap(mediaRepository.fetchMedia)
-            .flatMap { media in
-                Just((nft, media)).eraseToAnyPublisher()
+            .flatMap { media -> AnyPublisher<NFT, Error> in
+                var nft = nft
+                nft.media = media
+                return Just(nft).setFailureType(to: Error.self).eraseToAnyPublisher()
             }
             .eraseToAnyPublisher()
     }
