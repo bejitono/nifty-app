@@ -83,14 +83,12 @@ extension URLSession {
                     return
                 }
                 do {
-                    let cacheDir = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask).first!
-                    
-                    print(response.mimeType)
-                    let fileUrl = cacheDir
+                    let directoryURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+                    let fileURL: URL = directoryURL
                         .appendingPathComponent(UUID().uuidString)
-                        .appendingPathExtension(response.mimeSubType) // or use response.url?.pathExtension?
-                    try FileManager.default.moveItem(atPath: url.path, toPath: fileUrl.path)
-                    _ = self?.subscriber?.receive((url: fileUrl, response: response))
+                        .appendingPathExtension(response.mimeSubType)
+                    try FileManager.default.moveItem(atPath: url.path, toPath: fileURL.path)
+                    _ = self?.subscriber?.receive((url: fileURL, response: response))
                     self?.subscriber?.receive(completion: .finished)
                 }
                 catch {
