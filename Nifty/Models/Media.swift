@@ -35,3 +35,11 @@ enum FileType: String {
         self = .init(rawValue: rawValue) ?? .unknown
     }
 }
+
+extension Media {
+    init(_ cacheDto: NFTCacheDto, _ url: URL) {
+        self.url = url
+        self.type = cacheDto.type
+        self.fileType = cacheDto.fileType
+    }
+}

@@ -5,6 +5,7 @@
 //  Created by Stefano on 12.08.21.
 //
 
+import CryptoKit
 import Foundation
 
 struct NFT: Equatable {
@@ -61,4 +62,26 @@ struct NFTDto: Codable {
 
 struct EtherscanResponse<T: Codable>: Codable {
     let result: T
+}
+
+struct NFTCacheDto: Codable {
+    let mediaURL: String
+    let type: MediaType
+    let fileType: FileType
+}
+
+extension NFTCacheDto {
+    init(_ model: Media) {
+        self.mediaURL = model.url.lastPathComponent
+        self.type = model.type
+        self.fileType = model.fileType
+    }
+}
+
+extension MediaType: Codable { }
+extension FileType: Codable { }
+
+// Key is hash value of contractAdress and tokenID
+extension Dictionary: UserCacheKeyConvertible where Key == NFTHash, Value == NFTCacheDto {
+    static var key: String = "Nifty.NFTCacheDto.Dictionary"
 }
