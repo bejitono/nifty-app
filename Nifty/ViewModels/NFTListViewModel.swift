@@ -12,8 +12,6 @@ final class NFTListViewModel: ObservableObject {
     
     @Published var nftsViewModel: [NFTViewModel] = []
     @Published var nfts: [NFT] = []
-    @Published var metadata: ERC721Metadata?
-    @Published var media: Media?
 
     private let etherscanRepository: NFTFetcheable
     private let metadataRepository: MetadataFetcheable
@@ -41,7 +39,7 @@ final class NFTListViewModel: ObservableObject {
     }
     
     func fetchNFTs() {
-        let address = "0xdfDf2D882D9ebce6c7EAc3DA9AB66cbfDa263781" //"0xb8c2C29ee19D8307cb7255e1Cd9CbDE883A267d5" //paul "0xdfDf2D882D9ebce6c7EAc3DA9AB66cbfDa263781"//"0xECc953EFBd82D7Dea4aa0F7Bc3329Ea615e0CfF2" //"0x7CeA66d7bC4856F90b94A3C1ea0229B86aa3697a"
+        let address = "0x57C2955C0d0fC319dDF6110eEdFCC81AF3caDD72" //"0x57C2955C0d0fC319dDF6110eEdFCC81AF3caDD72" //"0xb8c2C29ee19D8307cb7255e1Cd9CbDE883A267d5" //paul "0xdfDf2D882D9ebce6c7EAc3DA9AB66cbfDa263781"//"0xECc953EFBd82D7Dea4aa0F7Bc3329Ea615e0CfF2" //"0x7CeA66d7bC4856F90b94A3C1ea0229B86aa3697a"
         
         etherscanRepository.fetchNFTs(with: address)
             .sink { [weak self] completion in
@@ -53,27 +51,25 @@ final class NFTListViewModel: ObservableObject {
                     self?.nfts = []
                 }
             } receiveValue: { [weak self] value in
+                guard let self = self else { return }
                 print("****** received value: \(value)")
-                self?.nfts = value
+                self.nfts = value
             }
             .store(in: &disposables)
         
         $nfts
-            .flatMap {
-                self.mediaPublisher(for: $0)
-            }
+            .flatMap(mediaPublisher)
             .sink { [weak self] completion in
                 switch completion {
                 case .finished:
                     break
                 case .failure(let error):
                     print("***\(error)")
-                    self?.media = nil
+                    self?.nftsViewModel = []
                 }
             } receiveValue: { [weak self] value in
                 guard let self = self else { return }
                 print("****** received value: \(value)")
-                self.media = value.media
                 self.nftsViewModel = self.nftsViewModel.map { nft in
                     if nft.tokenId == value.nft.tokenID && nft.contractAddress == nft.contractAddress {
                         var nft = nft
@@ -114,29 +110,34 @@ final class NFTListViewModel: ObservableObject {
     }
 
     func mediaPublisher(for nft: NFT) -> AnyPublisher<(nft: NFT, media: Media), Error> {
-        web3Repository.fetchTokenURI(contractAddress: nft.contractAddress, tokenId: nft.tokenID)
+        if let media = mediaRepository.fetchMediaFromPersistenceStore(from: nft.hash) {
+            return Just((nft, media))
+                .setFailureType(to: Error.self)
+                .eraseToAnyPublisher()
+        }
+
+        // add time limit and retry
+        return web3Repository.fetchTokenURI(contractAddress: nft.contractAddress, tokenId: nft.tokenID)
             .map(tokenURIParser.parseTokenURI)
-            .flatMap(metadataRepository.fetchMetadata)
-            .flatMap { [mediaURLParser] metadata ->  AnyPublisher<URL, Error> in // directly capture parser to avoid self retain cycle
+            .flatMap(metadataRepository.fetchMetadata) // if same url as another tokenid, merge it with the other
+            .flatMap { [mediaURLParser] metadata ->  AnyPublisher<(URL, NFTHash), Error> in // directly capture parser to avoid retain cycle with self
                 guard let mediaURL = mediaURLParser.parseMediaURLString(metadata.image) else {
                     return Fail(error: NFTError.couldNotParseMediaURLString(metadata.image))
                         .eraseToAnyPublisher()
                 }
-                return Just(mediaURL)
+                return Just((mediaURL, nft.hash))
                     .setFailureType(to: Error.self)
                     .eraseToAnyPublisher()
             }
-            .flatMap(mediaRepository.fetchImageData)
+            .flatMap(mediaRepository.fetchMedia)
             .flatMap { media in
                 Just((nft, media)).eraseToAnyPublisher()
             }
             .eraseToAnyPublisher()
     }
-    
 }
 
 enum NFTError: Error {
-    case viewModelDeallocated
     case couldNotParseMediaURLString(_ url: String)
     case couldNotParseTokenURI(_ url: URL)
 }
