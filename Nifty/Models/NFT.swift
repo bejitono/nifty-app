@@ -30,13 +30,27 @@ extension NFT {
             .joined()
     }
     
-    // TODO
-//    mutating func appendFailureMedia() {
-//        self.media = Media(
-//            url: URL(string: "failure_ape")!,
-//            type: .staticImage,
-//            fileType: .jpg)
-//    }
+    func appendFailureMedia() -> Self {
+        let failureMedia = Media(
+            url: "failure_ape",
+            type: .staticImage,
+            fileType: .jpg
+        )
+        let nft = NFT(
+            timeStamp: self.timeStamp,
+            from: self.from,
+            contractAddress: self.contractAddress,
+            to: self.to,
+            tokenID: self.tokenID,
+            tokenName: self.tokenName,
+            tokenSymbol: self.tokenSymbol,
+            tokenDecimal: self.tokenDecimal,
+            transactionIndex: self.transactionIndex,
+            metadata: ERC721Metadata.empty,
+            media: failureMedia
+        )
+        return nft
+    }
 }
 
 typealias NFTHash = String
@@ -56,7 +70,7 @@ extension NFT {
     }
     
     init(_ dto: NFTCacheDto,
-         _ mediaURL: URL) {
+         _ mediaURL: String) {
         self.timeStamp = dto.timeStamp
         self.from = dto.from
         self.contractAddress = dto.contractAddress

@@ -30,6 +30,10 @@ extension ERC721Metadata {
         self.name = cacheDto.name
         self.image = cacheDto.image
     }
+    
+    static var empty: ERC721Metadata {
+        ERC721Metadata(name: "", image: "")
+    }
 }
 
 struct ERC721MetadataDto: Codable {

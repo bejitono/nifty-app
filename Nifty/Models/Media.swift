@@ -8,7 +8,7 @@
 import Foundation
 
 struct Media: Equatable {
-    let url: URL
+    let url: String
     let type: MediaType
     let fileType: FileType
 }
@@ -38,7 +38,7 @@ enum FileType: String {
 }
 
 extension Media {
-    init?(_ cacheDto: MediaCacheDto?, _ url: URL) {
+    init?(_ cacheDto: MediaCacheDto?, _ url: String) {
         guard let cacheDto = cacheDto else {
             assertionFailure("Expected dto")
             return nil
@@ -58,11 +58,11 @@ struct MediaCacheDto: Codable {
 extension MediaCacheDto {
     
     init?(_ model: Media?) {
-        guard let model = model else {
+        guard let model = model, let url = URL(string: model.url) else {
             assertionFailure("Expected dto")
             return nil
         }
-        self.mediaURL = model.url.lastPathComponent
+        self.mediaURL = url.lastPathComponent
         self.type = model.type
         self.fileType = model.fileType
     }

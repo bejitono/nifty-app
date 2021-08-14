@@ -71,6 +71,7 @@ final class NFTListViewModel: ObservableObject {
             } receiveValue: { [weak self] value in
                 guard let self = self else { return }
                 print("****** received value: \(value)")
+                // TODO: Handle when new nfts have been added which need to be fetched
                 self.nftsViewModel = self.nftsViewModel.map { nft in
                     if let media = value.media,
                        let metadata = value.metadata,
@@ -97,7 +98,13 @@ final class NFTListViewModel: ObservableObject {
     }
     
     func mediaPublisher(for nfts: [NFT]) -> AnyPublisher<NFT, Error> {
-        Publishers.Sequence(sequence: nfts.map { self.mediaPublisher(for: $0).replaceError(with: $0) }) // add failure image
+        Publishers.Sequence(
+            sequence: nfts.map {
+                self.mediaPublisher(for: $0)
+                    .replaceError(with: $0.appendFailureMedia())
+                    .eraseToAnyPublisher()
+            }
+        ) // add failure image
             .flatMap(maxPublishers: .max(1)) { $0 }
             .eraseToAnyPublisher()
     }

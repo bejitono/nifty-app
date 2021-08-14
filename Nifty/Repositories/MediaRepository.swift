@@ -30,7 +30,7 @@ final class MediaRepository: MediaFetcheable {
 
     private func toMedia(_ response: DownloadTaskResponse) -> Media {
         Media(
-            url: response.url,
+            url: response.url.absoluteString,
             type: MediaType(from: response.urlResponse.mimeMainType),
             fileType: FileType(from: response.urlResponse.mimeSubType)
         )

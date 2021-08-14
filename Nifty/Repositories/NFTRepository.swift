@@ -38,7 +38,7 @@ final class NFTRepository: NFTFetcheable {
               let url = getSavedMediaURL(named: fileName) else {
             return nil
         }
-        return NFT(nftDto, url)
+        return NFT(nftDto, url.absoluteString)
     }
     
     func fetchNFTs(with address: String) -> AnyPublisher<[NFT], Error> {

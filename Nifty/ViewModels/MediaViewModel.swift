@@ -9,7 +9,7 @@ import Foundation
 
 struct MediaViewModel: Identifiable, Equatable {
     let id = UUID()
-    let imageURL: URL
+    let url: String
     let type: MediaType
     let fileType: FileType
 }
@@ -18,7 +18,7 @@ extension MediaViewModel {
     
     init(_ model: Media) {
         self.init(
-            imageURL: model.url,
+            url: model.url,
             type: model.type,
             fileType: model.fileType
         )

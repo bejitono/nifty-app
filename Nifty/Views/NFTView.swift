@@ -20,18 +20,26 @@ struct NFTView: View {
                     if let media = nft.media {
                         switch media.type {
                         case .image:
-                            if let image = UIImage(contentsOfFile: media.imageURL.path) {
+                            if let url = URL(string: media.url), let image = UIImage(contentsOfFile: url.path) {
+                                Image(uiImage: image)
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fit)
+                            }
+                        case .staticImage:
+                            if let image = UIImage(named: media.url) {
                                 Image(uiImage: image)
                                     .resizable()
                                     .aspectRatio(contentMode: .fit)
                             }
                         case .video:
-                            let avPlayer = AVPlayer(url: media.imageURL)
-                            VideoPlayer(player: avPlayer)
-    //                            .frame(height: 400)
-                                .onAppear {
-                                    avPlayer.play()
-                                }
+                            if let url = URL(string: media.url) {
+                                let avPlayer = AVPlayer(url: url)
+                                VideoPlayer(player: avPlayer)
+                                    //                            .frame(height: 400)
+                                    .onAppear {
+                                        avPlayer.play()
+                                    }
+                            }
                         default:
                             fatalError()
                         }
@@ -46,8 +54,10 @@ struct NFTView: View {
                     alignment: .center
                 )
             }
-            Text(nft.tokenId)
-            Text(nft.name)
+            HStack(alignment: .center, spacing: 10) {
+                Text(nft.name)
+                Text("#\(nft.tokenId)")
+            }
             Text(nft.description)
         }
     }
