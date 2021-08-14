@@ -10,6 +10,7 @@ import SwiftUI
 struct NFTListView: View {
     
     @ObservedObject var viewModel: NFTListViewModel = NFTListViewModel()
+    @State var showBottomCard = false
     
     init() {
         UITableView.appearance().backgroundColor = .clear
@@ -22,6 +23,7 @@ struct NFTListView: View {
     // https://stackoverflow.com/questions/27808266/how-do-you-loop-avplayer-in-swift
     
     var body: some View {
+        ZStack {
             List {
                 VStack(spacing: 40) {
                     ForEach(viewModel.nftsViewModel, id: \.id) { nft in
@@ -39,6 +41,9 @@ struct NFTListView: View {
                                 x: .shadowXOffset,
                                 y: .shadowYOffset
                             )
+                            .onTapGesture {
+                                self.showBottomCard.toggle()
+                            }
                     }
                 }
                 .listRowBackground(Color.clear)
@@ -55,6 +60,10 @@ struct NFTListView: View {
                     startPoint: .topLeading,
                     endPoint: .bottomTrailing)
             )
+            BottomCardView(show: $showBottomCard) {
+                Text("hello")
+            }
+        }
     }
 }
 
