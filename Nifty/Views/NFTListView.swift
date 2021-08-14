@@ -5,39 +5,55 @@
 //  Created by Stefano on 08.08.21.
 //
 
-import AVKit
 import SwiftUI
 
 struct NFTListView: View {
     
     @ObservedObject var viewModel: NFTListViewModel = NFTListViewModel()
     
+    init() {
+        UITableView.appearance().backgroundColor = .clear
+        UITableViewCell.appearance().backgroundColor = .clear
+        UITableView.appearance().tableFooterView = UIView()
+    }
     // do loop
     
     // https://schwiftyui.com/swiftui/playing-videos-on-a-loop-in-swiftui/
     // https://stackoverflow.com/questions/27808266/how-do-you-loop-avplayer-in-swift
     
     var body: some View {
-        List {
-            VStack(spacing: 40) {
-                ForEach(viewModel.nftsViewModel, id: \.id) { nft in
-                    NFTView(nft: nft)
-                        .frame(
-                            maxWidth: .infinity,
-                            maxHeight: .infinity,
-                            alignment: .center
-                        )
-                        .background(Color.white)
-                        .cornerRadius(.cornerRadius)
-                        .shadow(
-                            color: .gray,
-                            radius: .cornerRadius,
-                            x: .shadowXOffset,
-                            y: .shadowYOffset
-                        )
+            List {
+                VStack(spacing: 40) {
+                    ForEach(viewModel.nftsViewModel, id: \.id) { nft in
+                        NFTView(nft: nft)
+                            .frame(
+                                maxWidth: .infinity,
+                                maxHeight: .infinity,
+                                alignment: .center
+                            )
+                            .background(Color.white)
+                            .cornerRadius(.cornerRadius)
+                            .shadow(
+                                color: .gray,
+                                radius: .cornerRadius,
+                                x: .shadowXOffset,
+                                y: .shadowYOffset
+                            )
+                    }
                 }
+                .listRowBackground(Color.clear)
             }
-        }
+            .background(
+                LinearGradient(
+                    gradient: Gradient(
+                        colors: [
+                            Color(red: 3 / 255, green: 225 / 255, blue: 255 / 255),
+                            Color(red: 220 / 255, green: 31 / 255, blue: 255 / 255)
+                        ]
+                    ),
+                    startPoint: .topLeading,
+                    endPoint: .bottomTrailing)
+            )
     }
 }
 
