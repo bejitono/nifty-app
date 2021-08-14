@@ -9,7 +9,7 @@ import SwiftUI
 
 struct BottomCardView<Content: View>: View {
     
-    @Binding private var showCard: Bool
+    @Binding private var state: NFTListViewModel.BottomCardState
     @State private var showFull = false
     @State private var viewState = CGSize.zero
     @State private var bottomState = CGSize.zero
@@ -18,8 +18,8 @@ struct BottomCardView<Content: View>: View {
     private let screen = UIScreen.main.bounds
     private let content: Content
     
-    init(show: Binding<Bool>, @ViewBuilder content: () -> Content) {
-        self._showCard = show
+    init(state: Binding<NFTListViewModel.BottomCardState>, @ViewBuilder content: () -> Content) {
+        self._state = state
         self.content = content()
     }
     
@@ -37,7 +37,7 @@ struct BottomCardView<Content: View>: View {
         .padding(.horizontal, 20)
         .background(BlurView(style: .systemThinMaterial))
         .cornerRadius(30)
-        .offset(y: showCard ? screen.height / 2 - 50 : screen.height)
+        .offset(y: state == .closed ? screen.height : screen.height / 2 - 50)
         .offset(y: bottomState.height)
         .animation(.spring(response: 0.5, dampingFraction: 0.7, blendDuration: 0))
         .gesture(
@@ -53,7 +53,7 @@ struct BottomCardView<Content: View>: View {
                 }
                 .onEnded { value in
                     if self.bottomState.height > 50 {
-                        self.showCard = false
+                        self.state = .closed
                     }
                     if (self.bottomState.height < -100 && !self.showFull) || (self.bottomState.height < -250 && self.showFull) {
                         self.bottomState.height = -300

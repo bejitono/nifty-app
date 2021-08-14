@@ -10,7 +10,13 @@ import Foundation
 
 final class NFTListViewModel: ObservableObject {
     
+    enum BottomCardState: Equatable {
+        case show(nft: NFTViewModel)
+        case closed
+    }
+    
     @Published var nftsViewModel: [NFTViewModel] = []
+    @Published var bottomCardState: BottomCardState = .closed
     @Published private var nfts: [NFT] = []
 
     private let nftRepository: NFTFetcheable
@@ -90,7 +96,11 @@ final class NFTListViewModel: ObservableObject {
             .store(in: &disposables)
     }
     
-    func mediaPublisher(for nfts: [NFT]) -> AnyPublisher<NFT, Error> {
+    func handleTapOn(nft: NFTViewModel) {
+        bottomCardState = .show(nft: nft)
+    }
+    
+    private func mediaPublisher(for nfts: [NFT]) -> AnyPublisher<NFT, Error> {
         Publishers.Sequence(
             sequence: nfts.map {
                 self.mediaPublisher(for: $0)
@@ -102,7 +112,7 @@ final class NFTListViewModel: ObservableObject {
             .eraseToAnyPublisher()
     }
 
-    func mediaPublisher(for nft: NFT) -> AnyPublisher<NFT, Error> {
+    private func mediaPublisher(for nft: NFT) -> AnyPublisher<NFT, Error> {
         if let savedNFT = nftRepository.fetchNFT(from: nft.hash) {
             return Just(savedNFT)
                 .setFailureType(to: Error.self)
