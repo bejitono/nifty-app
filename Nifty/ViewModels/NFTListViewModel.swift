@@ -39,7 +39,7 @@ final class NFTListViewModel: ObservableObject {
     }
     
     func fetchNFTs() {
-        let address = "0x57C2955C0d0fC319dDF6110eEdFCC81AF3caDD72" //"0x57C2955C0d0fC319dDF6110eEdFCC81AF3caDD72" //"0xb8c2C29ee19D8307cb7255e1Cd9CbDE883A267d5" //paul "0xdfDf2D882D9ebce6c7EAc3DA9AB66cbfDa263781"//"0xECc953EFBd82D7Dea4aa0F7Bc3329Ea615e0CfF2" //"0x7CeA66d7bC4856F90b94A3C1ea0229B86aa3697a"
+        let address = "0xdfDf2D882D9ebce6c7EAc3DA9AB66cbfDa263781" //"0x57C2955C0d0fC319dDF6110eEdFCC81AF3caDD72" //"0xb8c2C29ee19D8307cb7255e1Cd9CbDE883A267d5" //paul "0xdfDf2D882D9ebce6c7EAc3DA9AB66cbfDa263781"//"0xECc953EFBd82D7Dea4aa0F7Bc3329Ea615e0CfF2" //"0x7CeA66d7bC4856F90b94A3C1ea0229B86aa3697a"
         
         nftRepository.fetchNFTs(with: address)
             .sink { [weak self] completion in
@@ -53,7 +53,9 @@ final class NFTListViewModel: ObservableObject {
             } receiveValue: { [weak self] value in
                 guard let self = self else { return }
                 print("****** received value: \(value)")
-                
+                self.nftsViewModel = value
+                    .filter { $0.tokenSymbol != "ENS" }
+                    .map(NFTViewModel.init)
                 self.nfts = value
             }
             .store(in: &disposables)
@@ -86,25 +88,16 @@ final class NFTListViewModel: ObservableObject {
                 }
             }
             .store(in: &disposables)
-        
-        $nfts
-            .sink { [weak self] nfts in
-                guard let self = self else { return }
-                self.nftsViewModel = nfts
-                    .filter { $0.tokenSymbol != "ENS" }
-                    .map(NFTViewModel.init)
-            }
-            .store(in: &disposables)
     }
     
     func mediaPublisher(for nfts: [NFT]) -> AnyPublisher<NFT, Error> {
         Publishers.Sequence(
             sequence: nfts.map {
                 self.mediaPublisher(for: $0)
-                    .replaceError(with: $0.appendFailureMedia())
+                    .replaceError(with: $0.nftWithFailureMedia())
                     .eraseToAnyPublisher()
             }
-        ) // add failure image
+        )
             .flatMap(maxPublishers: .max(1)) { $0 }
             .eraseToAnyPublisher()
     }

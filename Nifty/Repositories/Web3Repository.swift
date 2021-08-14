@@ -27,6 +27,7 @@ final class Web3Repository: ERC721TokenURIFetcheable {
             address: EthereumAddress(hexString: contractAddress)
         )
         
+        // TODO: add EIP-165 "supportsInterface(contractAddress)" to check if contract supports ERC721
         return Deferred {
             Future<URL, Error> { promise in
                 guard let erc721Contract = erc721Contract,

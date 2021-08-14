@@ -30,6 +30,7 @@ struct NFTView: View {
                                 Image(uiImage: image)
                                     .resizable()
                                     .aspectRatio(contentMode: .fit)
+                                    .frame(width: 250, height: 250, alignment: .center)
                             }
                         case .video:
                             if let url = URL(string: media.url) {
