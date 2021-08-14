@@ -12,7 +12,7 @@ protocol NFTFetcheable {
     func fetchNFTs(with address: String) -> AnyPublisher<[NFT], Error>
 }
 
-final class EtherscanRepository: NFTFetcheable {
+final class NFTRepository: NFTFetcheable {
     
     private let networkClient: NetworkClient
     
