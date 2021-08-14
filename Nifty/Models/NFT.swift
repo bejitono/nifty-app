@@ -32,7 +32,7 @@ extension NFT {
     
     // TODO
 //    mutating func appendFailureMedia() {
-//        media = Media(
+//        self.media = Media(
 //            url: URL(string: "failure_ape")!,
 //            type: .staticImage,
 //            fileType: .jpg)
@@ -53,6 +53,21 @@ extension NFT {
         self.tokenSymbol = dto.tokenSymbol
         self.tokenDecimal = dto.tokenDecimal
         self.transactionIndex = dto.transactionIndex
+    }
+    
+    init(_ dto: NFTCacheDto,
+         _ mediaURL: URL) {
+        self.timeStamp = dto.timeStamp
+        self.from = dto.from
+        self.contractAddress = dto.contractAddress
+        self.to = dto.to
+        self.tokenID = dto.tokenID
+        self.tokenName = dto.tokenName
+        self.tokenSymbol = dto.tokenSymbol
+        self.tokenDecimal = dto.tokenDecimal
+        self.transactionIndex = dto.transactionIndex
+        self.media = Media(dto.media, mediaURL)
+        self.metadata = ERC721Metadata(dto.metadata)
     }
 }
 
@@ -75,16 +90,33 @@ struct EtherscanResponse<T: Codable>: Codable {
 }
 
 struct NFTCacheDto: Codable {
-    let mediaURL: String
-    let type: MediaType
-    let fileType: FileType
+    let timeStamp: String
+    let from: String
+    let contractAddress: String
+    let to: String
+    let tokenID: String
+    let tokenName: String
+    let tokenSymbol: String
+    let tokenDecimal: String
+    let transactionIndex: String
+    var metadata: ERC721MetadataCacheDto?
+    var media: MediaCacheDto?
 }
 
 extension NFTCacheDto {
-    init(_ model: Media) {
-        self.mediaURL = model.url.lastPathComponent
-        self.type = model.type
-        self.fileType = model.fileType
+    
+    init(_ model: NFT) {
+        self.timeStamp = model.timeStamp
+        self.from = model.from
+        self.contractAddress = model.contractAddress
+        self.to = model.to
+        self.tokenID = model.tokenID
+        self.tokenName = model.tokenName
+        self.tokenSymbol = model.tokenSymbol
+        self.tokenDecimal = model.tokenDecimal
+        self.transactionIndex = model.transactionIndex
+        self.media = MediaCacheDto(model.media)
+        self.metadata = ERC721MetadataCacheDto(model.metadata)
     }
 }
 

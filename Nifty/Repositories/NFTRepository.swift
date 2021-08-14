@@ -9,15 +9,36 @@ import Combine
 import Foundation
 
 protocol NFTFetcheable {
+    func save(nft: NFT)
+    func fetchNFT(from hash: NFTHash) -> NFT?
     func fetchNFTs(with address: String) -> AnyPublisher<[NFT], Error>
 }
 
 final class NFTRepository: NFTFetcheable {
     
+    private let cache: UserCache
     private let networkClient: NetworkClient
     
-    init(networkClient: NetworkClient = NetworkClientImpl()) {
+    init(cache: UserCache = UserCache(),
+         networkClient: NetworkClient = NetworkClientImpl()) {
+        self.cache = cache
         self.networkClient = networkClient
+    }
+    
+    func save(nft: NFT) {
+        var savedNFTs: [NFTHash: NFTCacheDto] = cache.get() ?? [:]
+        savedNFTs[nft.hash] = NFTCacheDto(nft)
+        cache.set(savedNFTs)
+    }
+    
+    func fetchNFT(from hash: NFTHash) -> NFT? {
+        guard let nftDictionary: [NFTHash: NFTCacheDto] = cache.get(),
+              let nftDto = nftDictionary[hash],
+              let fileName = nftDictionary[hash]?.media?.mediaURL,
+              let url = getSavedMediaURL(named: fileName) else {
+            return nil
+        }
+        return NFT(nftDto, url)
     }
     
     func fetchNFTs(with address: String) -> AnyPublisher<[NFT], Error> {
@@ -54,6 +75,13 @@ final class NFTRepository: NFTFetcheable {
         }
         
         return ownedNFTs
+    }
+    
+    private func getSavedMediaURL(named name: String) -> URL? {
+        guard let dir = try? FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false) else {
+            return nil
+        }
+        return URL(fileURLWithPath: dir.absoluteString).appendingPathComponent(name)
     }
     
     private func buildURLComponents(with address: String) -> URLComponents {
