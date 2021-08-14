@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3D0F46D926C7C9820044E89A /* PlayerLoopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D0F46D826C7C9820044E89A /* PlayerLoopView.swift */; };
 		3D76414926C0C5C30063B043 /* NFTListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D76414826C0C5C30063B043 /* NFTListViewModel.swift */; };
 		3D86BEF926C4B10900BF2FB0 /* NFT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D86BEF826C4B10900BF2FB0 /* NFT.swift */; };
 		3D86BEFD26C4B6B800BF2FB0 /* NFTView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D86BEFC26C4B6B800BF2FB0 /* NFTView.swift */; };
@@ -52,6 +53,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		3D0F46D826C7C9820044E89A /* PlayerLoopView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerLoopView.swift; sourceTree = "<group>"; };
 		3D76414826C0C5C30063B043 /* NFTListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NFTListViewModel.swift; sourceTree = "<group>"; };
 		3D86BEF826C4B10900BF2FB0 /* NFT.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NFT.swift; sourceTree = "<group>"; };
 		3D86BEFC26C4B6B800BF2FB0 /* NFTView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NFTView.swift; sourceTree = "<group>"; };
@@ -155,6 +157,7 @@
 			children = (
 				3DF9F48A26BF6D6500C23005 /* NFTListView.swift */,
 				3D86BEFC26C4B6B800BF2FB0 /* NFTView.swift */,
+				3D0F46D826C7C9820044E89A /* PlayerLoopView.swift */,
 				3DF9F48E26BF6D6600C23005 /* Preview Content */,
 			);
 			path = Views;
@@ -395,6 +398,7 @@
 				3D86BF0926C4F80400BF2FB0 /* Media.swift in Sources */,
 				3DF9F48926BF6D6500C23005 /* NiftyApp.swift in Sources */,
 				3D76414926C0C5C30063B043 /* NFTListViewModel.swift in Sources */,
+				3D0F46D926C7C9820044E89A /* PlayerLoopView.swift in Sources */,
 				3D86BF0E26C4F8F300BF2FB0 /* NFTViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

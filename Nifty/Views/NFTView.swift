@@ -20,7 +20,8 @@ struct NFTView: View {
                     if let media = nft.media {
                         switch media.type {
                         case .image:
-                            if let url = URL(string: media.url), let image = UIImage(contentsOfFile: url.path) {
+                            if let url = URL(string: media.url),
+                               let image = UIImage(contentsOfFile: url.path) {
                                 Image(uiImage: image)
                                     .resizable()
                                     .aspectRatio(contentMode: .fit)
@@ -34,15 +35,10 @@ struct NFTView: View {
                             }
                         case .video:
                             if let url = URL(string: media.url) {
-                                let avPlayer = AVPlayer(url: url)
-                                VideoPlayer(player: avPlayer)
-                                    //                            .frame(height: 400)
-                                    .onAppear {
-                                        avPlayer.play()
-                                    }
+                                PlayerLoopView(url: url)
                             }
                         default:
-                            fatalError()
+                            fatalError() // TODO
                         }
                     }
                 }
