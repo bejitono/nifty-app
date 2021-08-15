@@ -51,11 +51,11 @@ struct NFTView: View {
                     alignment: .center
                 )
             }
-            HStack(alignment: .center, spacing: 10) {
+            VStack(alignment: .center) {
                 Text(nft.name)
                 Text("#\(nft.tokenId)")
             }
-            Text(nft.description)
+            .padding()
         }
     }
 }

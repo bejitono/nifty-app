@@ -57,7 +57,13 @@ struct NFTListView: View {
             )
             BottomCardView(state: $viewModel.bottomCardState) {
                 if case .show(let nft) = viewModel.bottomCardState {
-                    Text(nft.name)
+                    ScrollView {
+                        Text(nft.description ?? nft.name)
+                        ForEach(nft.attributes) { attribute in
+                            Text(attribute.trait)
+                            Text(attribute.value)
+                        }
+                    }
                 }
             }
         }
