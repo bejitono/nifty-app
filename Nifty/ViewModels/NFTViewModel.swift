@@ -12,16 +12,18 @@ struct NFTViewModel: Identifiable, Equatable {
     let contractAddress: String
     let tokenId: String
     var name: String
-    var description: String
+    var description: String?
     var media: MediaViewModel?
+    var attributes: [NFTAttributeViewModel]
     var isLoading: Bool
     
     init(id: UUID = UUID(),
          contractAddress: String,
          tokenId: String = "",
          name: String = "",
-         description: String = "",
+         description: String? = nil,
          media: MediaViewModel? = nil,
+         attributes: [NFTAttributeViewModel] = [],
          isLoading: Bool = true) {
         self.id = id
         self.contractAddress = contractAddress
@@ -29,6 +31,7 @@ struct NFTViewModel: Identifiable, Equatable {
         self.name = name
         self.description = description
         self.media = media
+        self.attributes = attributes
         self.isLoading = isLoading
     }
 }
@@ -38,7 +41,9 @@ extension NFTViewModel {
     init(_ model: NFT) {
         self.init(
             contractAddress: model.contractAddress,
-            tokenId: model.tokenID
+            tokenId: model.tokenID,
+            description: model.metadata?.description,
+            attributes: model.metadata?.attributes.compactMap(NFTAttributeViewModel.init) ?? []
         )
     }
 }
