@@ -24,7 +24,11 @@ struct NFTView: View {
                                let image = UIImage(contentsOfFile: url.path) {
                                 Image(uiImage: image)
                                     .resizable()
+//                                    .clipShape(Rectangle())
+                                    //.imageScale(.small)
                                     .aspectRatio(contentMode: .fit)
+                                    .cornerRadius(5)
+                                    .padding(.top, 20)
                             }
                         case .staticImage:
                             if let image = UIImage(named: media.url) {
@@ -58,6 +62,14 @@ struct NFTView: View {
             .padding()
         }
     }
+}
+
+// MARK: - Constants
+
+private extension CGFloat {
+    static let cornerRadius: CGFloat = 5
+    static let shadowYOffset: CGFloat = 5
+    static let shadowXOffset: CGFloat = 0
 }
 
 struct NFTView_Previews: PreviewProvider {
