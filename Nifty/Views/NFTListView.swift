@@ -61,11 +61,20 @@ struct NFTListView: View {
                 model: $viewModel.nftDetails
             ) { nft in
                 ScrollView {
-//                    PillView()
-                    Text(nft.description ?? nft.name)
-                    ForEach(nft.attributes) { attribute in
-                        Text(attribute.trait)
-                        Text(attribute.value)
+                    VStack(alignment: .leading, spacing: 10) {
+                        PillView(text: "#\(nft.tokenId)")
+                        Text(nft.name)
+                            .font(.title)
+                            .bold()
+                        Text(nft.description ?? nft.name)
+                        Text("Attributes")
+                            .font(.title2)
+                            .bold()
+                        ForEach(nft.attributes) { attribute in
+                            HStack {
+                                PillView(text: "\(attribute.trait): \(attribute.value)")
+                            }
+                        }
                     }
                 }
             }
