@@ -8,6 +8,7 @@
 import Foundation
 
 struct NFTAttributeViewModel: Identifiable, Equatable {
+    
     let id: UUID
     let trait: String
     let value: String
@@ -30,3 +31,4 @@ extension NFTAttributeViewModel {
         )
     }
 }
+ 
