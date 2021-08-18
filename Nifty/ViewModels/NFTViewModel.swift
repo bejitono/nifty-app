@@ -46,4 +46,8 @@ extension NFTViewModel {
             attributes: model.metadata?.attributes.compactMap(NFTAttributeViewModel.init) ?? []
         )
     }
+    
+    static var empty: NFTViewModel {
+        NFTViewModel(contractAddress: "")
+    }
 }

@@ -9,12 +9,13 @@ import SwiftUI
 
 struct NFTListView: View {
     
-    @ObservedObject var viewModel: NFTListViewModel = NFTListViewModel()
+    @ObservedObject var viewModel: NFTListViewModel
     
-    init() {
+    init(viewModel: NFTListViewModel = NFTListViewModel()) {
         UITableView.appearance().backgroundColor = .clear
         UITableViewCell.appearance().backgroundColor = .clear
         UITableView.appearance().tableFooterView = UIView()
+        self.viewModel = viewModel
     }
     
     var body: some View {
@@ -55,14 +56,16 @@ struct NFTListView: View {
                     startPoint: .topLeading,
                     endPoint: .bottomTrailing)
             )
-            BottomCardView(state: $viewModel.bottomCardState) {
-                if case .show(let nft) = viewModel.bottomCardState {
-                    ScrollView {
-                        Text(nft.description ?? nft.name)
-                        ForEach(nft.attributes) { attribute in
-                            Text(attribute.trait)
-                            Text(attribute.value)
-                        }
+            BottomCardView(
+                show: $viewModel.showDetails,
+                model: $viewModel.nftDetails
+            ) { nft in
+                ScrollView {
+//                    PillView()
+                    Text(nft.description ?? nft.name)
+                    ForEach(nft.attributes) { attribute in
+                        Text(attribute.trait)
+                        Text(attribute.value)
                     }
                 }
             }

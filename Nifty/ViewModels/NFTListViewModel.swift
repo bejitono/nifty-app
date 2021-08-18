@@ -10,13 +10,9 @@ import Foundation
 
 final class NFTListViewModel: ObservableObject {
     
-    enum BottomCardState: Equatable {
-        case show(nft: NFTViewModel)
-        case closed
-    }
-    
     @Published var nftsViewModel: [NFTViewModel] = []
-    @Published var bottomCardState: BottomCardState = .closed
+    @Published var showDetails: Bool = false
+    @Published var nftDetails: NFTViewModel = .empty
     @Published private var nfts: [NFT] = []
 
     private let nftRepository: NFTFetcheable
@@ -99,7 +95,8 @@ final class NFTListViewModel: ObservableObject {
     }
     
     func handleTapOn(nft: NFTViewModel) {
-        bottomCardState = .show(nft: nft)
+        nftDetails = nft
+        showDetails = true
     }
     
     private func mediaPublisher(for nfts: [NFT]) -> AnyPublisher<NFT, Error> {

@@ -7,9 +7,10 @@
 
 import SwiftUI
 
-struct BottomCardView<Content: View>: View {
+struct BottomCardView<Content: View, Model>: View {
     
-    @Binding private var state: NFTListViewModel.BottomCardState
+    @Binding private var show: Bool
+    @Binding private var model: Model
     @State private var showFull = false
     @State private var viewState = CGSize.zero
     @State private var bottomState = CGSize.zero
@@ -18,9 +19,10 @@ struct BottomCardView<Content: View>: View {
     private let screen = UIScreen.main.bounds
     private let content: Content
     
-    init(state: Binding<NFTListViewModel.BottomCardState>, @ViewBuilder content: () -> Content) {
-        self._state = state
-        self.content = content()
+    init(show: Binding<Bool>, model: Binding<Model>, @ViewBuilder content: (Model) -> Content) {
+        self._show = show
+        self._model = model
+        self.content = content(model.wrappedValue)
     }
     
     var body: some View {
@@ -38,7 +40,7 @@ struct BottomCardView<Content: View>: View {
         .padding(.horizontal, 20)
         .background(BlurView(style: .systemThinMaterial))
         .cornerRadius(30)
-        .offset(y: state == .closed ? screen.height : screen.height / 6 )
+        .offset(y: show ? screen.height / 5 : screen.height)
         .offset(y: bottomState.height)
         .animation(.spring(response: 0.5, dampingFraction: 0.7, blendDuration: 0))
         .gesture(
@@ -51,7 +53,8 @@ struct BottomCardView<Content: View>: View {
                 .onEnded { value in
                     if self.bottomState.height > 50 ||
                         value.predictedEndTranslation.height > 50 {
-                        self.state = .closed
+//                        self.state = .closed
+                        show = false
                     }
                     self.bottomState.height = 0
                 }
