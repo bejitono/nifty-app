@@ -71,9 +71,7 @@ struct NFTListView: View {
                             .font(.title2)
                             .bold()
                         ForEach(nft.attributes) { attribute in
-                            HStack {
-                                PillView(text: "\(attribute.trait): \(attribute.value)")
-                            }
+                            AttributeView(trait: attribute.trait, value: attribute.value)
                         }
                     }
                 }
