@@ -24,6 +24,7 @@
 		3D86BF1626C50BA900BF2FB0 /* SkeletonUI in Frameworks */ = {isa = PBXBuildFile; productRef = 3D86BF1526C50BA900BF2FB0 /* SkeletonUI */; };
 		3D86BF1926C51DBF00BF2FB0 /* UserCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D86BF1826C51DBF00BF2FB0 /* UserCache.swift */; };
 		3D8F0D4626CDDED9006ABEB4 /* MultilineHStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D8F0D4526CDDED9006ABEB4 /* MultilineHStack.swift */; };
+		3D8F0D4826CDE3F2006ABEB4 /* Title.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D8F0D4726CDE3F2006ABEB4 /* Title.swift */; };
 		3D92920926CD1B5E00F4A772 /* AttributeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D92920826CD1B5E00F4A772 /* AttributeView.swift */; };
 		3D9A409B26C9FC180063B448 /* PillView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D9A409A26C9FC180063B448 /* PillView.swift */; };
 		3DC1A27626C8B7C2005767B5 /* NFTAttributeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DC1A27526C8B7C2005767B5 /* NFTAttributeViewModel.swift */; };
@@ -75,6 +76,7 @@
 		3D86BF1226C500E800BF2FB0 /* URLParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLParser.swift; sourceTree = "<group>"; };
 		3D86BF1826C51DBF00BF2FB0 /* UserCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCache.swift; sourceTree = "<group>"; };
 		3D8F0D4526CDDED9006ABEB4 /* MultilineHStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultilineHStack.swift; sourceTree = "<group>"; };
+		3D8F0D4726CDE3F2006ABEB4 /* Title.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Title.swift; sourceTree = "<group>"; };
 		3D92920826CD1B5E00F4A772 /* AttributeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttributeView.swift; sourceTree = "<group>"; };
 		3D9A409A26C9FC180063B448 /* PillView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PillView.swift; sourceTree = "<group>"; };
 		3DC1A27526C8B7C2005767B5 /* NFTAttributeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NFTAttributeViewModel.swift; sourceTree = "<group>"; };
@@ -176,6 +178,7 @@
 				3DF9F48A26BF6D6500C23005 /* NFTListView.swift */,
 				3D86BEFC26C4B6B800BF2FB0 /* NFTView.swift */,
 				3D0F46D826C7C9820044E89A /* PlayerLoopView.swift */,
+				3D8F0D4726CDE3F2006ABEB4 /* Title.swift */,
 				3DF9F48E26BF6D6600C23005 /* Preview Content */,
 			);
 			path = Views;
@@ -419,6 +422,7 @@
 				3DC1A27626C8B7C2005767B5 /* NFTAttributeViewModel.swift in Sources */,
 				3D86BF0726C4F7E000BF2FB0 /* ERC721Metadata.swift in Sources */,
 				3DF9F4B926BF6F9D00C23005 /* Web3Repository.swift in Sources */,
+				3D8F0D4826CDE3F2006ABEB4 /* Title.swift in Sources */,
 				3D86BF0926C4F80400BF2FB0 /* Media.swift in Sources */,
 				3DF9F48926BF6D6500C23005 /* NiftyApp.swift in Sources */,
 				3D76414926C0C5C30063B043 /* NFTListViewModel.swift in Sources */,

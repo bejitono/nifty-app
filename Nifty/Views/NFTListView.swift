@@ -64,10 +64,7 @@ struct NFTListView: View {
                 ScrollView {
                     VStack(alignment: .leading, spacing: 10) {
                         PillView(text: "#\(nft.tokenId)")
-                        Text(nft.name)
-                            .font(.title)
-                            .bold()
-                            .multilineTextAlignment(.leading)
+                        Title(nft.name)
                         Text(nft.description ?? nft.name)
                             .multilineTextAlignment(.leading)
                         Text("Attributes")

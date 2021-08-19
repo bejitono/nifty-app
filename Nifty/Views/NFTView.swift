@@ -55,9 +55,9 @@ struct NFTView: View {
                     alignment: .center
                 )
             }
-            VStack(alignment: .center) {
-                Text(nft.name)
-                Text("#\(nft.tokenId)")
+            VStack(alignment: .center, spacing: 10) {
+                Title2(nft.name)
+                PillView(text: "#\(nft.tokenId)")
             }
             .padding()
         }
