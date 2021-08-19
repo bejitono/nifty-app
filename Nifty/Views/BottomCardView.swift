@@ -53,7 +53,6 @@ struct BottomCardView<Content: View, Model>: View {
                 .onEnded { value in
                     if self.bottomState.height > 50 ||
                         value.predictedEndTranslation.height > 50 {
-//                        self.state = .closed
                         show = false
                     }
                     self.bottomState.height = 0

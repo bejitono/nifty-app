@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct NFTAttributeViewModel: Identifiable, Equatable {
+struct NFTAttributeViewModel: Identifiable, Hashable, Equatable {
     
     let id: UUID
     let trait: String

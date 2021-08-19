@@ -74,7 +74,7 @@ struct NFTListView: View {
                             .font(.title2)
                             .bold()
                             .multilineTextAlignment(.leading)
-                        ForEach(nft.attributes) { attribute in
+                        MultilineHStack(models: nft.attributes) { attribute in
                             AttributeView(trait: attribute.trait, value: attribute.value)
                         }
                     }
