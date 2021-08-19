@@ -25,6 +25,7 @@ struct BottomCardView<Content: View, Model>: View {
         self.content = content(model.wrappedValue)
     }
     
+    // TODO: make content only as high as show in the screen, instead of simple spacer
     var body: some View {
         VStack(spacing: 20) {
             Rectangle()

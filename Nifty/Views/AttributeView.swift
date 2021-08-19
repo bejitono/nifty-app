@@ -24,7 +24,6 @@ struct AttributeView: View {
             RoundedRectangle(cornerRadius: 7)
                 .stroke(Color.gray, lineWidth: 1)
         )
-        .shadow(radius: 5)
     }
 }
 
