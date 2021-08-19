@@ -38,6 +38,7 @@ struct NFTListView: View {
                                 y: .shadowYOffset
                             )
                             .onTapGesture {
+                                vibrate(.success)
                                 viewModel.handleTapOn(nft: nft)
                             }
                     }
@@ -87,6 +88,11 @@ struct NFTListView: View {
                 }
             }
         }
+    }
+    
+    func vibrate(_ type: UINotificationFeedbackGenerator.FeedbackType) {
+        let generator = UINotificationFeedbackGenerator()
+        generator.notificationOccurred(type)
     }
 }
 
