@@ -41,7 +41,7 @@ final class NFTListViewModel: ObservableObject {
     }
     
     func fetchNFTs() {
-        let address = "0x57C2955C0d0fC319dDF6110eEdFCC81AF3caDD72" //"0x57C2955C0d0fC319dDF6110eEdFCC81AF3caDD72" //"0xb8c2C29ee19D8307cb7255e1Cd9CbDE883A267d5" //paul "0xdfDf2D882D9ebce6c7EAc3DA9AB66cbfDa263781"//lots of nfts and lots with errors: "0xECc953EFBd82D7Dea4aa0F7Bc3329Ea615e0CfF2" //"0x7CeA66d7bC4856F90b94A3C1ea0229B86aa3697a"
+        let address = "0xdfDf2D882D9ebce6c7EAc3DA9AB66cbfDa263781" //"0x57C2955C0d0fC319dDF6110eEdFCC81AF3caDD72" //"0xb8c2C29ee19D8307cb7255e1Cd9CbDE883A267d5" //paul "0xdfDf2D882D9ebce6c7EAc3DA9AB66cbfDa263781"//lots of nfts and lots with errors: "0xECc953EFBd82D7Dea4aa0F7Bc3329Ea615e0CfF2" //"0x7CeA66d7bC4856F90b94A3C1ea0229B86aa3697a"
         
         nftRepository.fetchNFTs(with: address)
             .sink { [weak self] completion in
@@ -96,7 +96,9 @@ final class NFTListViewModel: ObservableObject {
     
     func handleTapOn(nft: NFTViewModel) {
         nftDetails = nft
-        showDetails = true
+        if !nft.isLoading {
+            showDetails = true
+        }
     }
     
     private func mediaPublisher(for nfts: [NFT]) -> AnyPublisher<NFT, Error> {

@@ -66,14 +66,24 @@ struct NFTListView: View {
                         Text(nft.name)
                             .font(.title)
                             .bold()
+                            .multilineTextAlignment(.leading)
                         Text(nft.description ?? nft.name)
+                            .multilineTextAlignment(.leading)
                         Text("Attributes")
                             .font(.title2)
                             .bold()
+                            .multilineTextAlignment(.leading)
                         ForEach(nft.attributes) { attribute in
                             AttributeView(trait: attribute.trait, value: attribute.value)
                         }
                     }
+                    .frame(
+                        minWidth: 0,
+                        maxWidth: .infinity,
+                        minHeight: 0,
+                        maxHeight: .infinity,
+                        alignment: .topLeading
+                    )
                 }
             }
         }

@@ -31,7 +31,7 @@ struct BottomCardView<Content: View, Model>: View {
                 .frame(width: 40, height: 5)
                 .cornerRadius(3)
                 .opacity(0.1)
-            content // For some reason this doesn't move with the spring animation
+            content
             Spacer()
         }
         .frame(maxWidth: 600)
