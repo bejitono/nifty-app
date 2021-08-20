@@ -63,7 +63,17 @@ struct NFTListView: View {
             ) { nft in
                 ScrollView {
                     VStack(alignment: .leading, spacing: 10) {
-                        PillView(text: "#\(nft.tokenId)")
+                        HStack {
+                            PillView(text: "#\(nft.tokenId)")
+                            Spacer()
+                            VStack {
+                                Image(uiImage: Images.share)
+                            }
+                            .frame(width: 40, height: 40)
+                            .onTapGesture {
+                                viewModel.share(nft: nft)
+                            }
+                        }
                         Title(nft.name)
                         Text(nft.description ?? nft.name)
                             .multilineTextAlignment(.leading)
@@ -82,6 +92,14 @@ struct NFTListView: View {
                         maxHeight: .infinity,
                         alignment: .topLeading
                     )
+                }
+            }
+        }.sheet(isPresented: $viewModel.showShareMedia) {
+            if let urlString = viewModel.sharedMedia?.url,
+               let url = URL(string: urlString),
+               let image = UIImage(contentsOfFile: url.path) {
+                ShareSheet(activityItems: ["", image]) { _,_,_,_ in
+                    viewModel.showDetails = false
                 }
             }
         }

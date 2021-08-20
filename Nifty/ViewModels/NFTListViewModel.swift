@@ -13,6 +13,8 @@ final class NFTListViewModel: ObservableObject {
     @Published var nftsViewModel: [NFTViewModel] = []
     @Published var showDetails: Bool = false
     @Published var nftDetails: NFTViewModel = .empty
+    @Published var showShareMedia: Bool = false
+    @Published var sharedMedia: MediaViewModel?
     @Published private var nfts: [NFT] = []
 
     private let nftRepository: NFTFetcheable
@@ -59,6 +61,7 @@ final class NFTListViewModel: ObservableObject {
                     .filter { $0.tokenSymbol != "ENS" }
                     .map(NFTViewModel.init)
                 self.nfts = value
+                    .filter { $0.tokenSymbol != "ENS" }
             }
             .store(in: &disposables)
         
@@ -101,6 +104,13 @@ final class NFTListViewModel: ObservableObject {
         }
     }
     
+    func share(nft: NFTViewModel) {
+        if let media = nft.media {
+            sharedMedia = media
+            showShareMedia = true
+        }
+    }
+    
     private func mediaPublisher(for nfts: [NFT]) -> AnyPublisher<NFT, Error> {
         Publishers.Sequence(
             sequence: nfts.map {
@@ -124,7 +134,7 @@ final class NFTListViewModel: ObservableObject {
         return web3Repository.fetchTokenURI(contractAddress: nft.contractAddress, tokenId: nft.tokenID).print("%%%%")
             .map(tokenURIParser.parseTokenURI)
             .flatMap(metadataRepository.fetchMetadata).print("%%%%") // if same url as another tokenid, merge it with the other
-            .flatMap { [mediaURLParser] metadata ->  AnyPublisher<URL, Error> in // directly capture parser to avoid retain cycle with self
+            .flatMap { [mediaURLParser] metadata -> AnyPublisher<URL, Error> in // directly capture parser to avoid retain cycle with self
                 guard let mediaURL = mediaURLParser.parseMediaURLString(metadata.image) else {
                     return Fail(error: NFTError.couldNotParseMediaURLString(metadata.image))
                         .eraseToAnyPublisher()
