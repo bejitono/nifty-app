@@ -25,6 +25,8 @@
 		3D86BF1926C51DBF00BF2FB0 /* UserCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D86BF1826C51DBF00BF2FB0 /* UserCache.swift */; };
 		3D8F0D4626CDDED9006ABEB4 /* MultilineHStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D8F0D4526CDDED9006ABEB4 /* MultilineHStack.swift */; };
 		3D8F0D4826CDE3F2006ABEB4 /* Title.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D8F0D4726CDE3F2006ABEB4 /* Title.swift */; };
+		3D8F0D4B26CF3BFE006ABEB4 /* Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D8F0D4A26CF3BFE006ABEB4 /* Image.swift */; };
+		3D8F0D4D26CF3FFE006ABEB4 /* ShareView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D8F0D4C26CF3FFE006ABEB4 /* ShareView.swift */; };
 		3D92920926CD1B5E00F4A772 /* AttributeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D92920826CD1B5E00F4A772 /* AttributeView.swift */; };
 		3D9A409B26C9FC180063B448 /* PillView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D9A409A26C9FC180063B448 /* PillView.swift */; };
 		3DC1A27626C8B7C2005767B5 /* NFTAttributeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DC1A27526C8B7C2005767B5 /* NFTAttributeViewModel.swift */; };
@@ -77,6 +79,8 @@
 		3D86BF1826C51DBF00BF2FB0 /* UserCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCache.swift; sourceTree = "<group>"; };
 		3D8F0D4526CDDED9006ABEB4 /* MultilineHStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultilineHStack.swift; sourceTree = "<group>"; };
 		3D8F0D4726CDE3F2006ABEB4 /* Title.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Title.swift; sourceTree = "<group>"; };
+		3D8F0D4A26CF3BFE006ABEB4 /* Image.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Image.swift; sourceTree = "<group>"; };
+		3D8F0D4C26CF3FFE006ABEB4 /* ShareView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareView.swift; sourceTree = "<group>"; };
 		3D92920826CD1B5E00F4A772 /* AttributeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttributeView.swift; sourceTree = "<group>"; };
 		3D9A409A26C9FC180063B448 /* PillView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PillView.swift; sourceTree = "<group>"; };
 		3DC1A27526C8B7C2005767B5 /* NFTAttributeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NFTAttributeViewModel.swift; sourceTree = "<group>"; };
@@ -178,7 +182,9 @@
 				3D8F0D4526CDDED9006ABEB4 /* MultilineHStack.swift */,
 				3D9A409A26C9FC180063B448 /* PillView.swift */,
 				3D0F46D826C7C9820044E89A /* PlayerLoopView.swift */,
+				3D8F0D4C26CF3FFE006ABEB4 /* ShareView.swift */,
 				3D8F0D4726CDE3F2006ABEB4 /* Title.swift */,
+				3D8F0D4926CF3BED006ABEB4 /* Styles */,
 				3DF9F48E26BF6D6600C23005 /* Preview Content */,
 			);
 			path = Views;
@@ -199,6 +205,14 @@
 				3D86BF1826C51DBF00BF2FB0 /* UserCache.swift */,
 			);
 			path = Persistence;
+			sourceTree = "<group>";
+		};
+		3D8F0D4926CF3BED006ABEB4 /* Styles */ = {
+			isa = PBXGroup;
+			children = (
+				3D8F0D4A26CF3BFE006ABEB4 /* Image.swift */,
+			);
+			path = Styles;
 			sourceTree = "<group>";
 		};
 		3DF9F47C26BF6D6500C23005 = {
@@ -403,6 +417,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3D86BEFD26C4B6B800BF2FB0 /* NFTView.swift in Sources */,
+				3D8F0D4B26CF3BFE006ABEB4 /* Image.swift in Sources */,
 				3D0F46DB26C7DA250044E89A /* BottomCardView.swift in Sources */,
 				3D86BF1926C51DBF00BF2FB0 /* UserCache.swift in Sources */,
 				3D86BF0126C4F76200BF2FB0 /* NetworkClient.swift in Sources */,
@@ -425,6 +440,7 @@
 				3D8F0D4826CDE3F2006ABEB4 /* Title.swift in Sources */,
 				3D86BF0926C4F80400BF2FB0 /* Media.swift in Sources */,
 				3DF9F48926BF6D6500C23005 /* NiftyApp.swift in Sources */,
+				3D8F0D4D26CF3FFE006ABEB4 /* ShareView.swift in Sources */,
 				3D76414926C0C5C30063B043 /* NFTListViewModel.swift in Sources */,
 				3D0F46D926C7C9820044E89A /* PlayerLoopView.swift in Sources */,
 				3D86BF0E26C4F8F300BF2FB0 /* NFTViewModel.swift in Sources */,
