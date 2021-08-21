@@ -12,16 +12,13 @@ struct NFTListView: View {
     @ObservedObject var viewModel: NFTListViewModel
     
     init(viewModel: NFTListViewModel = NFTListViewModel()) {
-        UITableView.appearance().backgroundColor = .clear
-        UITableViewCell.appearance().backgroundColor = .clear
-        UITableView.appearance().tableFooterView = UIView()
         self.viewModel = viewModel
     }
     
     var body: some View {
         ZStack {
-            List {
-                VStack(spacing: 40) {
+            ScrollView {
+                LazyVStack(spacing: 40) {
                     ForEach(viewModel.nftsViewModel, id: \.id) { nft in
                         NFTView(nft: nft)
                             .frame(
@@ -43,7 +40,7 @@ struct NFTListView: View {
                             }
                     }
                 }
-                .listRowBackground(Color.clear)
+                .padding(EdgeInsets(top: 30, leading: 10, bottom: 30, trailing: 10))
             }
             .background(
                 LinearGradient(

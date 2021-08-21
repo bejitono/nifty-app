@@ -30,7 +30,7 @@ extension NFT {
             .joined()
     }
     
-    func nftWithFailureMedia() -> Self {
+    func failed() -> Self {
         let failureMedia = Media(
             url: "failure_ape",
             type: .staticImage,

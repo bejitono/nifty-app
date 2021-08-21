@@ -23,7 +23,7 @@ final class NFTListViewModel: ObservableObject {
     private let mediaRepository: MediaFetcheable
     private let tokenURIParser: TokenURIParseable
     private let mediaURLParser: MediaURLParseable
-    private var disposables = Set<AnyCancellable>()
+    private var cancellables = Set<AnyCancellable>()
     
     init(
         etherscanRepository: NFTFetcheable = NFTRepository(),
@@ -63,7 +63,7 @@ final class NFTListViewModel: ObservableObject {
                 self.nfts = value
                     .filter { $0.tokenSymbol != "ENS" }
             }
-            .store(in: &disposables)
+            .store(in: &cancellables)
         
         $nfts
             .flatMap(mediaPublisher)
@@ -79,22 +79,23 @@ final class NFTListViewModel: ObservableObject {
                 guard let self = self else { return }
                 print("****** received value: \(value)")
                 // TODO: Handle when new nfts have been added which need to be fetched
-                self.nftsViewModel = self.nftsViewModel.map { nft in
-                    if let media = value.media,
-                       let metadata = value.metadata,
-                       nft.tokenId == value.tokenID && nft.contractAddress == value.contractAddress {
+                self.nftsViewModel = self.nftsViewModel
+                    .map { nft in
                         var nft = nft
-                        nft.name = metadata.name
-                        nft.media = MediaViewModel(media)
-                        nft.description = metadata.description
-                        nft.attributes = value.metadata?.attributes.compactMap(NFTAttributeViewModel.init) ?? []
-                        nft.isLoading = false
+                        if let media = value.media,
+                           let metadata = value.metadata,
+                           nft.tokenId == value.tokenID && nft.contractAddress == value.contractAddress {
+                            nft.name = metadata.name
+                            nft.media = MediaViewModel(media)
+                            nft.description = metadata.description
+                            nft.attributes = value.metadata?.attributes.compactMap(NFTAttributeViewModel.init) ?? []
+                            nft.isLoading = false
+                            return nft
+                        }
                         return nft
                     }
-                    return nft
-                }
             }
-            .store(in: &disposables)
+            .store(in: &cancellables)
     }
     
     func handleTapOn(nft: NFTViewModel) {
@@ -115,7 +116,7 @@ final class NFTListViewModel: ObservableObject {
         Publishers.Sequence(
             sequence: nfts.map {
                 self.mediaPublisher(for: $0)
-                    .replaceError(with: $0.nftWithFailureMedia())
+                    .replaceError(with: $0.failed())
                     .eraseToAnyPublisher()
             }
         )
