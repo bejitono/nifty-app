@@ -32,7 +32,6 @@ extension ERC721Metadata {
     
     init?(_ cacheDto: ERC721MetadataCacheDto?) {
         guard let cacheDto = cacheDto else {
-            assertionFailure("Expected dto")
             return nil
         }
         self.name = cacheDto.name

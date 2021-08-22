@@ -70,7 +70,7 @@ extension NFT {
     }
     
     init(_ dto: NFTCacheDto,
-         _ mediaURL: String) {
+         _ mediaURL: String?) {
         self.timeStamp = dto.timeStamp
         self.from = dto.from
         self.contractAddress = dto.contractAddress

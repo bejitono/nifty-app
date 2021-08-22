@@ -38,9 +38,8 @@ enum FileType: String {
 }
 
 extension Media {
-    init?(_ cacheDto: MediaCacheDto?, _ url: String) {
-        guard let cacheDto = cacheDto else {
-            assertionFailure("Expected dto")
+    init?(_ cacheDto: MediaCacheDto?, _ url: String?) {
+        guard let cacheDto = cacheDto, let url = url else {
             return nil
         }
         self.url = url
