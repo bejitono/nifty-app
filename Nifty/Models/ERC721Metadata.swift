@@ -108,7 +108,6 @@ extension ERC721MetadataCacheDto {
     
     init?(_ model: ERC721Metadata?) {
         guard let model = model else {
-            assertionFailure("Expected dto")
             return nil
         }
         self.name = model.name
@@ -125,4 +124,3 @@ extension ERC721MetadataAttributeCacheDto {
         self.value = model.value
     }
 }
-

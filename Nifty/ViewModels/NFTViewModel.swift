@@ -42,8 +42,11 @@ extension NFTViewModel {
         self.init(
             contractAddress: model.contractAddress,
             tokenId: model.tokenID,
+            name: model.metadata?.name ?? "",
             description: model.metadata?.description,
-            attributes: model.metadata?.attributes.compactMap(NFTAttributeViewModel.init) ?? []
+            media: model.media.flatMap(MediaViewModel.init),
+            attributes: model.metadata?.attributes.compactMap(NFTAttributeViewModel.init) ?? [],
+            isLoading: model.media == nil
         )
     }
     

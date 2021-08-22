@@ -46,8 +46,8 @@ extension NFT {
             tokenSymbol: self.tokenSymbol,
             tokenDecimal: self.tokenDecimal,
             transactionIndex: self.transactionIndex,
-            metadata: ERC721Metadata.empty,
-            media: failureMedia
+            metadata: nil,
+            media: nil
         )
         return nft
     }

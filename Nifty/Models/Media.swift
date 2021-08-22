@@ -59,7 +59,6 @@ extension MediaCacheDto {
     
     init?(_ model: Media?) {
         guard let model = model, let url = URL(string: model.url) else {
-            assertionFailure("Expected dto")
             return nil
         }
         self.mediaURL = url.lastPathComponent

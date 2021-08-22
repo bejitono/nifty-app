@@ -16,7 +16,8 @@ struct MediaViewModel: Identifiable, Equatable {
 
 extension MediaViewModel {
     
-    init(_ model: Media) {
+    init?(_ model: Media?) {
+        guard let model = model else { return nil }
         self.init(
             url: model.url,
             type: model.type,

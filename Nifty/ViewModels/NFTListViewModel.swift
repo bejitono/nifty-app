@@ -46,26 +46,11 @@ final class NFTListViewModel: ObservableObject {
         let address = "0xdfDf2D882D9ebce6c7EAc3DA9AB66cbfDa263781" //"0x57C2955C0d0fC319dDF6110eEdFCC81AF3caDD72" //"0xb8c2C29ee19D8307cb7255e1Cd9CbDE883A267d5" //paul "0xdfDf2D882D9ebce6c7EAc3DA9AB66cbfDa263781"//lots of nfts and lots with errors: "0xECc953EFBd82D7Dea4aa0F7Bc3329Ea615e0CfF2" //"0x7CeA66d7bC4856F90b94A3C1ea0229B86aa3697a"
         
         nftRepository.fetchNFTs(with: address)
-            .sink { [weak self] completion in
-                switch completion {
-                case .finished:
-                    break
-                case .failure(let error):
-                    print("***\(error)")
-                    self?.nfts = []
-                }
-            } receiveValue: { [weak self] value in
-                guard let self = self else { return }
-                print("****** received value: \(value)")
-                self.nftsViewModel = value
+            .map { nfts -> [NFT] in
+                self.nfts = nfts
                     .filter { $0.tokenSymbol != "ENS" }
-                    .map(NFTViewModel.init)
-                self.nfts = value
-                    .filter { $0.tokenSymbol != "ENS" }
+                return nfts
             }
-            .store(in: &cancellables)
-        
-        $nfts
             .flatMap(mediaPublisher)
             .sink { [weak self] completion in
                 switch completion {
@@ -73,28 +58,27 @@ final class NFTListViewModel: ObservableObject {
                     break
                 case .failure(let error):
                     print("***\(error)")
-                    self?.nftsViewModel = []
                 }
-            } receiveValue: { [weak self] value in
+            } receiveValue: { [weak self] fetchedNFT in
                 guard let self = self else { return }
-                print("****** received value: \(value)")
-                // TODO: Handle when new nfts have been added which need to be fetched
-                self.nftsViewModel = self.nftsViewModel
-                    .map { nft in
+                print("****** received value: \(fetchedNFT)")
+                self.nfts = self.nfts.compactMap { nft in
+                    if nft.hash == fetchedNFT.hash {
+                        // TODO: Save failed nfts and don't refetch
+                        guard let metadata = fetchedNFT.metadata,
+                              let media = fetchedNFT.media else { return nil }
                         var nft = nft
-                        if let media = value.media,
-                           let metadata = value.metadata,
-                           nft.tokenId == value.tokenID && nft.contractAddress == value.contractAddress {
-                            nft.name = metadata.name
-                            nft.media = MediaViewModel(media)
-                            nft.description = metadata.description
-                            nft.attributes = value.metadata?.attributes.compactMap(NFTAttributeViewModel.init) ?? []
-                            nft.isLoading = false
-                            return nft
-                        }
+                        nft.metadata = metadata
+                        nft.media = media
                         return nft
                     }
+                    return nft
+                }
             }
+            .store(in: &cancellables)
+        
+        $nfts
+            .sink { self.nftsViewModel = $0.map(NFTViewModel.init) }
             .store(in: &cancellables)
     }
     
@@ -120,8 +104,12 @@ final class NFTListViewModel: ObservableObject {
                     .eraseToAnyPublisher()
             }
         )
-            .flatMap(maxPublishers: .max(1)) { $0 }
-            .eraseToAnyPublisher()
+        .flatMap(maxPublishers: .max(1)) { $0 }
+        .flatMap { nft -> AnyPublisher<NFT, Error> in
+            self.nftRepository.save(nft: nft)
+            return Just(nft).setFailureType(to: Error.self).eraseToAnyPublisher()
+        }
+        .eraseToAnyPublisher()
     }
 
     private func mediaPublisher(for nft: NFT) -> AnyPublisher<NFT, Error> {
@@ -149,8 +137,6 @@ final class NFTListViewModel: ObservableObject {
             .flatMap(mediaRepository.fetchMedia).print("%%%%")
             .flatMap { [nftRepository] media -> AnyPublisher<NFT, Error> in
                 nft.media = media
-                // TODO: Shouldn't have side effects
-                nftRepository.save(nft: nft)
                 return Just(nft).setFailureType(to: Error.self).eraseToAnyPublisher()
             }
             .eraseToAnyPublisher()
