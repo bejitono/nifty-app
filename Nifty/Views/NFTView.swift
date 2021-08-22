@@ -12,7 +12,7 @@ import SwiftUI
 struct NFTView: View {
     
     let nft: NFTViewModel
-    
+
     var body: some View {
         VStack {
             ZStack {
@@ -22,13 +22,15 @@ struct NFTView: View {
                         case .image:
                             if let url = URL(string: media.url),
                                let image = UIImage(contentsOfFile: url.path) {
-                                Image(uiImage: image)
-                                    .resizable()
-//                                    .clipShape(Rectangle())
-                                    //.imageScale(.small)
-                                    .aspectRatio(contentMode: .fit)
-                                    .cornerRadius(5)
-                                    .padding(.top, 20)
+                                ZoomableScrollView {
+                                    Image(uiImage: image)
+                                        .resizable()
+    //                                    .clipShape(Rectangle())
+                                        //.imageScale(.small)
+                                        .aspectRatio(contentMode: .fit)
+                                        .cornerRadius(5)
+                                        .padding(.top, 20)
+                                }
                             }
                         case .staticImage:
                             if let image = UIImage(named: media.url) {
