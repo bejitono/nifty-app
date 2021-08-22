@@ -42,18 +42,7 @@ struct NFTListView: View {
                 }
                 .padding(EdgeInsets(top: 30, leading: 10, bottom: 30, trailing: 10))
             }
-            .background(
-                LinearGradient(
-                    gradient: Gradient(
-                        colors: [
-                            Color(red: 3 / 255, green: 225 / 255, blue: 255 / 255),
-                            Color(red: 0 / 255, green: 255 / 255, blue: 163 / 255),
-                            Color(red: 220 / 255, green: 31 / 255, blue: 255 / 255)
-                        ]
-                    ),
-                    startPoint: .topLeading,
-                    endPoint: .bottomTrailing)
-            )
+            .appBackground()
             BottomCardView(
                 show: $viewModel.showDetails,
                 model: $viewModel.nftDetails
