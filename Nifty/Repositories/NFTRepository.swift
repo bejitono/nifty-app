@@ -33,12 +33,12 @@ final class NFTRepository: NFTFetcheable {
     
     func fetchNFT(from hash: NFTHash) -> NFT? {
         guard let nftDictionary: [NFTHash: NFTCacheDto] = cache.get(),
-              let nftDto = nftDictionary[hash],
-              let fileName = nftDictionary[hash]?.media?.mediaURL,
-              let url = getSavedMediaURL(named: fileName) else {
+              let nftDto = nftDictionary[hash] else {
             return nil
         }
-        return NFT(nftDto, url.absoluteString)
+        let fileName = nftDictionary[hash]?.media?.mediaURL
+        let url = getSavedMediaURL(named: fileName ?? "")
+        return NFT(nftDto, url?.absoluteString)
     }
     
     func fetchNFTs(with address: String) -> AnyPublisher<[NFT], Error> {
@@ -49,6 +49,7 @@ final class NFTRepository: NFTFetcheable {
             .map(toNFTs)
             .map(toNFTsWithAddress)
             .map(toOwnedNFTs)
+            .map(syncPersistentStore)
             .mapError { $0 }
             .receive(on: DispatchQueue.main)
             .eraseToAnyPublisher()
@@ -75,6 +76,25 @@ final class NFTRepository: NFTFetcheable {
         }
         
         return ownedNFTs
+    }
+    
+    private func syncPersistentStore(_ nfts: [NFT]) -> [NFT] {
+        var nftDictionary: [NFTHash: NFTCacheDto] = cache.get() ?? [:]
+        let nftHashes = nftDictionary.map { $0.key }
+        nftHashes.forEach { hash in
+            // If a saved nft is not found in newly fetched nfts, then remove it
+            if !nfts.contains(where: { hash == $0.hash }) {
+                guard let fileName = nftDictionary[hash]?.media?.mediaURL,
+                      let url = getSavedMediaURL(named: fileName) else {
+                    assertionFailure("Found non existing url")
+                    return
+                }
+                try? FileManager.default.removeItem(at: url)
+                nftDictionary.removeValue(forKey: hash)
+            }
+        }
+        cache.set(nftDictionary)
+        return nfts
     }
     
     private func getSavedMediaURL(named name: String) -> URL? {
