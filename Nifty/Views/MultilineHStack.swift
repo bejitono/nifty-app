@@ -50,8 +50,7 @@ struct MultilineHStack<Model, Content>: View where Model: Hashable, Content: Vie
                     .padding(.horizontal, horizontalSpacing)
                     .padding(.vertical, verticalSpacing)
                     .alignmentGuide(.leading, computeValue: { dimension in
-                        if (abs(width - dimension.width) > geometry.size.width)
-                        {
+                        if (abs(width - dimension.width) > geometry.size.width) {
                             width = 0
                             height -= dimension.height
                         }

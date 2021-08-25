@@ -13,7 +13,6 @@ struct NiftyApp: App {
     var body: some Scene {
         WindowGroup {
             NFTListView()
-                .ignoresSafeArea()
         }
     }
 }

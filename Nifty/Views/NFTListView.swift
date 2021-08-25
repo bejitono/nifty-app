@@ -17,6 +17,7 @@ struct NFTListView: View {
     
     var body: some View {
         ZStack {
+            AppGradient()
             ScrollView {
                 LazyVStack(spacing: 40) {
                     ForEach(viewModel.nftsViewModel, id: \.id) { nft in
@@ -42,7 +43,6 @@ struct NFTListView: View {
                 }
                 .padding(EdgeInsets(top: 30, leading: 10, bottom: 30, trailing: 10))
             }
-            .appBackground()
             BottomCardView(
                 show: $viewModel.showDetails,
                 model: $viewModel.nftDetails
@@ -67,8 +67,12 @@ struct NFTListView: View {
                             .font(.title2)
                             .bold()
                             .multilineTextAlignment(.leading)
+                        // TODO Attribute view looks messed up when no value or when value is long/multi-line
                         MultilineHStack(models: nft.attributes) { attribute in
-                            AttributeView(trait: attribute.trait, value: attribute.value)
+                            AttributeView(
+                                trait: attribute.trait,
+                                value: attribute.value.isEmpty ? "n/a" : attribute.value
+                            )
                         }
                     }
                     .frame(

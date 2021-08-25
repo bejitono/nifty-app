@@ -28,7 +28,7 @@ struct AppGradient: View {
             startPoint: .topLeading,
             endPoint: .bottomTrailing
         )
-        .ignoresSafeArea()
+        .ignoresSafeArea(.all)
     }
 }
 

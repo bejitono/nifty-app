@@ -16,7 +16,9 @@ struct AttributeView: View {
         VStack(alignment: .leading) {
             Text(trait.uppercased())
                 .font(.caption)
+                .lineLimit(1)
             Text(value)
+                .lineLimit(1)
         }
         .padding(5)
         .cornerRadius(5)
