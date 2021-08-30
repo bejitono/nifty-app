@@ -8,13 +8,16 @@
 import Combine
 import Foundation
 
-protocol NFTFetcheable {
+protocol NFTPersistable {
     func save(nft: NFT)
     func fetchNFT(from hash: NFTHash) -> NFT?
+}
+
+protocol NFTFetcheable {
     func fetchNFTs(with address: String) -> AnyPublisher<[NFT], Error>
 }
 
-final class NFTRepository: NFTFetcheable {
+final class NFTRepository: NFTFetcheable, NFTPersistable {
     
     private let cache: UserCache
     private let networkClient: NetworkClient
@@ -86,7 +89,6 @@ final class NFTRepository: NFTFetcheable {
             if !nfts.contains(where: { hash == $0.hash }) {
                 guard let fileName = nftDictionary[hash]?.media?.mediaURL,
                       let url = getSavedMediaURL(named: fileName) else {
-                    assertionFailure("Found non existing url")
                     return
                 }
                 try? FileManager.default.removeItem(at: url)

@@ -17,7 +17,7 @@ final class NFTListViewModel: ObservableObject {
     @Published var sharedMedia: MediaViewModel?
     @Published private var nfts: [NFT] = []
 
-    private let nftRepository: NFTFetcheable
+    private let nftRepository: NFTFetcheable & NFTPersistable
     private let metadataRepository: MetadataFetcheable
     private let web3Repository: ERC721TokenURIFetcheable
     private let mediaRepository: MediaFetcheable
@@ -26,14 +26,14 @@ final class NFTListViewModel: ObservableObject {
     private var cancellables = Set<AnyCancellable>()
     
     init(
-        etherscanRepository: NFTFetcheable = NFTRepository(),
+        nftRepository: NFTFetcheable & NFTPersistable = NFTRepository(),
         metadataRepository: MetadataFetcheable = MetadataRepository(),
         web3Repository: ERC721TokenURIFetcheable = Web3Repository(),
         mediaRepository: MediaFetcheable = MediaRepository(),
         tokenURIParser: TokenURIParseable = URLParser(),
         mediaURLParser: MediaURLParseable = URLParser()
     ) {
-        self.nftRepository = etherscanRepository
+        self.nftRepository = nftRepository
         self.metadataRepository = metadataRepository
         self.web3Repository = web3Repository
         self.mediaRepository = mediaRepository
