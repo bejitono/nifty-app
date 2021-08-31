@@ -35,6 +35,15 @@ enum FileType: String {
     init(from rawValue: String) {
         self = .init(rawValue: rawValue) ?? .unknown
     }
+    
+    var fileExtension: String {
+        switch self {
+        case .svg:
+            return "svg"
+        default:
+            return self.rawValue
+        }
+    }
 }
 
 extension Media {

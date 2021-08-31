@@ -81,7 +81,7 @@ extension NFT {
         self.tokenSymbol = dto.contract.symbol
         self.metadata = ERC721Metadata(
             name: dto.name,
-            image: dto.image ?? "",
+            image: dto.image ?? dto.animationURL ?? "",
             description: dto.description,
             attributes: dto.traits.map {
                 ERC721MetadataAttribute(trait: $0.trait, value: $0.value)

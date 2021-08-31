@@ -11,6 +11,8 @@
 		3D0F46DB26C7DA250044E89A /* BottomCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D0F46DA26C7DA250044E89A /* BottomCardView.swift */; };
 		3D0F46DD26C7DB4C0044E89A /* BlurView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D0F46DC26C7DB4C0044E89A /* BlurView.swift */; };
 		3D700A3B26DCF626008F0A96 /* OpenSeaRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D700A3A26DCF626008F0A96 /* OpenSeaRepository.swift */; };
+		3D700A3E26DE5600008F0A96 /* SVGKit in Frameworks */ = {isa = PBXBuildFile; productRef = 3D700A3D26DE5600008F0A96 /* SVGKit */; };
+		3D700A4026DE560E008F0A96 /* SVGImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D700A3F26DE560E008F0A96 /* SVGImageView.swift */; };
 		3D76414926C0C5C30063B043 /* NFTListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D76414826C0C5C30063B043 /* NFTListViewModel.swift */; };
 		3D86BEF926C4B10900BF2FB0 /* NFT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D86BEF826C4B10900BF2FB0 /* NFT.swift */; };
 		3D86BEFD26C4B6B800BF2FB0 /* NFTView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D86BEFC26C4B6B800BF2FB0 /* NFTView.swift */; };
@@ -72,6 +74,7 @@
 		3D0F46DA26C7DA250044E89A /* BottomCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomCardView.swift; sourceTree = "<group>"; };
 		3D0F46DC26C7DB4C0044E89A /* BlurView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlurView.swift; sourceTree = "<group>"; };
 		3D700A3A26DCF626008F0A96 /* OpenSeaRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenSeaRepository.swift; sourceTree = "<group>"; };
+		3D700A3F26DE560E008F0A96 /* SVGImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SVGImageView.swift; sourceTree = "<group>"; };
 		3D76414826C0C5C30063B043 /* NFTListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NFTListViewModel.swift; sourceTree = "<group>"; };
 		3D86BEF826C4B10900BF2FB0 /* NFT.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NFT.swift; sourceTree = "<group>"; };
 		3D86BEFC26C4B6B800BF2FB0 /* NFTView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NFTView.swift; sourceTree = "<group>"; };
@@ -121,6 +124,7 @@
 			files = (
 				3DF9F4C826BFE59600C23005 /* Web3ContractABI in Frameworks */,
 				3D86BF1626C50BA900BF2FB0 /* SkeletonUI in Frameworks */,
+				3D700A3E26DE5600008F0A96 /* SVGKit in Frameworks */,
 				3DF9F4CA26BFE59600C23005 /* Web3 in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -199,6 +203,7 @@
 				3D9A409A26C9FC180063B448 /* PillView.swift */,
 				3D0F46D826C7C9820044E89A /* PlayerLoopView.swift */,
 				3D8F0D4C26CF3FFE006ABEB4 /* ShareView.swift */,
+				3D700A3F26DE560E008F0A96 /* SVGImageView.swift */,
 				3D8F0D4726CDE3F2006ABEB4 /* Title.swift */,
 				3D8F0D5026D27A13006ABEB4 /* View+ViewModifiers.swift */,
 				3D8F0D4E26D2555F006ABEB4 /* ZoomableScrollView.swift */,
@@ -316,6 +321,7 @@
 				3DF9F4C726BFE59600C23005 /* Web3ContractABI */,
 				3DF9F4C926BFE59600C23005 /* Web3 */,
 				3D86BF1526C50BA900BF2FB0 /* SkeletonUI */,
+				3D700A3D26DE5600008F0A96 /* SVGKit */,
 			);
 			productName = Nifty;
 			productReference = 3DF9F48526BF6D6500C23005 /* Nifty.app */;
@@ -391,6 +397,7 @@
 			packageReferences = (
 				3DF9F4C626BFE59600C23005 /* XCRemoteSwiftPackageReference "Web3" */,
 				3D86BF1426C50BA900BF2FB0 /* XCRemoteSwiftPackageReference "SkeletonUI" */,
+				3D700A3C26DE5600008F0A96 /* XCRemoteSwiftPackageReference "SVGKit" */,
 			);
 			productRefGroup = 3DF9F48626BF6D6500C23005 /* Products */;
 			projectDirPath = "";
@@ -459,6 +466,7 @@
 				3DC1A27626C8B7C2005767B5 /* NFTAttributeViewModel.swift in Sources */,
 				3D8F0D4F26D2555F006ABEB4 /* ZoomableScrollView.swift in Sources */,
 				3D86BF0726C4F7E000BF2FB0 /* ERC721Metadata.swift in Sources */,
+				3D700A4026DE560E008F0A96 /* SVGImageView.swift in Sources */,
 				3DF9F4B926BF6F9D00C23005 /* Web3Repository.swift in Sources */,
 				3D8F0D4826CDE3F2006ABEB4 /* Title.swift in Sources */,
 				3D86BF0926C4F80400BF2FB0 /* Media.swift in Sources */,
@@ -789,6 +797,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		3D700A3C26DE5600008F0A96 /* XCRemoteSwiftPackageReference "SVGKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SVGKit/SVGKit.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.0.0;
+			};
+		};
 		3D86BF1426C50BA900BF2FB0 /* XCRemoteSwiftPackageReference "SkeletonUI" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/CSolanaM/SkeletonUI.git";
@@ -808,6 +824,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		3D700A3D26DE5600008F0A96 /* SVGKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 3D700A3C26DE5600008F0A96 /* XCRemoteSwiftPackageReference "SVGKit" */;
+			productName = SVGKit;
+		};
 		3D86BF1526C50BA900BF2FB0 /* SkeletonUI */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 3D86BF1426C50BA900BF2FB0 /* XCRemoteSwiftPackageReference "SkeletonUI" */;

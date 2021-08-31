@@ -84,9 +84,11 @@ extension URLSession {
                 }
                 do {
                     let directoryURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+                    let mimeSubtype = response.mimeSubType
+                    let fileExtension: String = mimeSubtype.contains("svg") ? "svg" : mimeSubtype
                     let fileURL: URL = directoryURL
                         .appendingPathComponent(UUID().uuidString)
-                        .appendingPathExtension(response.mimeSubType)
+                        .appendingPathExtension(fileExtension)
                     try FileManager.default.moveItem(atPath: url.path, toPath: fileURL.path)
                     _ = self?.subscriber?.receive((url: fileURL, response: response))
                     self?.subscriber?.receive(completion: .finished)
