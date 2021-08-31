@@ -83,6 +83,26 @@ extension NFT {
         self.media = Media(dto.media, mediaURL)
         self.metadata = ERC721Metadata(dto.metadata)
     }
+    
+    init(_ dto: OpenSeaNFTDto) {
+        self.timeStamp = ""
+        self.from = ""
+        self.contractAddress = dto.contract.address
+        self.to = ""
+        self.tokenID = dto.tokenId
+        self.tokenName = dto.contract.name
+        self.tokenSymbol = dto.contract.symbol
+        self.tokenDecimal = ""
+        self.transactionIndex = ""
+        self.metadata = ERC721Metadata(
+            name: dto.name,
+            image: dto.image ?? "",
+            description: dto.description,
+            attributes: dto.traits.map {
+                ERC721MetadataAttribute(trait: $0.trait, value: $0.value)
+            }
+        )
+    }
 }
 
 struct NFTDto: Codable {
@@ -140,4 +160,76 @@ extension FileType: Codable { }
 // Key is hash value of contractAdress and tokenID
 extension Dictionary: UserCacheKeyConvertible where Key == NFTHash, Value == NFTCacheDto {
     static var key: String = "Nifty.NFTCacheDto.Dictionary"
+}
+
+struct OpenSeaResponse: Codable {
+    let assets: [OpenSeaNFTDto]
+}
+
+struct OpenSeaNFTDto: Codable {
+    let tokenId: String
+    let name: String
+    let description: String?
+    let animationURL: String?
+    let image: String?
+    let imagePreview: String?
+    let contract: Contract
+    let owner: Owner
+    let traits: [Trait]
+    
+    struct Contract: Codable {
+        let address: String
+        let name: String
+        let symbol: String
+    }
+    
+    struct Owner: Codable {
+        let user: User
+        let address: String
+        let profileImage: String?
+
+        struct User: Codable {
+            let username: String?
+        }
+        
+        enum CodingKeys: String, CodingKey {
+            case user
+            case address
+            case profileImage = "profile_img_url"
+        }
+    }
+
+    struct Trait: Codable {
+        let trait: String
+        let value: String
+
+        enum CodingKeys: String, CodingKey {
+            case trait = "trait_type"
+            case value
+        }
+        
+        init(from decoder: Decoder) throws {
+            let container = try decoder.container(keyedBy: CodingKeys.self)
+            trait = try container.decode(String.self, forKey: .trait)
+            if let intValue = try? container.decode(Int.self, forKey: .value) {
+                value = String(intValue)
+            } else if let doubleValue = try? container.decode(Double.self, forKey: .value) {
+                value = String(doubleValue)
+            } else {
+                value = try container.decode(String.self, forKey: .value)
+            }
+        }
+    }
+    
+    enum CodingKeys: String, CodingKey {
+        case tokenId = "token_id"
+        case name
+        case description
+        case image = "image_url"
+        case imagePreview = "image_preview_url"
+        case animationURL = "animation_url"
+        case contract = "asset_contract"
+        case owner
+        case traits
+    }
 }
