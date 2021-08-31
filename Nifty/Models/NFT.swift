@@ -73,9 +73,9 @@ extension NFT {
     }
     
     init(_ dto: OpenSeaNFTDto) {
-        self.timeStamp = ""
+        self.timeStamp = dto.contract.createdDate
         self.contractAddress = dto.contract.address
-        self.to = ""
+        self.to = dto.owner.address
         self.tokenID = dto.tokenId
         self.tokenName = dto.contract.name
         self.tokenSymbol = dto.contract.symbol
@@ -160,6 +160,14 @@ struct OpenSeaNFTDto: Codable {
         let address: String
         let name: String
         let symbol: String
+        let createdDate: String
+        
+        enum CodingKeys: String, CodingKey {
+            case address
+            case name
+            case symbol
+            case createdDate = "created_date"
+        }
     }
     
     struct Owner: Codable {
@@ -176,7 +184,7 @@ struct OpenSeaNFTDto: Codable {
             case address
             case profileImage = "profile_img_url"
         }
-    }
+     }
 
     struct Trait: Codable {
         let trait: String
