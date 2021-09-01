@@ -20,16 +20,25 @@ struct NFTView: View {
                     if let media = nft.media {
                         switch media.type {
                         case .image:
-                            if let url = URL(string: media.url),
-                               let image = UIImage(contentsOfFile: url.path) {
-                                ZoomableScrollView {
-                                    Image(uiImage: image)
-                                        .resizable()
-    //                                    .clipShape(Rectangle())
-                                        //.imageScale(.small)
-                                        .aspectRatio(contentMode: .fit)
-                                        .cornerRadius(5)
-                                        .padding(.top, 20)
+                            if let url = URL(string: media.url) {
+                                switch media.fileType {
+                                case .svg:
+                                    ZoomableScrollView {
+                                        GeometryReader { geo in
+                                            SVGImageView(url: url, size: geo.size)
+                                                .clipShape(RoundedRectangle(cornerRadius: 7))
+                                        }
+                                    }
+                                default:
+                                    if let image = UIImage(contentsOfFile: url.path) {
+                                        ZoomableScrollView {
+                                            Image(uiImage: image)
+                                                .resizable()
+                                                .aspectRatio(contentMode: .fit)
+                                                .cornerRadius(5)
+                                                .padding([.top, .leading, .trailing], 20)
+                                        }
+                                    }
                                 }
                             }
                         case .staticImage:

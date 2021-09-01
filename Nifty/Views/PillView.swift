@@ -14,6 +14,7 @@ struct PillView: View {
     var body: some View {
         Text(text)
             .font(.callout)
+            .lineLimit(1)
             .padding(EdgeInsets(top: 3, leading: 10, bottom: 3, trailing: 10))
             .background(Color.gray.opacity(0.4))
             .clipShape(Capsule())

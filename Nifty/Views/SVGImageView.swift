@@ -11,10 +11,15 @@ import SVGKit
 struct SVGImageView: UIViewRepresentable {
     
     var url: URL
+    var size: CGSize
     
     func makeUIView(context: Context) -> SVGKFastImageView {
-        let svgImage = SVGKImage(contentsOf: url)
-        return SVGKFastImageView(svgkImage: svgImage ?? SVGKImage())
+        let svgImage = SVGKImage(contentsOfFile: url.path)
+        svgImage?.size = size
+        let imageView = SVGKFastImageView(svgkImage: svgImage ?? SVGKImage())
+        imageView?.tintColor = .black
+        imageView?.backgroundColor = .black
+        return imageView ?? SVGKFastImageView(svgkImage: svgImage ?? SVGKImage())
     }
     
     func updateUIView(_ uiView: SVGKFastImageView, context: Context) { }
