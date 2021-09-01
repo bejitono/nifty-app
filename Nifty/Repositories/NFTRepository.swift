@@ -14,7 +14,7 @@ protocol NFTPersistable {
 }
 
 protocol NFTFetcheable {
-    func fetchNFTs(with address: String, offset: Int) -> AnyPublisher<[NFT], Error>
+    func fetchNFTs(with address: String, offset: Int, limit: Int) -> AnyPublisher<[NFT], Error>
 }
 
 final class NFTRepository: NFTFetcheable, NFTPersistable {
@@ -47,12 +47,12 @@ final class NFTRepository: NFTFetcheable, NFTPersistable {
         return NFT(nftDto, url?.absoluteString)
     }
     
-    func fetchNFTs(with address: String, offset: Int = 0) -> AnyPublisher<[NFT], Error> {
+    func fetchNFTs(with address: String, offset: Int = 0, limit: Int = 20) -> AnyPublisher<[NFT], Error> {
 //        let components = buildURLComponents(with: address)
 //        let toNFTsWithAddress: ([NFT]) -> ([NFT], String) = { nfts in (nfts, address) }
         
 //        return networkClient.request(with: components)
-        return openSeaRepository.fetchNFTs(with: address, offset: offset)
+        return openSeaRepository.fetchNFTs(with: address, offset: offset, limit: limit)
 //            .map(toNFTs)
 //            .map(toNFTsWithAddress)
 //            .map(toOwnedNFTs)

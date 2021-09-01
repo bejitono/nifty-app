@@ -16,7 +16,9 @@ final class NFTListViewModel: ObservableObject {
     @Published var showShareMedia: Bool = false
     @Published var sharedMedia: MediaViewModel?
     @Published private var nfts: [NFT] = []
-
+    private var currentOffset = 0
+    private var isFetching = false
+    
     private let nftRepository: NFTFetcheable & NFTPersistable
     private let metadataRepository: MetadataFetcheable
     private let web3Repository: ERC721TokenURIFetcheable
@@ -39,46 +41,12 @@ final class NFTListViewModel: ObservableObject {
         self.mediaRepository = mediaRepository
         self.tokenURIParser = tokenURIParser
         self.mediaURLParser = mediaURLParser
-        fetchNFTs()
-    }
-    
-    func fetchNFTs() {
-        let address = "0xD3e9D60e4E4De615124D5239219F32946d10151D" // alex masm"0xD3e9D60e4E4De615124D5239219F32946d10151D" //"0x57C2955C0d0fC319dDF6110eEdFCC81AF3caDD72" //"0xb8c2C29ee19D8307cb7255e1Cd9CbDE883A267d5" //paul "0xdfDf2D882D9ebce6c7EAc3DA9AB66cbfDa263781"//lots of nfts and lots with errors: "0xECc953EFBd82D7Dea4aa0F7Bc3329Ea615e0CfF2" //"0x7CeA66d7bC4856F90b94A3C1ea0229B86aa3697a"
-        
-        nftRepository.fetchNFTs(with: address, offset: 50) // todo: handle offset upon scroll
-            .map { nfts -> [NFT] in
-                self.nfts = nfts
-                return nfts
-            }
-            .flatMap(mediaPublisher)
-            .sink { [weak self] completion in
-                switch completion {
-                case .finished:
-                    break
-                case .failure(let error):
-                    print("***\(error)")
-                }
-            } receiveValue: { [weak self] fetchedNFT in
-                guard let self = self else { return }
-                print("****** received value: \(fetchedNFT)")
-                print("hi")
-                self.nfts = self.nfts.compactMap { nft in
-                    if nft.hash == fetchedNFT.hash {
-                        guard let metadata = fetchedNFT.metadata,
-                              let media = fetchedNFT.media else { return nil }
-                        var nft = nft
-                        nft.metadata = metadata
-                        nft.media = media
-                        return nft
-                    }
-                    return nft
-                }
-            }
-            .store(in: &cancellables)
-
+        fetchNFTs(offset: currentOffset)
         $nfts
-            .sink { self.nftsViewModel = $0.map(NFTViewModel.init) }
-            .store(in: &cancellables)
+            .map {
+                $0.map(NFTViewModel.init)
+            }
+            .assign(to: &$nftsViewModel)
     }
     
     func handleTapOn(nft: NFTViewModel) {
@@ -95,6 +63,51 @@ final class NFTListViewModel: ObservableObject {
         }
     }
     
+    func fetchNFTsIfNeeded(for currentNFT: NFTViewModel) {
+        guard !isFetching, let index: Int = nftsViewModel.firstIndex(of: currentNFT) else { return }
+        let reachedThreshold = Double(index) / Double(nftsViewModel.count) > 0.7
+        print("!!!!", index, nftsViewModel.count, reachedThreshold)
+        if reachedThreshold {
+            fetchNFTs(offset: currentOffset)
+        }
+    }
+    
+    private func fetchNFTs(offset: Int) {
+        let address = "0xD3e9D60e4E4De615124D5239219F32946d10151D" // alex masm"0xD3e9D60e4E4De615124D5239219F32946d10151D" //"0x57C2955C0d0fC319dDF6110eEdFCC81AF3caDD72" //"0xb8c2C29ee19D8307cb7255e1Cd9CbDE883A267d5" //paul "0xdfDf2D882D9ebce6c7EAc3DA9AB66cbfDa263781"//lots of nfts and lots with errors: "0xECc953EFBd82D7Dea4aa0F7Bc3329Ea615e0CfF2" //"0x7CeA66d7bC4856F90b94A3C1ea0229B86aa3697a"
+        let limit = 20
+        isFetching = true
+        nftRepository.fetchNFTs(with: address, offset: currentOffset, limit: limit)
+            .map { nfts -> [NFT] in
+                self.currentOffset += limit
+                self.isFetching = false
+                self.nfts.append(contentsOf: nfts)
+                return nfts
+            }
+            .flatMap(mediaPublisher)
+            .sink { [weak self] completion in
+                switch completion {
+                case .finished:
+                    break
+                case .failure(let error):
+                    print("***\(error)")
+                }
+            } receiveValue: { [weak self] fetchedNFT in
+                guard let self = self else { return }
+                print("****** received value: \(fetchedNFT)")
+                print("hi")
+                self.nfts = self.nfts.compactMap { nft in
+                    if nft.hash == fetchedNFT.hash {
+                        guard let media = fetchedNFT.media else { return nil }
+                        var nft = nft
+                        nft.media = media
+                        return nft
+                    }
+                    return nft
+                }
+            }
+            .store(in: &cancellables)
+    }
+    
     private func mediaPublisher(for nfts: [NFT]) -> AnyPublisher<NFT, Error> {
         Publishers.Sequence(
             sequence: nfts.map {
@@ -104,10 +117,11 @@ final class NFTListViewModel: ObservableObject {
             }
         )
         .flatMap(maxPublishers: .max(1)) { $0 }
-        .flatMap { nft -> AnyPublisher<NFT, Error> in
-            self.nftRepository.save(nft: nft)
-            return Just(nft).setFailureType(to: Error.self).eraseToAnyPublisher()
-        }
+        // Saving is causing issues when fetching more nfts (images not shown in previosly fetched nfts
+//        .flatMap { nft -> AnyPublisher<NFT, Error> in
+//            self.nftRepository.save(nft: nft)
+//            return Just(nft).setFailureType(to: Error.self).eraseToAnyPublisher()
+//        }
         .eraseToAnyPublisher()
     }
 

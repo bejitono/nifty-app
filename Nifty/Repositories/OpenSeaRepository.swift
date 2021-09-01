@@ -16,8 +16,8 @@ final class OpenSeaRepository: NFTFetcheable {
         self.networkClient = networkClient
     }
     
-    func fetchNFTs(with address: String, offset: Int = 50) -> AnyPublisher<[NFT], Error> {
-        let components = buildURLComponents(with: address, offset: offset)
+    func fetchNFTs(with address: String, offset: Int = 0, limit: Int = 20) -> AnyPublisher<[NFT], Error> {
+        let components = buildURLComponents(with: address, offset: offset, limit: limit)
         return networkClient
             .request(with: components)
             .map(toNFTs)
@@ -31,7 +31,7 @@ final class OpenSeaRepository: NFTFetcheable {
     }
     
     // TODO: add opensea api key
-    private func buildURLComponents(with address: String, offset: Int) -> URLComponents {
+    private func buildURLComponents(with address: String, offset: Int, limit: Int) -> URLComponents {
 //        curl --request GET \
 //             --url 'https://api.opensea.io/api/v1/assets?owner=0xD3e9D60e4E4De615124D5239219F32946d10151D&order_direction=desc&offset=0&limit=20'
         var components = URLComponents()
@@ -41,7 +41,8 @@ final class OpenSeaRepository: NFTFetcheable {
         components.queryItems = [
             URLQueryItem(name: "owner", value: address),
             URLQueryItem(name: "order_direction", value: "desc"),
-            URLQueryItem(name: "limit", value: String(offset))
+            URLQueryItem(name: "offset", value: String(offset)),
+            URLQueryItem(name: "limit", value: String(limit))
         ]
         return components
     }

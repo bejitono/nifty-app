@@ -39,6 +39,9 @@ struct NFTListView: View {
                                 vibrate(.success)
                                 viewModel.handleTapOn(nft: nft)
                             }
+                            .onAppear {
+                                viewModel.fetchNFTsIfNeeded(for: nft)
+                            }
                     }
                 }
                 .padding(EdgeInsets(top: 30, leading: 10, bottom: 30, trailing: 10))
