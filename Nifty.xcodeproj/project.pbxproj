@@ -14,6 +14,7 @@
 		3D700A3E26DE5600008F0A96 /* SVGKit in Frameworks */ = {isa = PBXBuildFile; productRef = 3D700A3D26DE5600008F0A96 /* SVGKit */; };
 		3D700A4026DE560E008F0A96 /* SVGImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D700A3F26DE560E008F0A96 /* SVGImageView.swift */; };
 		3D76414926C0C5C30063B043 /* NFTListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D76414826C0C5C30063B043 /* NFTListViewModel.swift */; };
+		3D773FE926E0BE5600BEA63F /* NFTCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D773FE826E0BE5600BEA63F /* NFTCollection.swift */; };
 		3D86BEF926C4B10900BF2FB0 /* NFT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D86BEF826C4B10900BF2FB0 /* NFT.swift */; };
 		3D86BEFD26C4B6B800BF2FB0 /* NFTView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D86BEFC26C4B6B800BF2FB0 /* NFTView.swift */; };
 		3D86BF0126C4F76200BF2FB0 /* NetworkClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D86BF0026C4F76200BF2FB0 /* NetworkClient.swift */; };
@@ -76,6 +77,7 @@
 		3D700A3A26DCF626008F0A96 /* OpenSeaRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenSeaRepository.swift; sourceTree = "<group>"; };
 		3D700A3F26DE560E008F0A96 /* SVGImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SVGImageView.swift; sourceTree = "<group>"; };
 		3D76414826C0C5C30063B043 /* NFTListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NFTListViewModel.swift; sourceTree = "<group>"; };
+		3D773FE826E0BE5600BEA63F /* NFTCollection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NFTCollection.swift; sourceTree = "<group>"; };
 		3D86BEF826C4B10900BF2FB0 /* NFT.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NFT.swift; sourceTree = "<group>"; };
 		3D86BEFC26C4B6B800BF2FB0 /* NFTView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NFTView.swift; sourceTree = "<group>"; };
 		3D86BF0026C4F76200BF2FB0 /* NetworkClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkClient.swift; sourceTree = "<group>"; };
@@ -182,6 +184,7 @@
 			isa = PBXGroup;
 			children = (
 				3D86BEF826C4B10900BF2FB0 /* NFT.swift */,
+				3D773FE826E0BE5600BEA63F /* NFTCollection.swift */,
 				3D86BF0826C4F80400BF2FB0 /* Media.swift */,
 				3D86BF0626C4F7E000BF2FB0 /* ERC721Metadata.swift */,
 			);
@@ -451,6 +454,7 @@
 				3D86BF0C26C4F8E300BF2FB0 /* MediaViewModel.swift in Sources */,
 				3D86BF1326C500E800BF2FB0 /* URLParser.swift in Sources */,
 				3D8F0D5326D27A9B006ABEB4 /* NewWalletView.swift in Sources */,
+				3D773FE926E0BE5600BEA63F /* NFTCollection.swift in Sources */,
 				3DF9F4D026C018F700C23005 /* MediaRepository.swift in Sources */,
 				3D8F0D5726D28686006ABEB4 /* AppTextField.swift in Sources */,
 				3D0F46DD26C7DB4C0044E89A /* BlurView.swift in Sources */,

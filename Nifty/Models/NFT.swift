@@ -142,7 +142,7 @@ extension Dictionary: UserCacheKeyConvertible where Key == NFTHash, Value == NFT
     static var key: String = "Nifty.NFTCacheDto.Dictionary"
 }
 
-struct OpenSeaResponse: Codable {
+struct OpenSeaNFTResponse: Codable {
     let assets: [OpenSeaNFTDto]
 }
 
