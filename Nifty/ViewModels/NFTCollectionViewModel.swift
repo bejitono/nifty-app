@@ -5,7 +5,10 @@
 //  Created by Stefano on 02.09.21.
 //
 
-struct NFTCollectionViewModel: Equatable {
+import Foundation
+
+struct NFTCollectionViewModel: Equatable, Identifiable {
+    let id = UUID()
     let name: String
     let imageURL: String?
     let contractAddress: String
