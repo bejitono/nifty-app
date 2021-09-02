@@ -22,19 +22,7 @@ struct NFTCollectionListView: View {
                 LazyVStack(spacing: 40) {
                     ForEach(viewModel.collectionViewModels, id: \.id) { collection in
                         NFTCollectionView(collection: collection)
-                            .frame(
-                                maxWidth: .infinity,
-                                maxHeight: .infinity,
-                                alignment: .center
-                            )
-                            .background(Color.white)
-                            .cornerRadius(.cornerRadius)
-                            .shadow(
-                                color: .gray,
-                                radius: .cornerRadius,
-                                x: .shadowXOffset,
-                                y: .shadowYOffset
-                            )
+                            .cardStyle()
                             .onTapGesture {
                                 vibrate(.success)
                                 // viewmodel
@@ -50,14 +38,6 @@ struct NFTCollectionListView: View {
         let generator = UINotificationFeedbackGenerator()
         generator.notificationOccurred(type)
     }
-}
-
-// MARK: - Constants
-
-private extension CGFloat {
-    static let cornerRadius: CGFloat = 20
-    static let shadowYOffset: CGFloat = 15
-    static let shadowXOffset: CGFloat = 0
 }
 
 struct NFTCollectionListView_Previews: PreviewProvider {

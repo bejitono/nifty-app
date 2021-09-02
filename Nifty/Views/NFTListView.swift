@@ -23,23 +23,7 @@ struct NFTListView: View {
                 LazyVStack(spacing: 40) {
                     ForEach(viewModel.nftsViewModel, id: \.id) { nft in
                         NFTView(nft: nft)
-                            .frame(
-                                maxWidth: .infinity,
-                                maxHeight: .infinity,
-                                alignment: .center
-                            )
-                            .background(Color.white)
-                            .cornerRadius(.cornerRadius)
-                            .shadow(
-                                color: .gray,
-                                radius: .cornerRadius,
-                                x: .shadowXOffset,
-                                y: .shadowYOffset
-                            )
-                            .onTapGesture {
-                                vibrate(.success)
-                                viewModel.handleTapOn(nft: nft)
-                            }
+                            .cardStyle()
                             .onAppear {
                                 viewModel.fetchNFTsIfNeeded(for: nft)
                             }

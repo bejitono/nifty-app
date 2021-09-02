@@ -20,6 +20,8 @@
 		3D773FEF26E0C91A00BEA63F /* NFTCollectionListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D773FEE26E0C91A00BEA63F /* NFTCollectionListView.swift */; };
 		3D773FF126E0D51B00BEA63F /* NFTCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D773FF026E0D51B00BEA63F /* NFTCollectionView.swift */; };
 		3D773FF426E0DCE800BEA63F /* SDWebImageSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = 3D773FF326E0DCE800BEA63F /* SDWebImageSwiftUI */; };
+		3D773FF626E0DF3900BEA63F /* NFTCollectionSwipeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D773FF526E0DF3900BEA63F /* NFTCollectionSwipeView.swift */; };
+		3D773FF926E0E06800BEA63F /* CardModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D773FF826E0E06800BEA63F /* CardModifier.swift */; };
 		3D86BEF926C4B10900BF2FB0 /* NFT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D86BEF826C4B10900BF2FB0 /* NFT.swift */; };
 		3D86BEFD26C4B6B800BF2FB0 /* NFTView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D86BEFC26C4B6B800BF2FB0 /* NFTView.swift */; };
 		3D86BF0126C4F76200BF2FB0 /* NetworkClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D86BF0026C4F76200BF2FB0 /* NetworkClient.swift */; };
@@ -87,6 +89,8 @@
 		3D773FEC26E0C6AE00BEA63F /* NFTCollectionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NFTCollectionViewModel.swift; sourceTree = "<group>"; };
 		3D773FEE26E0C91A00BEA63F /* NFTCollectionListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NFTCollectionListView.swift; sourceTree = "<group>"; };
 		3D773FF026E0D51B00BEA63F /* NFTCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NFTCollectionView.swift; sourceTree = "<group>"; };
+		3D773FF526E0DF3900BEA63F /* NFTCollectionSwipeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NFTCollectionSwipeView.swift; sourceTree = "<group>"; };
+		3D773FF826E0E06800BEA63F /* CardModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardModifier.swift; sourceTree = "<group>"; };
 		3D86BEF826C4B10900BF2FB0 /* NFT.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NFT.swift; sourceTree = "<group>"; };
 		3D86BEFC26C4B6B800BF2FB0 /* NFTView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NFTView.swift; sourceTree = "<group>"; };
 		3D86BF0026C4F76200BF2FB0 /* NetworkClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkClient.swift; sourceTree = "<group>"; };
@@ -158,6 +162,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3D773FF726E0E05500BEA63F /* Modifiers */ = {
+			isa = PBXGroup;
+			children = (
+				3D773FF826E0E06800BEA63F /* CardModifier.swift */,
+			);
+			path = Modifiers;
+			sourceTree = "<group>";
+		};
 		3D86BEFE26C4F6D100BF2FB0 /* Repositories */ = {
 			isa = PBXGroup;
 			children = (
@@ -212,6 +224,7 @@
 				3D0F46DA26C7DA250044E89A /* BottomCardView.swift */,
 				3D0F46DC26C7DB4C0044E89A /* BlurView.swift */,
 				3D8F0D4526CDDED9006ABEB4 /* MultilineHStack.swift */,
+				3D773FF526E0DF3900BEA63F /* NFTCollectionSwipeView.swift */,
 				3D773FEE26E0C91A00BEA63F /* NFTCollectionListView.swift */,
 				3D773FF026E0D51B00BEA63F /* NFTCollectionView.swift */,
 				3DF9F48A26BF6D6500C23005 /* NFTListView.swift */,
@@ -224,6 +237,7 @@
 				3D8F0D4726CDE3F2006ABEB4 /* Title.swift */,
 				3D8F0D5026D27A13006ABEB4 /* View+ViewModifiers.swift */,
 				3D8F0D4E26D2555F006ABEB4 /* ZoomableScrollView.swift */,
+				3D773FF726E0E05500BEA63F /* Modifiers */,
 				3D8F0D4926CF3BED006ABEB4 /* Styles */,
 				3DF9F48E26BF6D6600C23005 /* Preview Content */,
 			);
@@ -486,8 +500,10 @@
 				3DF9F4CC26BFE75200C23005 /* NFTRepository.swift in Sources */,
 				3D86BF0326C4F7A400BF2FB0 /* DownloadTask.swift in Sources */,
 				3D773FF126E0D51B00BEA63F /* NFTCollectionView.swift in Sources */,
+				3D773FF926E0E06800BEA63F /* CardModifier.swift in Sources */,
 				3DC1A27626C8B7C2005767B5 /* NFTAttributeViewModel.swift in Sources */,
 				3D8F0D4F26D2555F006ABEB4 /* ZoomableScrollView.swift in Sources */,
+				3D773FF626E0DF3900BEA63F /* NFTCollectionSwipeView.swift in Sources */,
 				3D86BF0726C4F7E000BF2FB0 /* ERC721Metadata.swift in Sources */,
 				3D773FED26E0C6AE00BEA63F /* NFTCollectionViewModel.swift in Sources */,
 				3D700A4026DE560E008F0A96 /* SVGImageView.swift in Sources */,
