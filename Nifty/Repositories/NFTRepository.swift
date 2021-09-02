@@ -14,18 +14,23 @@ protocol NFTPersistable {
 }
 
 protocol NFTFetcheable {
-    func fetchNFTs(with address: String, offset: Int, limit: Int) -> AnyPublisher<[NFT], Error>
+    func fetchNFTs(forAddress address: String, offset: Int, limit: Int) -> AnyPublisher<[NFT], Error>
 }
 
-final class NFTRepository: NFTFetcheable, NFTPersistable {
+protocol NFTCollectionFetcheable {
+    func fetchCollection(forAddress address: String, offset: Int, limit: Int) -> AnyPublisher<[NFTCollection], Error>
+    func fetchNFTs(forContractAddress contractAddress: String, offset: Int, limit: Int) -> AnyPublisher<[NFT], Error>
+}
+
+final class NFTRepository: NFTFetcheable, NFTCollectionFetcheable, NFTPersistable {
     
     private let cache: UserCache
     private let networkClient: NetworkClient
-    private let openSeaRepository: NFTFetcheable
+    private let openSeaRepository: NFTFetcheable & NFTCollectionFetcheable
     
     init(cache: UserCache = UserCache(),
          networkClient: NetworkClient = NetworkClientImpl(),
-         openSeaRepository: NFTFetcheable = OpenSeaRepository()) {
+         openSeaRepository: NFTFetcheable & NFTCollectionFetcheable = OpenSeaRepository()) {
         self.cache = cache
         self.networkClient = networkClient
         self.openSeaRepository = openSeaRepository
@@ -47,20 +52,29 @@ final class NFTRepository: NFTFetcheable, NFTPersistable {
         return NFT(nftDto, url?.absoluteString)
     }
     
-    func fetchNFTs(with address: String, offset: Int = 0, limit: Int = 20) -> AnyPublisher<[NFT], Error> {
+    func fetchNFTs(forAddress address: String, offset: Int = 0, limit: Int = 20) -> AnyPublisher<[NFT], Error> {
 //        let components = buildURLComponents(with: address)
 //        let toNFTsWithAddress: ([NFT]) -> ([NFT], String) = { nfts in (nfts, address) }
         
 //        return networkClient.request(with: components)
-        return openSeaRepository.fetchNFTs(with: address, offset: offset, limit: limit)
 //            .map(toNFTs)
 //            .map(toNFTsWithAddress)
 //            .map(toOwnedNFTs)
-            .map(syncPersistentStore)
-            .mapError { $0 }
-            .receive(on: DispatchQueue.main)
-            .eraseToAnyPublisher()
+//            .map(syncPersistentStore)
+//            .mapError { $0 }
+//            .receive(on: DispatchQueue.main)
+//            .eraseToAnyPublisher()
+        openSeaRepository.fetchNFTs(forAddress: address, offset: offset, limit: limit)
     }
+    
+    func fetchNFTs(forContractAddress contractAddress: String, offset: Int, limit: Int) -> AnyPublisher<[NFT], Error> {
+        openSeaRepository.fetchNFTs(forContractAddress: contractAddress, offset: offset, limit: limit)
+    }
+    
+    func fetchCollection(forAddress address: String, offset: Int, limit: Int) -> AnyPublisher<[NFTCollection], Error> {
+        openSeaRepository.fetchCollection(forAddress: address, offset: offset, limit: limit)
+    }
+    
     
     // If fetching from etherescan:
 //    func fetchNFTs(with address: String, offset: Int = 0) -> AnyPublisher<[NFT], Error> {

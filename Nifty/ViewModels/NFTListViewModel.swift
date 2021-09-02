@@ -79,7 +79,7 @@ final class NFTListViewModel: ObservableObject {
         let limit = 20
         isFetching = true
         
-        nftRepository.fetchNFTs(with: address, offset: currentOffset, limit: limit)
+        nftRepository.fetchNFTs(forAddress: address, offset: currentOffset, limit: limit)
             .map { nfts -> [NFT] in
                 self.currentOffset += limit
                 self.isFetching = false
