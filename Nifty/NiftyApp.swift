@@ -12,7 +12,7 @@ struct NiftyApp: App {
     
     var body: some Scene {
         WindowGroup {
-            NFTListView()
+            NFTCollectionListView()//NFTListView()
         }
     }
 }

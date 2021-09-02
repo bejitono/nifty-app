@@ -50,8 +50,8 @@ final class OpenSeaRepository: NFTFetcheable, NFTCollectionFetcheable {
         response.assets.map(NFT.init)
     }
     
-    private func toNFTCollections(_ response: OpenSeaCollectionResponse) -> [NFTCollection] {
-        response.collections.compactMap(NFTCollection.init)
+    private func toNFTCollections(_ response: [OpenSeaNFTCollectionDTO]) -> [NFTCollection] {
+        response.compactMap(NFTCollection.init)
     }
     
     // TODO: add opensea api key
