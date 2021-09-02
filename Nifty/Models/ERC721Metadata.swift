@@ -9,7 +9,8 @@ import Foundation
 
 struct ERC721Metadata: Equatable {
     let name: String
-    let image: String
+    let imageURL: String
+    let animationURL: String?
     let description: String?
     let attributes: [ERC721MetadataAttribute]
 }
@@ -24,7 +25,8 @@ extension ERC721Metadata {
     init(_ dto: ERC721MetadataDto) {
         self.init(
             name: dto.name ?? "",
-            image: dto.image,
+            imageURL: dto.image,
+            animationURL: nil,
             description: dto.description,
             attributes: dto.attributes?.compactMap(ERC721MetadataAttribute.init) ?? []
         )
@@ -35,13 +37,14 @@ extension ERC721Metadata {
             return nil
         }
         self.name = cacheDto.name
-        self.image = cacheDto.image
+        self.imageURL = cacheDto.image
+        self.animationURL = nil
         self.description = cacheDto.description
         self.attributes = cacheDto.attributes.compactMap(ERC721MetadataAttribute.init)
     }
     
     static var empty: ERC721Metadata {
-        ERC721Metadata(name: "", image: "", description: "", attributes: [])
+        ERC721Metadata(name: "", imageURL: "", animationURL: nil, description: "", attributes: [])
     }
 }
 
@@ -110,7 +113,7 @@ extension ERC721MetadataCacheDto {
             return nil
         }
         self.name = model.name
-        self.image = model.image
+        self.image = model.imageURL
         self.description = model.description
         self.attributes = model.attributes.compactMap(ERC721MetadataAttributeCacheDto.init)
     }

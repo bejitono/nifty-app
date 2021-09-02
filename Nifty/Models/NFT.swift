@@ -81,7 +81,8 @@ extension NFT {
         self.tokenSymbol = dto.contract.symbol
         self.metadata = ERC721Metadata(
             name: dto.name,
-            image: dto.image ?? dto.animationURL ?? "",
+            imageURL: dto.imageURL ?? "",
+            animationURL: dto.animationURL,
             description: dto.description,
             attributes: dto.traits.map {
                 ERC721MetadataAttribute(trait: $0.trait, value: $0.value)
@@ -150,7 +151,7 @@ struct OpenSeaNFTDto: Codable {
     let name: String
     let description: String?
     let animationURL: String?
-    let image: String?
+    let imageURL: String?
     let imagePreview: String?
     let contract: Contract
     let owner: Owner
@@ -212,7 +213,7 @@ struct OpenSeaNFTDto: Codable {
         case tokenId = "token_id"
         case name
         case description
-        case image = "image_url"
+        case imageURL = "image_url"
         case imagePreview = "image_preview_url"
         case animationURL = "animation_url"
         case contract = "asset_contract"

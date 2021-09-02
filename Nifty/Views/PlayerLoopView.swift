@@ -33,13 +33,14 @@ final class LoopingPlayerUIView: UIView {
         
         // Setup the player
         let player = AVQueuePlayer()
+        player.isMuted = true
         playerLayer.player = player
         playerLayer.videoGravity = .resizeAspectFill
         layer.addSublayer(playerLayer)
          
         // Create a new player looper with the queue player and template item
         playerLooper = AVPlayerLooper(player: player, templateItem: item)
-
+        
         // Start the movie
         player.play()
     }

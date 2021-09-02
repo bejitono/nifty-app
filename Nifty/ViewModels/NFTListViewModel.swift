@@ -5,8 +5,10 @@
 //  Created by Stefano on 09.08.21.
 //
 
+import AVKit
 import Combine
 import Foundation
+import MobileCoreServices
 
 final class NFTListViewModel: ObservableObject {
     
@@ -64,9 +66,9 @@ final class NFTListViewModel: ObservableObject {
     }
     
     func fetchNFTsIfNeeded(for currentNFT: NFTViewModel) {
+        // TODO: check if all nfts are fetched when it reaches its end (less nfts available then limit 20)
         guard !isFetching, let index: Int = nftsViewModel.firstIndex(of: currentNFT) else { return }
         let reachedThreshold = Double(index) / Double(nftsViewModel.count) > 0.7
-        print("!!!!", index, nftsViewModel.count, reachedThreshold)
         if reachedThreshold {
             fetchNFTs(offset: currentOffset)
         }
@@ -76,6 +78,7 @@ final class NFTListViewModel: ObservableObject {
         let address = "0xD3e9D60e4E4De615124D5239219F32946d10151D" // alex masm"0xD3e9D60e4E4De615124D5239219F32946d10151D" //"0x57C2955C0d0fC319dDF6110eEdFCC81AF3caDD72" //"0xb8c2C29ee19D8307cb7255e1Cd9CbDE883A267d5" //paul "0xdfDf2D882D9ebce6c7EAc3DA9AB66cbfDa263781"//lots of nfts and lots with errors: "0xECc953EFBd82D7Dea4aa0F7Bc3329Ea615e0CfF2" //"0x7CeA66d7bC4856F90b94A3C1ea0229B86aa3697a"
         let limit = 20
         isFetching = true
+        
         nftRepository.fetchNFTs(with: address, offset: currentOffset, limit: limit)
             .map { nfts -> [NFT] in
                 self.currentOffset += limit
@@ -84,11 +87,12 @@ final class NFTListViewModel: ObservableObject {
                 return nfts
             }
             .flatMap(mediaPublisher)
-            .sink { [weak self] completion in
+            .sink { completion in
                 switch completion {
                 case .finished:
                     break
                 case .failure(let error):
+                    // TODO: handle error
                     print("***\(error)")
                 }
             } receiveValue: { [weak self] fetchedNFT in
@@ -118,6 +122,7 @@ final class NFTListViewModel: ObservableObject {
         )
         .flatMap(maxPublishers: .max(1)) { $0 }
         // Saving is causing issues when fetching more nfts (images not shown in previosly fetched nfts
+        // Probably an issue with loading in repo
 //        .flatMap { nft -> AnyPublisher<NFT, Error> in
 //            self.nftRepository.save(nft: nft)
 //            return Just(nft).setFailureType(to: Error.self).eraseToAnyPublisher()
@@ -132,8 +137,17 @@ final class NFTListViewModel: ObservableObject {
                 .eraseToAnyPublisher()
         }
         
-        guard let metadata = nft.metadata, let url = URL(string: metadata.image) else {
+        guard let metadata = nft.metadata, let imageURL = URL(string: metadata.imageURL) else {
             return Fail(error: NFTError.couldNotGetImageURL).eraseToAnyPublisher()
+        }
+        
+        var url: URL
+        if let videoURLString = nft.metadata?.animationURL,
+           let videoURL = URL(string: videoURLString),
+           supportedVideoFileExtensions().contains(videoURL.pathExtension) {
+            url = videoURL
+        } else {
+            url = imageURL
         }
         
         var nft = nft
@@ -167,6 +181,13 @@ final class NFTListViewModel: ObservableObject {
 //                return Just(nft).setFailureType(to: Error.self).eraseToAnyPublisher()
 //            }
 //            .eraseToAnyPublisher()
+    }
+    
+    private func supportedVideoFileExtensions() -> [String] {
+        let avTypes = AVURLAsset.audiovisualTypes()
+        var avExtensions = avTypes.map({ UTTypeCopyPreferredTagWithClass($0 as CFString, kUTTagClassFilenameExtension)?.takeRetainedValue() as String? ?? "" })
+        avExtensions = avExtensions.filter { !$0.isEmpty }
+        return avExtensions
     }
 }
 
