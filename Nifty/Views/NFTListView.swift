@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SVGKit
 
 struct NFTListView: View {
     
@@ -90,12 +91,21 @@ struct NFTListView: View {
         }.sheet(isPresented: $viewModel.showShareMedia) {
             if let urlString = viewModel.sharedMedia?.url,
                let url = URL(string: urlString),
-               let image = UIImage(contentsOfFile: url.path) {
+               let image = viewModel.sharedMedia?.fileType == .svg
+                    ? svgImage(contentsOfFile: url.path)
+                    : UIImage(contentsOfFile: url.path) {
                 ShareSheet(activityItems: ["", image]) { _,_,_,_ in
                     viewModel.showDetails = false
                 }
             }
         }
+    }
+    
+    func svgImage(contentsOfFile: String) -> UIImage {
+        guard let svgImage = SVGKImage(contentsOfFile: contentsOfFile) else {
+            return SVGKImage().uiImage
+        }
+        return svgImage.uiImage
     }
     
     func vibrate(_ type: UINotificationFeedbackGenerator.FeedbackType) {
