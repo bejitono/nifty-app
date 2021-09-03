@@ -7,12 +7,15 @@
 
 import Foundation
 
-struct NFTViewModel: Identifiable, Equatable {
+struct NFTViewModel: Identifiable, Hashable, Equatable {
+    
     let id: UUID
     let contractAddress: String
     let tokenId: String
     var name: String
     var description: String?
+    let imageURL: String?
+    let animationURL: String?
     var media: MediaViewModel?
     var attributes: [NFTAttributeViewModel]
     var isLoading: Bool
@@ -22,6 +25,8 @@ struct NFTViewModel: Identifiable, Equatable {
          tokenId: String = "",
          name: String = "",
          description: String? = nil,
+         imageURL: String? = nil,
+         animationURL: String? = nil,
          media: MediaViewModel? = nil,
          attributes: [NFTAttributeViewModel] = [],
          isLoading: Bool = true) {
@@ -30,6 +35,8 @@ struct NFTViewModel: Identifiable, Equatable {
         self.tokenId = tokenId
         self.name = name
         self.description = description
+        self.imageURL = imageURL
+        self.animationURL = animationURL
         self.media = media
         self.attributes = attributes
         self.isLoading = isLoading
@@ -44,6 +51,8 @@ extension NFTViewModel {
             tokenId: model.tokenID,
             name: model.metadata?.name ?? "",
             description: model.metadata?.description,
+            imageURL: model.metadata?.imageURL,
+            animationURL: model.metadata?.animationURL,
             media: model.media.flatMap(MediaViewModel.init),
             attributes: model.metadata?.attributes.compactMap(NFTAttributeViewModel.init) ?? [],
             isLoading: model.media == nil

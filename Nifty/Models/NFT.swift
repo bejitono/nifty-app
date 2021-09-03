@@ -28,7 +28,7 @@ extension NFT {
     }
     
     func failed() -> Self {
-        let failureMedia = Media(
+        _ = Media(
             url: "failure_ape",
             type: .staticImage,
             fileType: .jpg
@@ -172,7 +172,7 @@ struct OpenSeaNFTDto: Codable {
     }
     
     struct Owner: Codable {
-        let user: User
+        let user: User?
         let address: String
         let profileImage: String?
 

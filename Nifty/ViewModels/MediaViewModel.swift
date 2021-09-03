@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct MediaViewModel: Identifiable, Equatable {
+struct MediaViewModel: Identifiable, Hashable, Equatable {
     let id = UUID()
     let url: String
     let type: MediaType
