@@ -13,6 +13,7 @@ import MobileCoreServices
 enum SwipeDirection {
     case left
     case right
+    case none
 }
 
 final class NFTCollectionSwipeViewModel: ObservableObject {
@@ -22,6 +23,8 @@ final class NFTCollectionSwipeViewModel: ObservableObject {
     @Published private var nftViewModels: [NFTViewModel] = []
     @Published private var nfts: [NFT] = []
     
+    private var likedNFTs: [NFTViewModel] = []
+    private var dismissedNFTs: [NFTViewModel] = []
     private var currentOffset = 0
     private var isFetching = false
     private let nftRepository: NFTCollectionFetcheable
@@ -38,26 +41,14 @@ final class NFTCollectionSwipeViewModel: ObservableObject {
         self.nftRepository = nftRepository
         self.mediaRepository = mediaRepository
         fetchNFTs(offset: currentOffset)
-        // Only first 3, then add more later
-        
         // being called many times
         $nfts
             .map {
                 $0.map(NFTViewModel.init)
             }
-//            .assign(to: &$nftViewModels)
             .sink { [weak self] viewModels in
                 guard let self = self else { return }
-                // handle empty nfts
                 self.nftViewModels = viewModels.reversed()
-//                var initialNFTs: [NFTViewModel] = []
-//                for index in 0..<4 {
-//                    if let nft = viewModels[safe: index] {
-//                        initialNFTs.append(nft)
-//                        self.index = index
-//                    }
-//                }
-//                self.currentNFTs = initialNFTs
             }
             .store(in: &cancellables)
         
@@ -78,8 +69,18 @@ final class NFTCollectionSwipeViewModel: ObservableObject {
             .store(in: &cancellables)
     }
     
-    func swiped(_ nft: NFTViewModel, at index: Int, to direction: SwipeDirection) {
+    func swiped(_ nft: NFTViewModel, at index: Int, to swipeDirection: SwipeDirection) {
+        switch swipeDirection {
+        case .left:
+            dismissedNFTs.append(nft)
+        case .right:
+            likedNFTs.append(nft)
+        case .none:
+            break
+        }
+        
         currentNFTs.remove(at: index)
+        
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) {
             guard let nft = self.nftViewModels[safe: self.index + 1] else { return }
             // Appending would be more efficient (maybe cards should be reverted
