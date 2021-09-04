@@ -10,6 +10,8 @@
 		3D0F46D926C7C9820044E89A /* PlayerLoopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D0F46D826C7C9820044E89A /* PlayerLoopView.swift */; };
 		3D0F46DB26C7DA250044E89A /* BottomCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D0F46DA26C7DA250044E89A /* BottomCardView.swift */; };
 		3D0F46DD26C7DB4C0044E89A /* BlurView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D0F46DC26C7DB4C0044E89A /* BlurView.swift */; };
+		3D24A7FC26E35329004BC218 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D24A7FB26E35329004BC218 /* Colors.swift */; };
+		3D24A7FE26E35364004BC218 /* TabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D24A7FD26E35364004BC218 /* TabBar.swift */; };
 		3D700A3B26DCF626008F0A96 /* OpenSeaRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D700A3A26DCF626008F0A96 /* OpenSeaRepository.swift */; };
 		3D700A3E26DE5600008F0A96 /* SVGKit in Frameworks */ = {isa = PBXBuildFile; productRef = 3D700A3D26DE5600008F0A96 /* SVGKit */; };
 		3D700A4026DE560E008F0A96 /* SVGImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D700A3F26DE560E008F0A96 /* SVGImageView.swift */; };
@@ -83,6 +85,8 @@
 		3D0F46D826C7C9820044E89A /* PlayerLoopView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerLoopView.swift; sourceTree = "<group>"; };
 		3D0F46DA26C7DA250044E89A /* BottomCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomCardView.swift; sourceTree = "<group>"; };
 		3D0F46DC26C7DB4C0044E89A /* BlurView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlurView.swift; sourceTree = "<group>"; };
+		3D24A7FB26E35329004BC218 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
+		3D24A7FD26E35364004BC218 /* TabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBar.swift; sourceTree = "<group>"; };
 		3D700A3A26DCF626008F0A96 /* OpenSeaRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenSeaRepository.swift; sourceTree = "<group>"; };
 		3D700A3F26DE560E008F0A96 /* SVGImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SVGImageView.swift; sourceTree = "<group>"; };
 		3D76414826C0C5C30063B043 /* NFTListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NFTListViewModel.swift; sourceTree = "<group>"; };
@@ -240,6 +244,7 @@
 				3D8F0D4C26CF3FFE006ABEB4 /* ShareView.swift */,
 				3D700A3F26DE560E008F0A96 /* SVGImageView.swift */,
 				3D8F0D4726CDE3F2006ABEB4 /* Title.swift */,
+				3D24A7FD26E35364004BC218 /* TabBar.swift */,
 				3D8F0D5026D27A13006ABEB4 /* View+ViewModifiers.swift */,
 				3D8F0D4E26D2555F006ABEB4 /* ZoomableScrollView.swift */,
 				3D773FF726E0E05500BEA63F /* Modifiers */,
@@ -271,6 +276,7 @@
 			isa = PBXGroup;
 			children = (
 				3D8F0D4A26CF3BFE006ABEB4 /* Image.swift */,
+				3D24A7FB26E35329004BC218 /* Colors.swift */,
 			);
 			path = Styles;
 			sourceTree = "<group>";
@@ -489,6 +495,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3D86BEFD26C4B6B800BF2FB0 /* NFTView.swift in Sources */,
+				3D24A7FC26E35329004BC218 /* Colors.swift in Sources */,
 				3D8F0D4B26CF3BFE006ABEB4 /* Image.swift in Sources */,
 				3D0F46DB26C7DA250044E89A /* BottomCardView.swift in Sources */,
 				3D86BF1926C51DBF00BF2FB0 /* UserCache.swift in Sources */,
@@ -532,6 +539,7 @@
 				3D0F46D926C7C9820044E89A /* PlayerLoopView.swift in Sources */,
 				3D8F0D5526D2867D006ABEB4 /* AddWalletButton.swift in Sources */,
 				3D86BF0E26C4F8F300BF2FB0 /* NFTViewModel.swift in Sources */,
+				3D24A7FE26E35364004BC218 /* TabBar.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
