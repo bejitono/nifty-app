@@ -27,6 +27,9 @@ struct NFTCollectionListView: View {
                                 vibrate(.success)
                                 // viewmodel
                             }
+                            .onAppear {
+                                viewModel.fetchCollectionIfNeeded(for: collection)
+                            }
                     }
                 }
                 .padding(EdgeInsets(top: 30, leading: 10, bottom: 30, trailing: 10))

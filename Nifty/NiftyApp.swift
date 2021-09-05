@@ -22,16 +22,15 @@ struct NiftyApp: App {
         WindowGroup {
             ZStack {
                 AppGradient()
+                
                 TabView(selection: $selectedTab) {
-                    NFTListView()
-                        .tag(Tab.nfts)
-                    NFTCollectionListView()
-                        .tag(Tab.collections)
-                    NFTCollectionListView()
-                        .tag(Tab.savedNFTs)
+                    NFTListView().tag(Tab.nfts)
+                    NFTCollectionListView().tag(Tab.collections)
+                    NFTCollectionListView().tag(Tab.savedNFTs)
                 }
                 .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
                 .ignoresSafeArea(.all, edges: .bottom)
+                
                 VStack {
                     Spacer()
                     TabBar(selectedTab: $selectedTab)

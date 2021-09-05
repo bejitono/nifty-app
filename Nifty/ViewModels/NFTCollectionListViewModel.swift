@@ -20,7 +20,7 @@ final class NFTCollectionListViewModel: ObservableObject {
     
     init(nftRepository: NFTCollectionFetcheable = NFTRepository()) {
         self.nftRepository = nftRepository
-        fetchCollections()
+        fetchCollections(offset: currentOffset)
         $collections
             .map {
                 $0.map(NFTCollectionViewModel.init)
@@ -28,8 +28,17 @@ final class NFTCollectionListViewModel: ObservableObject {
             .assign(to: &$collectionViewModels)
     }
     
-    func fetchCollections() {
+    func fetchCollectionIfNeeded(for collection: NFTCollectionViewModel) {
+        guard !isFetching, let index: Int = collectionViewModels.firstIndex(of: collection) else { return }
+        let reachedThreshold = Double(index) / Double(collectionViewModels.count) > 0.7
+        if reachedThreshold {
+            fetchCollections(offset: currentOffset)
+        }
+    }
+    
+    func fetchCollections(offset: Int) {
         let limit = 50
+        isFetching = true
         
         nftRepository.fetchCollection(
             forAddress: "0xD3e9D60e4E4De615124D5239219F32946d10151D",
@@ -46,7 +55,9 @@ final class NFTCollectionListViewModel: ObservableObject {
             }
         } receiveValue: { [weak self] fetchedCollections in
             guard let self = self else { return }
-            self.collections = fetchedCollections
+            self.currentOffset += limit
+            self.isFetching = false
+            self.collections.append(contentsOf: fetchedCollections)
         }
         .store(in: &cancellables)
     }
