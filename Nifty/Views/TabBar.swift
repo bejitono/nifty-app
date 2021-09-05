@@ -9,18 +9,38 @@ import SwiftUI
 
 struct TabBar: View {
     
-    @State var nftListActive = true
-    @State var swipeCollectionsActive = false
-    @State var savedNFTsActive = false
+    @Binding var selectedTab: Tab
+    
+    @State private var nftListActive = true
+    @State private var swipeCollectionsActive = false
+    @State private var savedNFTsActive = false
     
     var body: some View {
         VStack {
             HStack {
                 TabBarImageView(name: "tray.full.fill", active: $nftListActive)
+                    .onTapGesture {
+                        nftListActive = true
+                        swipeCollectionsActive = false
+                        savedNFTsActive = false
+                        selectedTab = .nfts
+                    }
                 Spacer()
                 TabBarImageView(name: "rectangle.stack.fill", active: $swipeCollectionsActive)
+                    .onTapGesture {
+                        nftListActive = false
+                        swipeCollectionsActive = true
+                        savedNFTsActive = false
+                        selectedTab = .collections
+                    }
                 Spacer()
                 TabBarImageView(name: "bag.fill", active: $savedNFTsActive)
+                    .onTapGesture {
+                        nftListActive = false
+                        swipeCollectionsActive = false
+                        savedNFTsActive = true
+                        selectedTab = .savedNFTs
+                    }
             }
             .padding([.leading, .trailing], 40)
         }
@@ -66,6 +86,6 @@ private extension CGFloat {
 
 struct TabBar_Previews: PreviewProvider {
     static var previews: some View {
-        TabBar()
+        TabBar(selectedTab: .constant(.nfts))
     }
 }
