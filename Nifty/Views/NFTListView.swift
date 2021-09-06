@@ -23,6 +23,7 @@ struct NFTListView: View {
                 LazyVStack(spacing: 40) {
                     ForEach(viewModel.nftsViewModel, id: \.id) { nft in
                         NFTView(nft: nft)
+                            .equatable()
                             .cardStyle()
                             .onAppear {
                                 viewModel.fetchNFTsIfNeeded(for: nft)

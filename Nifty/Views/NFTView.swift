@@ -9,7 +9,7 @@ import AVKit
 import SkeletonUI
 import SwiftUI
 
-struct NFTView: View {
+struct NFTView: View, Equatable {
     
     let nft: NFTViewModel
 
