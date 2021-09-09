@@ -14,6 +14,7 @@ final class NFTCollectionListViewModel: ObservableObject {
     @Published private var collections: [NFTCollection] = []
     private var currentOffset = 0
     private var isFetching = false
+    private var reachedEnd = false
     
     private let nftRepository: NFTCollectionFetcheable
     private var cancellables = Set<AnyCancellable>()
@@ -29,7 +30,7 @@ final class NFTCollectionListViewModel: ObservableObject {
     }
     
     func fetchCollectionIfNeeded(for collection: NFTCollectionViewModel) {
-        guard !isFetching, let index: Int = collectionViewModels.firstIndex(of: collection) else { return }
+        guard !isFetching, !reachedEnd, let index: Int = collectionViewModels.firstIndex(of: collection) else { return }
         let reachedThreshold = Double(index) / Double(collectionViewModels.count) > 0.7
         if reachedThreshold {
             fetchCollections(offset: currentOffset)
@@ -58,6 +59,9 @@ final class NFTCollectionListViewModel: ObservableObject {
             self.currentOffset += limit
             self.isFetching = false
             self.collections.append(contentsOf: fetchedCollections)
+            if fetchedCollections.isEmpty {
+                self.reachedEnd = true
+            }
         }
         .store(in: &cancellables)
     }
