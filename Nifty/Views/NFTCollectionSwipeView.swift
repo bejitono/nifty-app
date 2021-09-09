@@ -15,15 +15,31 @@ struct NFTCollectionSwipeView: View {
     @State var swipeDirection: SwipeDirection = .none
     
     @ObservedObject var viewModel: NFTCollectionSwipeViewModel
+    @Binding var flow: NFTCollectionFlow
     
-    init(viewModel: NFTCollectionSwipeViewModel = NFTCollectionSwipeViewModel(
+    init(flow: Binding<NFTCollectionFlow>,
+         viewModel: NFTCollectionSwipeViewModel = NFTCollectionSwipeViewModel(
             contractAddress: "0xc3f733ca98e0dad0386979eb96fb1722a1a05e69"//"0x3b1bb53b1a42ff61b7399fc196469a742cd3e98d"
     )) {
+        self._flow = flow
         self.viewModel = viewModel
     }
     
     var body: some View {
         VStack {
+            HStack {
+                Image(systemName: "chevron.backward")
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: 25, height: 25)
+//                    .foregroundColor(.white)
+                    .onTapGesture {
+                        self.flow = .list
+                    }
+                    .padding()
+                Spacer()
+            }
+            .padding([.bottom], 70)
             ZStack {
                 // TODO: make data source generic
                 ForEach(Array(viewModel.currentNFTs.enumerated()), id: \.element) { index, nft in
@@ -76,6 +92,7 @@ struct NFTCollectionSwipeView: View {
                 }
             }
             .offset(x: 0, y: 25 * CGFloat(viewModel.currentNFTs.count) * -1)
+            Spacer()
         }
     }
     
@@ -163,6 +180,6 @@ private extension CGFloat {
 
 struct NFTCollectionSwipeView_Previews: PreviewProvider {
     static var previews: some View {
-        NFTCollectionSwipeView()
+        NFTCollectionSwipeView(flow: .constant(.list))
     }
 }

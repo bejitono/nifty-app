@@ -10,8 +10,10 @@ import SwiftUI
 struct NFTCollectionListView: View {
     
     @ObservedObject var viewModel: NFTCollectionListViewModel
+    @Binding var flow: NFTCollectionFlow
     
-    init(viewModel: NFTCollectionListViewModel = NFTCollectionListViewModel()) {
+    init(flow: Binding<NFTCollectionFlow>, viewModel: NFTCollectionListViewModel = NFTCollectionListViewModel()) {
+        self._flow = flow
         self.viewModel = viewModel
     }
     
@@ -25,7 +27,7 @@ struct NFTCollectionListView: View {
                             .cardStyle()
                             .onTapGesture {
                                 vibrate(.success)
-                                // viewmodel
+                                self.flow = .detail(contractAddress: collection.contractAddress)
                             }
                             .onAppear {
                                 viewModel.fetchCollectionIfNeeded(for: collection)
@@ -45,6 +47,6 @@ struct NFTCollectionListView: View {
 
 struct NFTCollectionListView_Previews: PreviewProvider {
     static var previews: some View {
-        NFTCollectionListView()
+        NFTCollectionListView(flow: .constant(.list))
     }
 }
