@@ -93,6 +93,9 @@ struct NFTImageView: View {
         VStack {
             VStack {
                 WebImage(url: URL(string: nft.imageURL ?? ""))
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .cornerRadius(5)
             }
             .frame(
                 maxWidth: .infinity,
