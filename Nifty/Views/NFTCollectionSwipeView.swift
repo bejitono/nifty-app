@@ -27,18 +27,11 @@ struct NFTCollectionSwipeView: View {
     
     var body: some View {
         VStack {
-            HStack {
-                Image(systemName: "chevron.backward")
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .frame(width: 25, height: 25)
-//                    .foregroundColor(.white)
-                    .onTapGesture {
-                        self.flow = .list
-                    }
-                    .padding()
-                Spacer()
-            }
+            // TODO: Change to normal view push
+            BackButtonView()
+                .onTapGesture {
+                    self.flow = .list
+                }
             .padding([.bottom], 70)
             ZStack {
                 // TODO: make data source generic

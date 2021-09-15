@@ -45,6 +45,7 @@
 		3D8F0D5326D27A9B006ABEB4 /* NewWalletView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D8F0D5226D27A9B006ABEB4 /* NewWalletView.swift */; };
 		3D8F0D5526D2867D006ABEB4 /* AddWalletButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D8F0D5426D2867D006ABEB4 /* AddWalletButton.swift */; };
 		3D8F0D5726D28686006ABEB4 /* AppTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D8F0D5626D28686006ABEB4 /* AppTextField.swift */; };
+		3D8FBF7D26F2508E0051B8B8 /* BackButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D8FBF7C26F2508E0051B8B8 /* BackButtonView.swift */; };
 		3D92920926CD1B5E00F4A772 /* AttributeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D92920826CD1B5E00F4A772 /* AttributeView.swift */; };
 		3D9A409B26C9FC180063B448 /* PillView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D9A409A26C9FC180063B448 /* PillView.swift */; };
 		3DC1A27626C8B7C2005767B5 /* NFTAttributeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DC1A27526C8B7C2005767B5 /* NFTAttributeViewModel.swift */; };
@@ -119,6 +120,7 @@
 		3D8F0D5226D27A9B006ABEB4 /* NewWalletView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewWalletView.swift; sourceTree = "<group>"; };
 		3D8F0D5426D2867D006ABEB4 /* AddWalletButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddWalletButton.swift; sourceTree = "<group>"; };
 		3D8F0D5626D28686006ABEB4 /* AppTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTextField.swift; sourceTree = "<group>"; };
+		3D8FBF7C26F2508E0051B8B8 /* BackButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackButtonView.swift; sourceTree = "<group>"; };
 		3D92920826CD1B5E00F4A772 /* AttributeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttributeView.swift; sourceTree = "<group>"; };
 		3D9A409A26C9FC180063B448 /* PillView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PillView.swift; sourceTree = "<group>"; };
 		3DC1A27526C8B7C2005767B5 /* NFTAttributeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NFTAttributeViewModel.swift; sourceTree = "<group>"; };
@@ -233,9 +235,6 @@
 			children = (
 				3D8F0D5426D2867D006ABEB4 /* AddWalletButton.swift */,
 				3D8F0D5626D28686006ABEB4 /* AppTextField.swift */,
-				3D92920826CD1B5E00F4A772 /* AttributeView.swift */,
-				3D0F46DA26C7DA250044E89A /* BottomCardView.swift */,
-				3D0F46DC26C7DB4C0044E89A /* BlurView.swift */,
 				3D8F0D4526CDDED9006ABEB4 /* MultilineHStack.swift */,
 				3D773FF526E0DF3900BEA63F /* NFTCollectionSwipeView.swift */,
 				3D773FEE26E0C91A00BEA63F /* NFTCollectionListView.swift */,
@@ -244,15 +243,11 @@
 				3DF9F48A26BF6D6500C23005 /* NFTListView.swift */,
 				3D86BEFC26C4B6B800BF2FB0 /* NFTView.swift */,
 				3D8F0D5226D27A9B006ABEB4 /* NewWalletView.swift */,
-				3D9A409A26C9FC180063B448 /* PillView.swift */,
-				3D0F46D826C7C9820044E89A /* PlayerLoopView.swift */,
-				3D8F0D4C26CF3FFE006ABEB4 /* ShareView.swift */,
-				3D700A3F26DE560E008F0A96 /* SVGImageView.swift */,
-				3D8F0D4726CDE3F2006ABEB4 /* Title.swift */,
 				3D24A7FD26E35364004BC218 /* TabBar.swift */,
 				3D8F0D5026D27A13006ABEB4 /* View+ViewModifiers.swift */,
 				3D8F0D4E26D2555F006ABEB4 /* ZoomableScrollView.swift */,
 				3D773FF726E0E05500BEA63F /* Modifiers */,
+				3D8FBF7B26F2507C0051B8B8 /* Shared */,
 				3D8F0D4926CF3BED006ABEB4 /* Styles */,
 				3DF9F48E26BF6D6600C23005 /* Preview Content */,
 			);
@@ -284,6 +279,22 @@
 				3D24A7FB26E35329004BC218 /* Colors.swift */,
 			);
 			path = Styles;
+			sourceTree = "<group>";
+		};
+		3D8FBF7B26F2507C0051B8B8 /* Shared */ = {
+			isa = PBXGroup;
+			children = (
+				3D92920826CD1B5E00F4A772 /* AttributeView.swift */,
+				3D8FBF7C26F2508E0051B8B8 /* BackButtonView.swift */,
+				3D0F46DA26C7DA250044E89A /* BottomCardView.swift */,
+				3D0F46DC26C7DB4C0044E89A /* BlurView.swift */,
+				3D9A409A26C9FC180063B448 /* PillView.swift */,
+				3D0F46D826C7C9820044E89A /* PlayerLoopView.swift */,
+				3D8F0D4C26CF3FFE006ABEB4 /* ShareView.swift */,
+				3D700A3F26DE560E008F0A96 /* SVGImageView.swift */,
+				3D8F0D4726CDE3F2006ABEB4 /* Title.swift */,
+			);
+			path = Shared;
 			sourceTree = "<group>";
 		};
 		3DCA24A726E20E1C0057AFEE /* Extensions */ = {
@@ -524,6 +535,7 @@
 				3D9A409B26C9FC180063B448 /* PillView.swift in Sources */,
 				3D86BF1126C4FB9300BF2FB0 /* Constants.swift in Sources */,
 				3D8F0D4626CDDED9006ABEB4 /* MultilineHStack.swift in Sources */,
+				3D8FBF7D26F2508E0051B8B8 /* BackButtonView.swift in Sources */,
 				3D773FEB26E0C4F700BEA63F /* NFTCollectionListViewModel.swift in Sources */,
 				3D92920926CD1B5E00F4A772 /* AttributeView.swift in Sources */,
 				3D700A3B26DCF626008F0A96 /* OpenSeaRepository.swift in Sources */,
