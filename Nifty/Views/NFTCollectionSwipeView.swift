@@ -117,7 +117,7 @@ struct NFTImageView: View {
             .frame(
                 maxWidth: .infinity,
                 minHeight: 350,
-                maxHeight: 350,
+                maxHeight: 350, // TODO: make it dynamic according to screen size
                 alignment: .center
             )
             VStack(spacing: 10) {

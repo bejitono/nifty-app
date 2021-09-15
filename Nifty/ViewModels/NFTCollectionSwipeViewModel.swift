@@ -83,7 +83,7 @@ final class NFTCollectionSwipeViewModel: ObservableObject {
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) {
             guard let nft = self.nftViewModels[safe: self.index + 1] else { return }
-            // Appending would be more efficient (maybe cards should be reverted
+            // Appending would be more efficient (maybe cards should be reverted)
             self.currentNFTs.insert(nft, at: 0)
             self.index += 1
             self.fetchNFTsIfNeeded(for: nft)
@@ -103,13 +103,6 @@ final class NFTCollectionSwipeViewModel: ObservableObject {
         isFetching = true
         
         nftRepository.fetchNFTs(forContractAddress: contractAddress, offset: offset, limit: limit)
-//            .map { nfts -> [NFT] in
-//                self.currentOffset += limit
-//                self.isFetching = false
-//                self.nfts.append(contentsOf: nfts)
-//                return nfts
-//            }
-//            .flatMap(mediaPublisher)
             .sink { completion in
                 switch completion {
                 case .finished:
@@ -123,25 +116,6 @@ final class NFTCollectionSwipeViewModel: ObservableObject {
                 self.currentOffset += limit
                 self.isFetching = false
                 self.nfts.append(contentsOf: nfts)
-//                self.nfts = self.nfts.compactMap { nft in
-//                    if nft.hash == fetchedNFT.hash {
-//                        guard let media = fetchedNFT.media else { return nil }
-//                        var nft = nft
-//                        nft.media = media
-//                        return nft
-//                    }
-//                    return nft
-//                }
-                
-                // Change:
-//                self.currentNFTs = self.currentNFTs.map { nft in
-//                    var nft = nft
-//                    let viewModel = NFTViewModel(fetchedNFT)
-//                    if nft.media == nil {
-//                        nft.media = viewModel.media
-//                    }
-//                    return nft
-//                }
             }
             .store(in: &cancellables)
     }
