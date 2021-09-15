@@ -5,6 +5,7 @@
 //  Created by Stefano on 12.08.21.
 //
 
+import CoreData
 import CryptoKit
 import Foundation
 
@@ -219,5 +220,39 @@ struct OpenSeaNFTDto: Codable {
         case contract = "asset_contract"
         case owner
         case traits
+    }
+}
+
+extension NFTCache {
+    
+    convenience init(
+        id: UUID = UUID(),
+        contractAddress: String,
+        tokenId: String,
+        name: String,
+        description: String?,
+        imageURL: String?,
+        animationURL: String?,
+        context: NSManagedObjectContext = PersistenceStore.shared.mainContext
+    ) {
+        self.init(context: context)
+        self.identifier = id.uuidString
+        self.contractAddress = contractAddress
+        self.tokenId = tokenId
+        self.name = name
+        self.nftDescription = description
+        self.imageURL = imageURL
+        self.animationURL = animationURL
+    }
+    
+    convenience init(viewModel: NFTViewModel) {
+        self.init(
+            contractAddress: viewModel.contractAddress,
+            tokenId: viewModel.tokenId,
+            name: viewModel.name,
+            description: viewModel.description,
+            imageURL: viewModel.imageURL,
+            animationURL: viewModel.animationURL
+        )
     }
 }

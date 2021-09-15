@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="18154" systemVersion="21A5506j" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="NFTCache" representedClassName="NFTCache" syncable="YES" codeGenerationType="class">
+        <attribute name="animationURL" optional="YES" attributeType="String"/>
+        <attribute name="contractAddress" attributeType="String"/>
+        <attribute name="identifier" attributeType="String"/>
+        <attribute name="imageURL" optional="YES" attributeType="String"/>
+        <attribute name="name" attributeType="String"/>
+        <attribute name="nftDescription" attributeType="String"/>
+        <attribute name="tokenId" attributeType="String"/>
+    </entity>
+    <elements>
+        <element name="NFTCache" positionX="-63" positionY="-18" width="128" height="134"/>
+    </elements>
+</model>
