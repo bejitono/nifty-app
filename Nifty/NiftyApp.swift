@@ -5,6 +5,8 @@
 //  Created by Stefano on 08.08.21.
 //
 
+import SDWebImage
+import SDWebImageSVGCoder
 import SwiftUI
 
 enum Tab: String {
@@ -17,6 +19,10 @@ enum Tab: String {
 struct NiftyApp: App {
     
     @State var selectedTab: Tab = .nfts
+    
+    init() {
+        SDImageCodersManager.shared.addCoder(SDImageSVGCoder.shared)
+    }
     
     var body: some Scene {
         WindowGroup {

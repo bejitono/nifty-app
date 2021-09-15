@@ -8,7 +8,7 @@
 import SDWebImageSwiftUI
 import SwiftUI
 
-struct NFTCollectionView: View {
+struct NFTCollectionView: View, Equatable {
     
     let collection: NFTCollectionViewModel
     

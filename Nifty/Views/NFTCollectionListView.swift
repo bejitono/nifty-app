@@ -24,6 +24,7 @@ struct NFTCollectionListView: View {
                 LazyVStack(spacing: 40) {
                     ForEach(viewModel.collectionViewModels, id: \.id) { collection in
                         NFTCollectionView(collection: collection)
+                            .equatable()
                             .cardStyle()
                             .onTapGesture {
                                 vibrate(.success)
