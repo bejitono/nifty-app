@@ -46,6 +46,8 @@
 		3D8F0D5526D2867D006ABEB4 /* AddWalletButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D8F0D5426D2867D006ABEB4 /* AddWalletButton.swift */; };
 		3D8F0D5726D28686006ABEB4 /* AppTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D8F0D5626D28686006ABEB4 /* AppTextField.swift */; };
 		3D8FBF7D26F2508E0051B8B8 /* BackButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D8FBF7C26F2508E0051B8B8 /* BackButtonView.swift */; };
+		3D8FBF7F26F256F10051B8B8 /* NFTPersistenceStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D8FBF7E26F256F10051B8B8 /* NFTPersistenceStore.swift */; };
+		3D8FBF8226F257CC0051B8B8 /* NFTs.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 3D8FBF8026F257CC0051B8B8 /* NFTs.xcdatamodeld */; };
 		3D92920926CD1B5E00F4A772 /* AttributeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D92920826CD1B5E00F4A772 /* AttributeView.swift */; };
 		3D9A409B26C9FC180063B448 /* PillView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D9A409A26C9FC180063B448 /* PillView.swift */; };
 		3DC1A27626C8B7C2005767B5 /* NFTAttributeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DC1A27526C8B7C2005767B5 /* NFTAttributeViewModel.swift */; };
@@ -121,6 +123,8 @@
 		3D8F0D5426D2867D006ABEB4 /* AddWalletButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddWalletButton.swift; sourceTree = "<group>"; };
 		3D8F0D5626D28686006ABEB4 /* AppTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTextField.swift; sourceTree = "<group>"; };
 		3D8FBF7C26F2508E0051B8B8 /* BackButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackButtonView.swift; sourceTree = "<group>"; };
+		3D8FBF7E26F256F10051B8B8 /* NFTPersistenceStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NFTPersistenceStore.swift; sourceTree = "<group>"; };
+		3D8FBF8126F257CC0051B8B8 /* NFTs.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = NFTs.xcdatamodel; sourceTree = "<group>"; };
 		3D92920826CD1B5E00F4A772 /* AttributeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttributeView.swift; sourceTree = "<group>"; };
 		3D9A409A26C9FC180063B448 /* PillView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PillView.swift; sourceTree = "<group>"; };
 		3DC1A27526C8B7C2005767B5 /* NFTAttributeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NFTAttributeViewModel.swift; sourceTree = "<group>"; };
@@ -268,6 +272,8 @@
 			isa = PBXGroup;
 			children = (
 				3D86BF1826C51DBF00BF2FB0 /* UserCache.swift */,
+				3D8FBF7E26F256F10051B8B8 /* NFTPersistenceStore.swift */,
+				3D8FBF8026F257CC0051B8B8 /* NFTs.xcdatamodeld */,
 			);
 			path = Persistence;
 			sourceTree = "<group>";
@@ -531,6 +537,7 @@
 				3D8F0D5726D28686006ABEB4 /* AppTextField.swift in Sources */,
 				3D0F46DD26C7DB4C0044E89A /* BlurView.swift in Sources */,
 				3DF9F48B26BF6D6500C23005 /* NFTListView.swift in Sources */,
+				3D8FBF7F26F256F10051B8B8 /* NFTPersistenceStore.swift in Sources */,
 				3D86BEF926C4B10900BF2FB0 /* NFT.swift in Sources */,
 				3D9A409B26C9FC180063B448 /* PillView.swift in Sources */,
 				3D86BF1126C4FB9300BF2FB0 /* Constants.swift in Sources */,
@@ -559,6 +566,7 @@
 				3D0F46D926C7C9820044E89A /* PlayerLoopView.swift in Sources */,
 				3D8F0D5526D2867D006ABEB4 /* AddWalletButton.swift in Sources */,
 				3D86BF0E26C4F8F300BF2FB0 /* NFTViewModel.swift in Sources */,
+				3D8FBF8226F257CC0051B8B8 /* NFTs.xcdatamodeld in Sources */,
 				3D24A7FE26E35364004BC218 /* TabBar.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -955,6 +963,19 @@
 			productName = Web3;
 		};
 /* End XCSwiftPackageProductDependency section */
+
+/* Begin XCVersionGroup section */
+		3D8FBF8026F257CC0051B8B8 /* NFTs.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				3D8FBF8126F257CC0051B8B8 /* NFTs.xcdatamodel */,
+			);
+			currentVersion = 3D8FBF8126F257CC0051B8B8 /* NFTs.xcdatamodel */;
+			path = NFTs.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 3DF9F47D26BF6D6500C23005 /* Project object */;
 }
