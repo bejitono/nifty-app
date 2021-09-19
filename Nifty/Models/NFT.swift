@@ -245,14 +245,14 @@ extension NFTCache {
         self.animationURL = animationURL
     }
     
-    convenience init(viewModel: NFTViewModel) {
+    convenience init(nft: NFT) {
         self.init(
-            contractAddress: viewModel.contractAddress,
-            tokenId: viewModel.tokenId,
-            name: viewModel.name,
-            description: viewModel.description,
-            imageURL: viewModel.imageURL,
-            animationURL: viewModel.animationURL
+            contractAddress: nft.contractAddress,
+            tokenId: nft.tokenID,
+            name: nft.metadata?.name ?? "",
+            description: nft.metadata?.description,
+            imageURL: nft.metadata?.imageURL,
+            animationURL: nft.metadata?.animationURL
         )
     }
 }

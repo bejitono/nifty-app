@@ -17,7 +17,7 @@ extension NFTCollection {
     
     init?(_ dto: OpenSeaNFTCollectionDTO) {
         guard let contractAddress = dto.contracts.first?.address else { return nil }
-        self.name = dto.name ?? ""
+        self.name = dto.name
         self.imageURL = dto.imageURL
         self.contractAddress = contractAddress
     }

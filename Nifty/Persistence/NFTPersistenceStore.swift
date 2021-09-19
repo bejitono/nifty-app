@@ -13,6 +13,7 @@ protocol PersistenceStoreProtocol {
     
     func fetch<Resource: NSManagedObject>(
         withId identifier: String,
+        contractAddress: String,
         context: NSManagedObjectContext?
     ) throws -> Resource?
     
@@ -25,6 +26,8 @@ protocol PersistenceStoreProtocol {
         _ object: Resource,
         in context: NSManagedObjectContext?
     )
+    
+    func deleteAll(in context: NSManagedObjectContext?) throws
     
     func reset(context: NSManagedObjectContext?)
 }
@@ -63,13 +66,21 @@ final class PersistenceStore: PersistenceStoreProtocol {
         if let error = error { throw error }
     }
 
-    func fetch<Resource: NSManagedObject>(withId identifier: String,
-                                          context: NSManagedObjectContext? = nil) throws -> Resource? {
+    func fetch<Resource: NSManagedObject>(
+        withId identifier: String,
+        contractAddress: String,
+        context: NSManagedObjectContext? = nil
+    ) throws -> Resource? {
         let context = context ?? mainContext
         var resource: Resource?
         var error: Error?
         let fetchRequest: NSFetchRequest<Resource> = Resource.fetchRequest() as! NSFetchRequest<Resource>
-        let predicate = NSPredicate(format: "identifier == %@", identifier)
+        let idPredicate = NSPredicate(format: "identifier == %@", identifier)
+        let contractAddressPredicate = NSPredicate(format: "contractAdress == %@", contractAddress)
+        let predicate = NSCompoundPredicate(
+            type: .and,
+            subpredicates: [idPredicate, contractAddressPredicate]
+        )
         fetchRequest.predicate = predicate
 
         context.performAndWait {
@@ -86,8 +97,10 @@ final class PersistenceStore: PersistenceStoreProtocol {
         return resource
     }
 
-    func fetch<Resource: NSManagedObject>(recent fetchLimit: Int = 100,
-                                          in context: NSManagedObjectContext? = nil) throws -> [Resource] {
+    func fetch<Resource: NSManagedObject>(
+        recent fetchLimit: Int = 100,
+        in context: NSManagedObjectContext? = nil
+    ) throws -> [Resource] {
         let context = context ?? mainContext
         var resource = [Resource]()
         var error: Error?
@@ -112,10 +125,21 @@ final class PersistenceStore: PersistenceStoreProtocol {
         return resource
     }
 
-    func delete<Resource: NSManagedObject>(_ object: Resource,
-                                           in context: NSManagedObjectContext? = nil) {
+    func delete<Resource: NSManagedObject>(
+        _ object: Resource,
+        in context: NSManagedObjectContext? = nil
+    ) {
         let context = context ?? mainContext
         context.delete(object)
+    }
+    
+    func deleteAll (
+        in context: NSManagedObjectContext? = nil
+    ) throws {
+        let context = context ?? mainContext
+        let fetchRequest: NSFetchRequest<NSFetchRequestResult> = NSFetchRequest(entityName: "NFTCache")
+        let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
+        try context.execute(deleteRequest)
     }
 
     func reset(context: NSManagedObjectContext? = nil) {
