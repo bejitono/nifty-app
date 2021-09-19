@@ -28,6 +28,10 @@ struct NFTListView: View {
                             .onAppear {
                                 viewModel.fetchNFTsIfNeeded(for: nft)
                             }
+                            .onTapGesture {
+                                vibrate(.heavy)
+                                viewModel.handleTapOn(nft: nft)
+                            }
                     }
                 }
                 .padding(EdgeInsets(top: 30, leading: 10, bottom: 30, trailing: 10))
@@ -93,9 +97,9 @@ struct NFTListView: View {
         return svgImage.uiImage
     }
     
-    func vibrate(_ type: UINotificationFeedbackGenerator.FeedbackType) {
-        let generator = UINotificationFeedbackGenerator()
-        generator.notificationOccurred(type)
+    func vibrate(_ type: UIImpactFeedbackGenerator.FeedbackStyle) {
+        let generator = UIImpactFeedbackGenerator(style: type)
+        generator.impactOccurred()
     }
 }
 

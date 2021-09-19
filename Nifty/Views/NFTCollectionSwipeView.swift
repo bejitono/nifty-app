@@ -32,7 +32,7 @@ struct NFTCollectionSwipeView: View {
                 .onTapGesture {
                     self.flow = .list
                 }
-            .padding([.bottom], 70)
+                .padding([.bottom], 70)
             ZStack {
                 // TODO: make data source generic
                 ForEach(Array(viewModel.currentNFTs.enumerated()), id: \.element) { index, nft in
@@ -72,7 +72,7 @@ struct NFTCollectionSwipeView: View {
                                         withAnimation(Animation.easeInOut(duration: 0.3)){
                                             self.side = CGSize(width: swipedRight ? 600 : -600, height: self.side.height)
                                         }
-                                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
                                             viewModel.swiped(nft, at: index, to: swipedLeft ? .left : .right)
                                             self.movingItem = nil
                                         }

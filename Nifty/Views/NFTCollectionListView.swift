@@ -27,7 +27,7 @@ struct NFTCollectionListView: View {
                             .equatable()
                             .cardStyle()
                             .onTapGesture {
-                                vibrate(.success)
+                                vibrate(.heavy)
                                 self.flow = .detail(contractAddress: collection.contractAddress)
                             }
                             .onAppear {
@@ -40,9 +40,9 @@ struct NFTCollectionListView: View {
         }
     }
     
-    func vibrate(_ type: UINotificationFeedbackGenerator.FeedbackType) {
-        let generator = UINotificationFeedbackGenerator()
-        generator.notificationOccurred(type)
+    func vibrate(_ type: UIImpactFeedbackGenerator.FeedbackStyle) {
+        let generator = UIImpactFeedbackGenerator(style: type)
+        generator.impactOccurred()
     }
 }
 
