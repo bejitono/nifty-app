@@ -27,14 +27,14 @@ final class NFTCollectionSwipeViewModel: ObservableObject {
     private var dismissedNFTs: [NFTViewModel] = []
     private var currentOffset = 0
     private var isFetching = false
-    private let nftRepository: NFTCollectionFetcheable
+    private let nftRepository: NFTCollectionFetcheable & NFTPersistable
     private let mediaRepository: MediaFetcheable
     private let contractAddress: String
     private var cancellables = Set<AnyCancellable>()
     
     init(
         contractAddress: String,
-        nftRepository: NFTCollectionFetcheable = NFTRepository(),
+        nftRepository: NFTCollectionFetcheable & NFTPersistable = NFTRepository(),
         mediaRepository: MediaFetcheable = MediaRepository()
     ) {
         self.contractAddress = contractAddress
@@ -74,6 +74,15 @@ final class NFTCollectionSwipeViewModel: ObservableObject {
         case .left:
             dismissedNFTs.append(nft)
         case .right:
+            try? nftRepository.save(
+                id: nft.id,
+                contractAddress: nft.contractAddress,
+                tokenId: nft.tokenId,
+                name: nft.name,
+                description: nft.description,
+                imageURL: nft.imageURL,
+                animationURL: nft.animationURL
+            )
             likedNFTs.append(nft)
         case .none:
             break

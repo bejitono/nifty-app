@@ -9,8 +9,19 @@ import Combine
 import Foundation
 
 protocol NFTPersistable {
-    func save(nft: NFT)
-    func fetchNFT(from hash: NFTHash) -> NFT?
+    func save(
+        id: UUID,
+        contractAddress: String,
+        tokenId: String,
+        name: String,
+        description: String?,
+        imageURL: String?,
+        animationURL: String?
+    ) throws
+    
+    func fetchNFTs() throws -> [NFTViewModel] // TODO: change to nft
+    
+    func deleteNFTs() throws
 }
 
 protocol NFTFetcheable {
@@ -22,34 +33,70 @@ protocol NFTCollectionFetcheable {
     func fetchNFTs(forContractAddress contractAddress: String, offset: Int, limit: Int) -> AnyPublisher<[NFT], Error>
 }
 
-final class NFTRepository: NFTFetcheable, NFTCollectionFetcheable, NFTPersistable {
+final class NFTRepository: NFTFetcheable,
+                           NFTCollectionFetcheable,
+                           NFTPersistable {
     
-    private let cache: UserCache
+    private let persistenceStore: PersistenceStore
     private let networkClient: NetworkClient
     private let openSeaRepository: NFTFetcheable & NFTCollectionFetcheable
     
-    init(cache: UserCache = UserCache(),
+    init(persistenceStore: PersistenceStore = PersistenceStore.shared,
          networkClient: NetworkClient = NetworkClientImpl(),
          openSeaRepository: NFTFetcheable & NFTCollectionFetcheable = OpenSeaRepository()) {
-        self.cache = cache
+        self.persistenceStore = persistenceStore
         self.networkClient = networkClient
         self.openSeaRepository = openSeaRepository
     }
     
-    func save(nft: NFT) {
-        var savedNFTs: [NFTHash: NFTCacheDto] = cache.get() ?? [:]
-        savedNFTs[nft.hash] = NFTCacheDto(nft)
-        cache.set(savedNFTs)
+    func save(
+        id: UUID,
+        contractAddress: String,
+        tokenId: String,
+        name: String,
+        description: String?,
+        imageURL: String?,
+        animationURL: String?
+    ) throws {
+        let _ = NFTCache(
+            id: id,
+            contractAddress: contractAddress,
+            tokenId: tokenId,
+            name: name,
+            description: description,
+            imageURL: imageURL,
+            animationURL: animationURL
+        )
+        try persistenceStore.save()
     }
     
-    func fetchNFT(from hash: NFTHash) -> NFT? {
-        guard let nftDictionary: [NFTHash: NFTCacheDto] = cache.get(),
-              let nftDto = nftDictionary[hash] else {
-            return nil
+    func fetchNFTs() throws -> [NFTViewModel] { // TODO: Change to NFTs
+//        guard let nftDictionary: [NFTHash: NFTCacheDto] = cache.get(),
+//              let nftDto = nftDictionary[hash] else {
+//            return nil
+//        }
+//        let fileName = nftDictionary[hash]?.media?.mediaURL
+//        let url = getSavedMediaURL(named: fileName ?? "")
+//        return NFT(nftDto, url?.absoluteString)
+        let persistedNFTs: [NFTCache] = try persistenceStore.fetch(recent: 100)
+        return persistedNFTs.map { nft in
+            NFTViewModel(
+                id: UUID(),
+                contractAddress: nft.contractAddress ?? "",
+                tokenId: nft.tokenId ?? "",
+                name: nft.name ?? "",
+                description: nft.nftDescription,
+                imageURL: nft.imageURL,
+                animationURL: nft.animationURL,
+                media: nil,
+                attributes: [],
+                isLoading: false
+            )
         }
-        let fileName = nftDictionary[hash]?.media?.mediaURL
-        let url = getSavedMediaURL(named: fileName ?? "")
-        return NFT(nftDto, url?.absoluteString)
+    }
+    
+    func deleteNFTs() throws {
+        try persistenceStore.deleteAll()
     }
     
     func fetchNFTs(forAddress address: String, offset: Int = 0, limit: Int = 20) -> AnyPublisher<[NFT], Error> {
@@ -114,23 +161,23 @@ final class NFTRepository: NFTFetcheable, NFTCollectionFetcheable, NFTPersistabl
 //        return ownedNFTs
 //    }
     
-    private func syncPersistentStore(_ nfts: [NFT]) -> [NFT] {
-        var nftDictionary: [NFTHash: NFTCacheDto] = cache.get() ?? [:]
-        let nftHashes = nftDictionary.map { $0.key }
-        nftHashes.forEach { hash in
-            // If a saved nft is not found in newly fetched nfts, then remove it
-            if !nfts.contains(where: { hash == $0.hash }) {
-                guard let fileName = nftDictionary[hash]?.media?.mediaURL,
-                      let url = getSavedMediaURL(named: fileName) else {
-                    return
-                }
-                try? FileManager.default.removeItem(at: url)
-                nftDictionary.removeValue(forKey: hash)
-            }
-        }
-        cache.set(nftDictionary)
-        return nfts
-    }
+//    private func syncPersistentStore(_ nfts: [NFT]) -> [NFT] {
+//        var nftDictionary: [NFTHash: NFTCacheDto] = cache.get() ?? [:]
+//        let nftHashes = nftDictionary.map { $0.key }
+//        nftHashes.forEach { hash in
+//            // If a saved nft is not found in newly fetched nfts, then remove it
+//            if !nfts.contains(where: { hash == $0.hash }) {
+//                guard let fileName = nftDictionary[hash]?.media?.mediaURL,
+//                      let url = getSavedMediaURL(named: fileName) else {
+//                    return
+//                }
+//                try? FileManager.default.removeItem(at: url)
+//                nftDictionary.removeValue(forKey: hash)
+//            }
+//        }
+//        cache.set(nftDictionary)
+//        return nfts
+//    }
     
     private func getSavedMediaURL(named name: String) -> URL? {
         guard let dir = try? FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false) else {
