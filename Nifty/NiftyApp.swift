@@ -32,7 +32,8 @@ struct NiftyApp: App {
                 TabView(selection: $selectedTab) {
                     NFTListView().tag(Tab.nfts)
                     NFTCollectionFlowView().tag(Tab.collections)
-                    NFTCollectionSwipeView(flow: .constant(.list)).tag(Tab.savedNFTs)
+                    SavedNFTListView().tag(Tab.savedNFTs)
+//                    NFTCollectionSwipeView(flow: .constant(.list)).tag(Tab.savedNFTs)
                 }
                 .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
                 .ignoresSafeArea(.all, edges: .bottom)
