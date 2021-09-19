@@ -7,8 +7,8 @@
 
 import Combine
 import Foundation
-import Web3
-import Web3ContractABI
+//import Web3
+//import Web3ContractABI
 
 protocol ERC721TokenURIFetcheable {
     func fetchTokenURI(contractAddress: String, tokenId: String) -> AnyPublisher<URL, Error>
@@ -16,45 +16,46 @@ protocol ERC721TokenURIFetcheable {
 
 final class Web3Repository: ERC721TokenURIFetcheable {
     
-    private let web3 = Web3(rpcURL: AppConstants.infuraRpcURL)
+//    private let web3 = Web3(rpcURL: AppConstants.infuraRpcURL)
     
     init() { }
     
     func fetchTokenURI(contractAddress: String, tokenId: String) -> AnyPublisher<URL, Error> {
-        let erc721Contract = try? self.web3.eth.Contract(
-            json: Data.erc721MetadataABI,
-            abiKey: nil,
-            address: EthereumAddress(hexString: contractAddress)
-        )
+        Just(URL(string: "")!).setFailureType(to: Error.self).eraseToAnyPublisher()
+//        let erc721Contract = try? self.web3.eth.Contract(
+//            json: Data.erc721MetadataABI,
+//            abiKey: nil,
+//            address: EthereumAddress(hexString: contractAddress)
+//        )
         
         // TODO: add EIP-165 "supportsInterface(contractAddress)" to check if contract supports ERC721
-        return Deferred {
-            Future<URL, Error> { promise in
-                guard let erc721Contract = erc721Contract,
-                      let tokenURIInvocation = erc721Contract["tokenURI"] else {
-                    promise(.failure(Web3Error.failedToCreateContract))
-                    return
-                }
-                
-                tokenURIInvocation([tokenId]).call { response, error in
-                    if let error = error {
-                        promise(.failure(error))
-                        return
-                    }
-                    
-                    guard let metadataDictionary = response as? [String: String],
-                          let urlString = metadataDictionary[""],
-                          let url = URL(string: urlString) else {
-                        promise(.failure(Web3Error.invalidURL))
-                        return
-                    }
-                    
-                    promise(.success(url))
-                }
-            }
-        }
-        .receive(on: DispatchQueue.main)
-        .eraseToAnyPublisher()
+//        return Deferred {
+//            Future<URL, Error> { promise in
+//                guard let erc721Contract = erc721Contract,
+//                      let tokenURIInvocation = erc721Contract["tokenURI"] else {
+//                    promise(.failure(Web3Error.failedToCreateContract))
+//                    return
+//                }
+//
+//                tokenURIInvocation([tokenId]).call { response, error in
+//                    if let error = error {
+//                        promise(.failure(error))
+//                        return
+//                    }
+//
+//                    guard let metadataDictionary = response as? [String: String],
+//                          let urlString = metadataDictionary[""],
+//                          let url = URL(string: urlString) else {
+//                        promise(.failure(Web3Error.invalidURL))
+//                        return
+//                    }
+//
+//                    promise(.success(url))
+//                }
+//            }
+//        }
+//        .receive(on: DispatchQueue.main)
+//        .eraseToAnyPublisher()
     }
 }
 
