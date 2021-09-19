@@ -12,6 +12,8 @@
 		3D0F46DD26C7DB4C0044E89A /* BlurView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D0F46DC26C7DB4C0044E89A /* BlurView.swift */; };
 		3D24A7FC26E35329004BC218 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D24A7FB26E35329004BC218 /* Colors.swift */; };
 		3D24A7FE26E35364004BC218 /* TabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D24A7FD26E35364004BC218 /* TabBar.swift */; };
+		3D5EF9B726F71CDD00A3A21B /* web3.swift in Frameworks */ = {isa = PBXBuildFile; productRef = 3D5EF9B626F71CDD00A3A21B /* web3.swift */; };
+		3D5EF9B926F71D0C00A3A21B /* ENSRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D5EF9B826F71D0C00A3A21B /* ENSRepository.swift */; };
 		3D67B8E326F25F8600EB102D /* SavedNFTListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D67B8E226F25F8600EB102D /* SavedNFTListView.swift */; };
 		3D67B8E526F4BE8700EB102D /* SavedNFTListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D67B8E426F4BE8700EB102D /* SavedNFTListViewModel.swift */; };
 		3D67B8E726F4BEAD00EB102D /* SavedNFTViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D67B8E626F4BEAD00EB102D /* SavedNFTViewModel.swift */; };
@@ -65,8 +67,6 @@
 		3DF9F49B26BF6D6600C23005 /* NiftyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DF9F49A26BF6D6600C23005 /* NiftyTests.swift */; };
 		3DF9F4A626BF6D6600C23005 /* NiftyUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DF9F4A526BF6D6600C23005 /* NiftyUITests.swift */; };
 		3DF9F4B926BF6F9D00C23005 /* Web3Repository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DF9F4B826BF6F9D00C23005 /* Web3Repository.swift */; };
-		3DF9F4C826BFE59600C23005 /* Web3ContractABI in Frameworks */ = {isa = PBXBuildFile; productRef = 3DF9F4C726BFE59600C23005 /* Web3ContractABI */; };
-		3DF9F4CA26BFE59600C23005 /* Web3 in Frameworks */ = {isa = PBXBuildFile; productRef = 3DF9F4C926BFE59600C23005 /* Web3 */; };
 		3DF9F4CC26BFE75200C23005 /* NFTRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DF9F4CB26BFE75200C23005 /* NFTRepository.swift */; };
 		3DF9F4CE26C012C400C23005 /* MetadataRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DF9F4CD26C012C400C23005 /* MetadataRepository.swift */; };
 		3DF9F4D026C018F700C23005 /* MediaRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DF9F4CF26C018F600C23005 /* MediaRepository.swift */; };
@@ -95,6 +95,7 @@
 		3D0F46DC26C7DB4C0044E89A /* BlurView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlurView.swift; sourceTree = "<group>"; };
 		3D24A7FB26E35329004BC218 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		3D24A7FD26E35364004BC218 /* TabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBar.swift; sourceTree = "<group>"; };
+		3D5EF9B826F71D0C00A3A21B /* ENSRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ENSRepository.swift; sourceTree = "<group>"; };
 		3D67B8E226F25F8600EB102D /* SavedNFTListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedNFTListView.swift; sourceTree = "<group>"; };
 		3D67B8E426F4BE8700EB102D /* SavedNFTListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedNFTListViewModel.swift; sourceTree = "<group>"; };
 		3D67B8E626F4BEAD00EB102D /* SavedNFTViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedNFTViewModel.swift; sourceTree = "<group>"; };
@@ -161,11 +162,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				3D773FF426E0DCE800BEA63F /* SDWebImageSwiftUI in Frameworks */,
-				3DF9F4C826BFE59600C23005 /* Web3ContractABI in Frameworks */,
 				3D86BF1626C50BA900BF2FB0 /* SkeletonUI in Frameworks */,
 				3DCC503226E9FA0100425A48 /* SDWebImageSVGCoder in Frameworks */,
+				3D5EF9B726F71CDD00A3A21B /* web3.swift in Frameworks */,
 				3D700A3E26DE5600008F0A96 /* SVGKit in Frameworks */,
-				3DF9F4CA26BFE59600C23005 /* Web3 in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -190,6 +190,7 @@
 			isa = PBXGroup;
 			children = (
 				3D773FF826E0E06800BEA63F /* CardModifier.swift */,
+				3D8F0D5026D27A13006ABEB4 /* View+ViewModifiers.swift */,
 			);
 			path = Modifiers;
 			sourceTree = "<group>";
@@ -197,6 +198,7 @@
 		3D86BEFE26C4F6D100BF2FB0 /* Repositories */ = {
 			isa = PBXGroup;
 			children = (
+				3D5EF9B826F71D0C00A3A21B /* ENSRepository.swift */,
 				3DF9F4B826BF6F9D00C23005 /* Web3Repository.swift */,
 				3DF9F4CB26BFE75200C23005 /* NFTRepository.swift */,
 				3DF9F4CD26C012C400C23005 /* MetadataRepository.swift */,
@@ -245,9 +247,6 @@
 		3D86BF0A26C4F85500BF2FB0 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				3D8F0D5426D2867D006ABEB4 /* AddWalletButton.swift */,
-				3D8F0D5626D28686006ABEB4 /* AppTextField.swift */,
-				3D8F0D4526CDDED9006ABEB4 /* MultilineHStack.swift */,
 				3D773FF526E0DF3900BEA63F /* NFTCollectionSwipeView.swift */,
 				3D773FEE26E0C91A00BEA63F /* NFTCollectionListView.swift */,
 				3DCC502E26E6626700425A48 /* NFTCollectionFlowView.swift */,
@@ -256,9 +255,7 @@
 				3D86BEFC26C4B6B800BF2FB0 /* NFTView.swift */,
 				3D8F0D5226D27A9B006ABEB4 /* NewWalletView.swift */,
 				3D24A7FD26E35364004BC218 /* TabBar.swift */,
-				3D8F0D5026D27A13006ABEB4 /* View+ViewModifiers.swift */,
 				3D67B8E226F25F8600EB102D /* SavedNFTListView.swift */,
-				3D8F0D4E26D2555F006ABEB4 /* ZoomableScrollView.swift */,
 				3D773FF726E0E05500BEA63F /* Modifiers */,
 				3D8FBF7B26F2507C0051B8B8 /* Shared */,
 				3D8F0D4926CF3BED006ABEB4 /* Styles */,
@@ -299,15 +296,19 @@
 		3D8FBF7B26F2507C0051B8B8 /* Shared */ = {
 			isa = PBXGroup;
 			children = (
+				3D8F0D5426D2867D006ABEB4 /* AddWalletButton.swift */,
+				3D8F0D5626D28686006ABEB4 /* AppTextField.swift */,
 				3D92920826CD1B5E00F4A772 /* AttributeView.swift */,
 				3D8FBF7C26F2508E0051B8B8 /* BackButtonView.swift */,
 				3D0F46DA26C7DA250044E89A /* BottomCardView.swift */,
 				3D0F46DC26C7DB4C0044E89A /* BlurView.swift */,
+				3D8F0D4526CDDED9006ABEB4 /* MultilineHStack.swift */,
 				3D9A409A26C9FC180063B448 /* PillView.swift */,
 				3D0F46D826C7C9820044E89A /* PlayerLoopView.swift */,
 				3D8F0D4C26CF3FFE006ABEB4 /* ShareView.swift */,
 				3D700A3F26DE560E008F0A96 /* SVGImageView.swift */,
 				3D8F0D4726CDE3F2006ABEB4 /* Title.swift */,
+				3D8F0D4E26D2555F006ABEB4 /* ZoomableScrollView.swift */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -400,12 +401,11 @@
 			);
 			name = Nifty;
 			packageProductDependencies = (
-				3DF9F4C726BFE59600C23005 /* Web3ContractABI */,
-				3DF9F4C926BFE59600C23005 /* Web3 */,
 				3D86BF1526C50BA900BF2FB0 /* SkeletonUI */,
 				3D700A3D26DE5600008F0A96 /* SVGKit */,
 				3D773FF326E0DCE800BEA63F /* SDWebImageSwiftUI */,
 				3DCC503126E9FA0100425A48 /* SDWebImageSVGCoder */,
+				3D5EF9B626F71CDD00A3A21B /* web3.swift */,
 			);
 			productName = Nifty;
 			productReference = 3DF9F48526BF6D6500C23005 /* Nifty.app */;
@@ -479,11 +479,11 @@
 			);
 			mainGroup = 3DF9F47C26BF6D6500C23005;
 			packageReferences = (
-				3DF9F4C626BFE59600C23005 /* XCRemoteSwiftPackageReference "Web3" */,
 				3D86BF1426C50BA900BF2FB0 /* XCRemoteSwiftPackageReference "SkeletonUI" */,
 				3D700A3C26DE5600008F0A96 /* XCRemoteSwiftPackageReference "SVGKit" */,
 				3D773FF226E0DCE800BEA63F /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */,
 				3DCC503026E9FA0100425A48 /* XCRemoteSwiftPackageReference "SDWebImageSVGCoder" */,
+				3D5EF9B526F71CDD00A3A21B /* XCRemoteSwiftPackageReference "web3.swift" */,
 			);
 			productRefGroup = 3DF9F48626BF6D6500C23005 /* Products */;
 			projectDirPath = "";
@@ -527,6 +527,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3D5EF9B926F71D0C00A3A21B /* ENSRepository.swift in Sources */,
 				3D86BEFD26C4B6B800BF2FB0 /* NFTView.swift in Sources */,
 				3D24A7FC26E35329004BC218 /* Colors.swift in Sources */,
 				3D67B8E326F25F8600EB102D /* SavedNFTListView.swift in Sources */,
@@ -901,6 +902,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		3D5EF9B526F71CDD00A3A21B /* XCRemoteSwiftPackageReference "web3.swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/argentlabs/web3.swift.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.8.1;
+			};
+		};
 		3D700A3C26DE5600008F0A96 /* XCRemoteSwiftPackageReference "SVGKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SVGKit/SVGKit.git";
@@ -933,17 +942,14 @@
 				minimumVersion = 1.6.0;
 			};
 		};
-		3DF9F4C626BFE59600C23005 /* XCRemoteSwiftPackageReference "Web3" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/Boilertalk/Web3.swift";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 0.5.3;
-			};
-		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		3D5EF9B626F71CDD00A3A21B /* web3.swift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 3D5EF9B526F71CDD00A3A21B /* XCRemoteSwiftPackageReference "web3.swift" */;
+			productName = web3.swift;
+		};
 		3D700A3D26DE5600008F0A96 /* SVGKit */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 3D700A3C26DE5600008F0A96 /* XCRemoteSwiftPackageReference "SVGKit" */;
@@ -963,16 +969,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 3DCC503026E9FA0100425A48 /* XCRemoteSwiftPackageReference "SDWebImageSVGCoder" */;
 			productName = SDWebImageSVGCoder;
-		};
-		3DF9F4C726BFE59600C23005 /* Web3ContractABI */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 3DF9F4C626BFE59600C23005 /* XCRemoteSwiftPackageReference "Web3" */;
-			productName = Web3ContractABI;
-		};
-		3DF9F4C926BFE59600C23005 /* Web3 */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 3DF9F4C626BFE59600C23005 /* XCRemoteSwiftPackageReference "Web3" */;
-			productName = Web3;
 		};
 /* End XCSwiftPackageProductDependency section */
 

@@ -34,7 +34,7 @@ struct AddWalletButton: View {
             } else {
                 Image(systemName: "xmark.circle.fill")
                     .aspectRatio(contentMode: .fit)
-                    .foregroundColor(.secondary)
+                    .foregroundColor(.red)
                     .scaleEffect(1.5)
                     .shadow(radius: 10)
             }
@@ -55,11 +55,25 @@ struct ScaleEffectStyle: ButtonStyle {
 
 struct AddWalletButton_Previews: PreviewProvider {
     static var previews: some View {
-        AddWalletButton(
-            address: .constant("sdfsf"),
-            loading: .constant(false),
-            evaluate: { _ in return true },
-            action: { _ in }
-        )
+        Group {
+            AddWalletButton(
+                address: .constant("sdfsf"),
+                loading: .constant(false),
+                evaluate: { _ in return true },
+                action: { _ in }
+            )
+            AddWalletButton(
+                address: .constant("sdfsf"),
+                loading: .constant(true),
+                evaluate: { _ in return true },
+                action: { _ in }
+            )
+            AddWalletButton(
+                address: .constant("sdfsf"),
+                loading: .constant(false),
+                evaluate: { _ in return false },
+                action: { _ in }
+            )
+        }
     }
 }

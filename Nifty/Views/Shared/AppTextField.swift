@@ -23,7 +23,7 @@ struct AppTextField: View {
                         style: StrokeStyle(lineWidth: 3)
                     )
             )
-            .accentColor(.white)
+            .accentColor(.blue)
             .font(.headline)
             .foregroundColor(.primary)
     }
