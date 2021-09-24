@@ -19,22 +19,30 @@ struct NFTListView: View {
     var body: some View {
         ZStack {
             AppGradient()
-            ScrollView {
-                LazyVStack(spacing: 40) {
-                    ForEach(viewModel.nftsViewModel, id: \.id) { nft in
-                        NFTView(nft: nft)
-                            .equatable()
-                            .cardStyle()
-                            .onAppear {
-                                viewModel.fetchNFTsIfNeeded(for: nft)
-                            }
-                            .onTapGesture {
-                                vibrate(.heavy)
-                                viewModel.handleTapOn(nft: nft)
-                            }
-                    }
+            VStack {
+                HStack {
+                    Title("My NFTs")
+                    Spacer()
                 }
-                .padding(EdgeInsets(top: 30, leading: 10, bottom: 30, trailing: 10))
+                .frame(height: 15)
+                .padding()
+                ScrollView {
+                    LazyVStack(spacing: 40) {
+                        ForEach(viewModel.nftsViewModel, id: \.id) { nft in
+                            NFTView(nft: nft)
+                                .equatable()
+                                .cardStyle()
+                                .onAppear {
+                                    viewModel.fetchNFTsIfNeeded(for: nft)
+                                }
+                                .onTapGesture {
+                                    vibrate(.heavy)
+                                    viewModel.handleTapOn(nft: nft)
+                                }
+                        }
+                    }
+                    .padding(EdgeInsets(top: 30, leading: 10, bottom: 30, trailing: 10))
+                }
             }
             BottomCardView(
                 show: $viewModel.showDetails,

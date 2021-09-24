@@ -25,7 +25,6 @@ struct NFTCollectionFlowView: View {
                 NFTCollectionSwipeView(flow: $flow, viewModel: NFTCollectionSwipeViewModel(contractAddress: contractAddress))
             }
         }
-        .animation(.easeOut)
     }
 }
 

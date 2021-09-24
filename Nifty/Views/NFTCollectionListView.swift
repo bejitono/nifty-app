@@ -20,22 +20,30 @@ struct NFTCollectionListView: View {
     var body: some View {
         ZStack {
             AppGradient()
-            ScrollView {
-                LazyVStack(spacing: 40) {
-                    ForEach(viewModel.collectionViewModels, id: \.id) { collection in
-                        NFTCollectionView(collection: collection)
-                            .equatable()
-                            .cardStyle()
-                            .onTapGesture {
-                                vibrate(.heavy)
-                                self.flow = .detail(contractAddress: collection.contractAddress)
-                            }
-                            .onAppear {
-                                viewModel.fetchCollectionIfNeeded(for: collection)
-                            }
-                    }
+            VStack {
+                HStack {
+                    Title("Explore Collections")
+                    Spacer()
                 }
-                .padding(EdgeInsets(top: 30, leading: 10, bottom: 30, trailing: 10))
+                .frame(height: 15)
+                .padding()
+                ScrollView {
+                    LazyVStack(spacing: 40) {
+                        ForEach(viewModel.collectionViewModels, id: \.id) { collection in
+                            NFTCollectionView(collection: collection)
+                                .equatable()
+                                .cardStyle()
+                                .onTapGesture {
+                                    vibrate(.heavy)
+                                    self.flow = .detail(contractAddress: collection.contractAddress)
+                                }
+                                .onAppear {
+                                    viewModel.fetchCollectionIfNeeded(for: collection)
+                                }
+                        }
+                    }
+                    .padding(EdgeInsets(top: 30, leading: 10, bottom: 30, trailing: 10))
+                }
             }
         }
     }

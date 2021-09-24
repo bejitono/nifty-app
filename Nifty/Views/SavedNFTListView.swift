@@ -18,6 +18,7 @@ struct SavedNFTListView: View {
     var body: some View {
         VStack {
             HStack {
+                Title("My NFTs")
                 Spacer()
                 Image(systemName: "trash")
                     .resizable()
@@ -31,6 +32,8 @@ struct SavedNFTListView: View {
                         }
                     }
             }
+            .frame(height: 15)
+            .padding()
             ScrollView {
                 LazyVStack(spacing: 40) {
                     ForEach(viewModel.nftViewModels, id: \.id) { nft in
