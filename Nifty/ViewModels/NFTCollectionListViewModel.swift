@@ -16,10 +16,15 @@ final class NFTCollectionListViewModel: ObservableObject {
     private var isFetching = false
     private var reachedEnd = false
     
+    private let user: User
     private let nftRepository: NFTCollectionFetcheable
     private var cancellables = Set<AnyCancellable>()
     
-    init(nftRepository: NFTCollectionFetcheable = NFTRepository()) {
+    init(
+        user: User,
+        nftRepository: NFTCollectionFetcheable = NFTRepository()
+    ) {
+        self.user = user
         self.nftRepository = nftRepository
         fetchCollections(offset: currentOffset)
         $collections
@@ -42,7 +47,7 @@ final class NFTCollectionListViewModel: ObservableObject {
         isFetching = true
         
         nftRepository.fetchCollection(
-            forAddress: "0xD3e9D60e4E4De615124D5239219F32946d10151D",
+            forAddress: user.wallet.address,
             offset: currentOffset,
             limit: limit
         )

@@ -21,6 +21,7 @@ final class NFTListViewModel: ObservableObject {
     private var currentOffset = 0
     private var isFetching = false
     
+    private let user: User
     private let nftRepository: NFTFetcheable & NFTPersistable
     private let metadataRepository: MetadataFetcheable
     private let web3Repository: ERC721TokenURIFetcheable
@@ -30,6 +31,7 @@ final class NFTListViewModel: ObservableObject {
     private var cancellables = Set<AnyCancellable>()
     
     init(
+        user: User,
         nftRepository: NFTFetcheable & NFTPersistable = NFTRepository(),
         metadataRepository: MetadataFetcheable = MetadataRepository(),
         web3Repository: ERC721TokenURIFetcheable = Web3Repository(),
@@ -37,6 +39,7 @@ final class NFTListViewModel: ObservableObject {
         tokenURIParser: TokenURIParseable = URLParser(),
         mediaURLParser: MediaURLParseable = URLParser()
     ) {
+        self.user = user
         self.nftRepository = nftRepository
         self.metadataRepository = metadataRepository
         self.web3Repository = web3Repository
@@ -74,12 +77,16 @@ final class NFTListViewModel: ObservableObject {
         }
     }
     
+    func refetch() {
+        fetchNFTs(offset: currentOffset)
+    }
+    
     private func fetchNFTs(offset: Int) {
-        let address = "0xD3e9D60e4E4De615124D5239219F32946d10151D" // alex masm"0xD3e9D60e4E4De615124D5239219F32946d10151D" //"0x57C2955C0d0fC319dDF6110eEdFCC81AF3caDD72" //"0xb8c2C29ee19D8307cb7255e1Cd9CbDE883A267d5" //paul "0xdfDf2D882D9ebce6c7EAc3DA9AB66cbfDa263781"//lots of nfts and lots with errors: "0xECc953EFBd82D7Dea4aa0F7Bc3329Ea615e0CfF2" //"0x7CeA66d7bC4856F90b94A3C1ea0229B86aa3697a"
+//        let address = "0xD3e9D60e4E4De615124D5239219F32946d10151D" // alex masm"0xD3e9D60e4E4De615124D5239219F32946d10151D" //"0x57C2955C0d0fC319dDF6110eEdFCC81AF3caDD72" //"0xb8c2C29ee19D8307cb7255e1Cd9CbDE883A267d5" //paul "0xdfDf2D882D9ebce6c7EAc3DA9AB66cbfDa263781"//lots of nfts and lots with errors: "0xECc953EFBd82D7Dea4aa0F7Bc3329Ea615e0CfF2" //"0x7CeA66d7bC4856F90b94A3C1ea0229B86aa3697a"
         let limit = 20
         isFetching = true
         
-        nftRepository.fetchNFTs(forAddress: address, offset: currentOffset, limit: limit)
+        nftRepository.fetchNFTs(forAddress: user.wallet.address, offset: currentOffset, limit: limit)
             .map { nfts -> [NFT] in
                 self.currentOffset += limit
                 self.isFetching = false
@@ -131,11 +138,11 @@ final class NFTListViewModel: ObservableObject {
     }
 
     private func mediaPublisher(for nft: NFT) -> AnyPublisher<NFT, Error> {
-        if let savedNFT = nftRepository.fetchNFT(from: nft.hash) {
-            return Just(savedNFT)
-                .setFailureType(to: Error.self)
-                .eraseToAnyPublisher()
-        }
+//        if let savedNFT = nftRepository.fetchNFT(from: nft.hash) {
+//            return Just(savedNFT)
+//                .setFailureType(to: Error.self)
+//                .eraseToAnyPublisher()
+//        }
         
         guard let metadata = nft.metadata, let imageURL = URL(string: metadata.imageURL) else {
             return Fail(error: NFTError.couldNotGetImageURL).eraseToAnyPublisher()

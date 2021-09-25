@@ -12,7 +12,7 @@ struct NFTCollectionListView: View {
     @ObservedObject var viewModel: NFTCollectionListViewModel
     @Binding var flow: NFTCollectionFlow
     
-    init(flow: Binding<NFTCollectionFlow>, viewModel: NFTCollectionListViewModel = NFTCollectionListViewModel()) {
+    init(flow: Binding<NFTCollectionFlow>, viewModel: NFTCollectionListViewModel = NFTCollectionListViewModel(user: User(wallet: Wallet(address: "0xD3e9D60e4E4De615124D5239219F32946d10151D")))) {
         self._flow = flow
         self.viewModel = viewModel
     }

@@ -12,7 +12,7 @@ struct NFTListView: View {
     
     @ObservedObject var viewModel: NFTListViewModel
     
-    init(viewModel: NFTListViewModel = NFTListViewModel()) {
+    init(viewModel: NFTListViewModel = NFTListViewModel(user: User(wallet: Wallet(address: "0xD3e9D60e4E4De615124D5239219F32946d10151D")))) {
         self.viewModel = viewModel
     }
     
