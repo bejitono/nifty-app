@@ -26,6 +26,7 @@ final class NewWalletViewModel: ObservableObject {
         self.userCache = userCache
         self.ensResolver = ensResolver
         self.web3Utils = web3Utils
+        self.user = userCache.get()
         $address
             .sink(receiveValue: onNewAddressInput)
             .store(in: &cancellables)
