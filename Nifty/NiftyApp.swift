@@ -19,8 +19,16 @@ enum Tab: String {
 struct NiftyApp: App {
     
     @State var selectedTab: Tab = .nfts
+    // Should have a separate view model instead of using new wallet VM directly
+    @ObservedObject var newWalletViewModel: NewWalletViewModel = NewWalletViewModel()
+    
+    private let nftFactory: NFTFactory = NFTFactory()
+    private let nftCollectionFactory: NFTCollectionFactory = NFTCollectionFactory()
+    private let savedNFTFactory: SavedNFTFactory = SavedNFTFactory()
+    private let user: User?
     
     init() {
+        self.user = UserCache().get()
         SDImageCodersManager.shared.addCoder(SDImageSVGCoder.shared)
     }
     
@@ -28,21 +36,23 @@ struct NiftyApp: App {
         WindowGroup {
             ZStack {
                 AppGradient()
-                
-                TabView(selection: $selectedTab) {
-                    NFTListView().tag(Tab.nfts)
-                    NFTCollectionFlowView().tag(Tab.collections)
-                    SavedNFTListView().tag(Tab.savedNFTs)
-//                    NFTCollectionSwipeView(flow: .constant(.list)).tag(Tab.savedNFTs)
+                if let user = newWalletViewModel.user {
+                    TabView(selection: $selectedTab) {
+                        nftFactory.buildNFTList(user: user).tag(Tab.nfts)
+                        nftCollectionFactory.buildNFTCollectionFlow(user: user).tag(Tab.collections)
+                        savedNFTFactory.buildSavedNFTList().tag(Tab.savedNFTs)
+                    }
+                    .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
+                    .ignoresSafeArea(.all, edges: .bottom)
+                    
+                    VStack {
+                        Spacer()
+                        TabBar(selectedTab: $selectedTab)
+                    }
+                    .padding([.bottom], 20)
+                } else {
+                    NewWalletView(viewModel: newWalletViewModel)
                 }
-                .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
-                .ignoresSafeArea(.all, edges: .bottom)
-                
-                VStack {
-                    Spacer()
-                    TabBar(selectedTab: $selectedTab)
-                }
-                .padding([.bottom], 20)
             }
         }
     }
