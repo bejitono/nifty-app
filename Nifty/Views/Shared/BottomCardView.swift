@@ -27,37 +27,40 @@ struct BottomCardView<Content: View, Model>: View {
     
     // TODO: make content only as high as show in the screen, instead of simple spacer
     var body: some View {
-        VStack(spacing: 20) {
-            Rectangle()
-                .frame(width: 40, height: 5)
-                .cornerRadius(3)
-                .opacity(0.1)
-            content
-            Spacer()
-        }
-        .frame(maxWidth: 600)
-        .padding(.top, 35)
-        .padding(.bottom,50)
-        .padding(.horizontal, 20)
-        .background(BlurView(style: .systemThinMaterial))
-        .cornerRadius(30)
-        .offset(y: show ? screen.height / 5 : screen.height)
-        .offset(y: bottomState.height)
-        .animation(.spring(response: 0.5, dampingFraction: 0.7, blendDuration: 0))
-        .gesture(
-            DragGesture()
-                .onChanged { value in
-                    // TODO: get rid of absolute values
-                    guard value.translation.height > -120 else { return }
-                    self.bottomState = value.translation
-                }
-                .onEnded { value in
-                    if self.bottomState.height > 50 ||
-                        value.predictedEndTranslation.height > 50 {
-                        show = false
+        GeometryReader { geometry in
+            VStack(spacing: 20) {
+                Rectangle()
+                    .frame(width: 40, height: 5)
+                    .cornerRadius(3)
+                    .opacity(0.1)
+                content
+                    .padding([.bottom], 20)
+                Spacer()
+            }
+            .frame(maxWidth: 600)
+            .padding(.top, 35)
+            .padding(.bottom, 50)
+            .padding(.horizontal, 20)
+            .background(BlurView(style: .systemThinMaterial))
+            .cornerRadius(30, corners: [.topLeft, .topRight])
+            .offset(y: show ? screen.height - geometry.size.height : screen.height)
+            .offset(y: bottomState.height)
+            .animation(.spring(response: 0.5, dampingFraction: 0.7, blendDuration: 0))
+            .gesture(
+                DragGesture()
+                    .onChanged { value in
+                        // TODO: get rid of absolute values
+                        guard value.translation.height > -50 else { return }
+                        self.bottomState = value.translation
                     }
-                    self.bottomState.height = 0
-                }
-        )
+                    .onEnded { value in
+                        if self.bottomState.height > 50 ||
+                            value.predictedEndTranslation.height > 50 {
+                            show = false
+                        }
+                        self.bottomState.height = 0
+                    }
+            )
+        }
     }
 }
