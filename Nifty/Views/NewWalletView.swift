@@ -9,27 +9,29 @@ import SwiftUI
 
 struct NewWalletView: View {
     
-    @Binding var address: String
-    @Binding var loading: Bool
-    var evaluate: (String) -> Bool
-    var action: (String) -> Void
+    @ObservedObject private var viewModel: NewWalletViewModel
+    
+    init(viewModel: NewWalletViewModel = NewWalletViewModel()) {
+        self.viewModel = viewModel
+    }
     
     var body: some View {
-        VStack(spacing: 20) {
-            Text("Paste your Ethereum address to get started")
+        VStack(spacing: 30) {
+            Text("Paste your ENS or Ethereum address to get started")
             HStack(spacing: 15) {
-                AppTextField(placeholder: "Ethereum address", text: $address)
+                AppTextField(placeholder: "Ethereum/ENS address", text: $viewModel.address)
                 AddWalletButton(
-                    address: $address,
-                    loading: $loading,
-                    evaluate: evaluate,
-                    action: action
+                    state: $viewModel.buttonState,
+                    onPress: viewModel.onAddNewWallet
                 )
             }
-            .padding()
-            
+            Button("Paste") {
+                print("pasted")
+            }
             Spacer()
         }
+        .padding()
+        .padding(.top, 30)
     }
 }
 
@@ -39,32 +41,7 @@ struct NewWalletView_Previews: PreviewProvider {
         Group {
             ZStack {
                 AppGradient()
-                NewWalletView(address: .constant("sdfdsfds"), loading: .constant(true)) { text in
-                    print(text)
-                    return true
-                } action: { text in
-                    print(text)
-                }
-            }
-            
-            ZStack {
-                AppGradient()
-                NewWalletView(address: .constant("sdfdsfds"), loading: .constant(false)) { text in
-                    print(text)
-                    return false
-                } action: { text in
-                    print(text)
-                }
-            }
-            
-            ZStack {
-                AppGradient()
-                NewWalletView(address: .constant("sdfdsfds"), loading: .constant(false)) { text in
-                    print(text)
-                    return true
-                } action: { text in
-                    print(text)
-                }
+                NewWalletView()
             }
         }
     }
