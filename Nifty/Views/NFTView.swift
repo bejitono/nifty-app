@@ -52,8 +52,9 @@ struct NFTView: View, Equatable {
                             if let url = URL(string: media.url) {
                                 PlayerLoopView(url: url)
                             }
+                            // MP3?
                         default:
-                            fatalError() // TODO
+                            EmptyView() // TODO
                         }
                     }
                 }

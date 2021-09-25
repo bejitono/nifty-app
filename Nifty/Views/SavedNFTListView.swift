@@ -18,7 +18,7 @@ struct SavedNFTListView: View {
     var body: some View {
         VStack {
             HStack {
-                Title("My NFTs")
+                Title("Saved NFTs")
                 Spacer()
                 Image(systemName: "trash")
                     .resizable()

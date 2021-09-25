@@ -14,6 +14,7 @@ struct AppTextField: View {
     
     var body: some View {
         TextField(placeholder, text: $text)
+            .autocapitalization(.none)
             .frame(height: 30)
             .padding(EdgeInsets(top: 10, leading: 15, bottom: 10, trailing: 15))
             .accentColor(.blue)
