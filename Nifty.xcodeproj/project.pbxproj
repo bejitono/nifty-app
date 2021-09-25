@@ -14,6 +14,8 @@
 		3D24A7FE26E35364004BC218 /* TabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D24A7FD26E35364004BC218 /* TabBar.swift */; };
 		3D5EF9B726F71CDD00A3A21B /* web3.swift in Frameworks */ = {isa = PBXBuildFile; productRef = 3D5EF9B626F71CDD00A3A21B /* web3.swift */; };
 		3D5EF9B926F71D0C00A3A21B /* ENSRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D5EF9B826F71D0C00A3A21B /* ENSRepository.swift */; };
+		3D5F59DF26FF3E1B00C992D2 /* SDWebImageVideoCoder in Frameworks */ = {isa = PBXBuildFile; productRef = 3D5F59DE26FF3E1B00C992D2 /* SDWebImageVideoCoder */; };
+		3D5F59E226FF3FC600C992D2 /* SDWebImageWebPCoder in Frameworks */ = {isa = PBXBuildFile; productRef = 3D5F59E126FF3FC600C992D2 /* SDWebImageWebPCoder */; };
 		3D67B8E326F25F8600EB102D /* SavedNFTListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D67B8E226F25F8600EB102D /* SavedNFTListView.swift */; };
 		3D67B8E526F4BE8700EB102D /* SavedNFTListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D67B8E426F4BE8700EB102D /* SavedNFTListViewModel.swift */; };
 		3D67B8E726F4BEAD00EB102D /* SavedNFTViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D67B8E626F4BEAD00EB102D /* SavedNFTViewModel.swift */; };
@@ -181,8 +183,10 @@
 				3D773FF426E0DCE800BEA63F /* SDWebImageSwiftUI in Frameworks */,
 				3D86BF1626C50BA900BF2FB0 /* SkeletonUI in Frameworks */,
 				3DCC503226E9FA0100425A48 /* SDWebImageSVGCoder in Frameworks */,
+				3D5F59DF26FF3E1B00C992D2 /* SDWebImageVideoCoder in Frameworks */,
 				3D5EF9B726F71CDD00A3A21B /* web3.swift in Frameworks */,
 				3D700A3E26DE5600008F0A96 /* SVGKit in Frameworks */,
+				3D5F59E226FF3FC600C992D2 /* SDWebImageWebPCoder in Frameworks */,
 				3D797A9426F7AD980036194A /* CryptoSwift in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -441,6 +445,8 @@
 				3DCC503126E9FA0100425A48 /* SDWebImageSVGCoder */,
 				3D5EF9B626F71CDD00A3A21B /* web3.swift */,
 				3D797A9326F7AD980036194A /* CryptoSwift */,
+				3D5F59DE26FF3E1B00C992D2 /* SDWebImageVideoCoder */,
+				3D5F59E126FF3FC600C992D2 /* SDWebImageWebPCoder */,
 			);
 			productName = Nifty;
 			productReference = 3DF9F48526BF6D6500C23005 /* Nifty.app */;
@@ -520,6 +526,8 @@
 				3DCC503026E9FA0100425A48 /* XCRemoteSwiftPackageReference "SDWebImageSVGCoder" */,
 				3D5EF9B526F71CDD00A3A21B /* XCRemoteSwiftPackageReference "web3.swift" */,
 				3D797A9226F7AD980036194A /* XCRemoteSwiftPackageReference "CryptoSwift" */,
+				3D5F59DD26FF3E1A00C992D2 /* XCRemoteSwiftPackageReference "SDWebImageVideoCoder" */,
+				3D5F59E026FF3FC600C992D2 /* XCRemoteSwiftPackageReference "SDWebImageWebPCoder" */,
 			);
 			productRefGroup = 3DF9F48626BF6D6500C23005 /* Products */;
 			projectDirPath = "";
@@ -954,6 +962,22 @@
 				minimumVersion = 0.8.1;
 			};
 		};
+		3D5F59DD26FF3E1A00C992D2 /* XCRemoteSwiftPackageReference "SDWebImageVideoCoder" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SDWebImage/SDWebImageVideoCoder.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.2.0;
+			};
+		};
+		3D5F59E026FF3FC600C992D2 /* XCRemoteSwiftPackageReference "SDWebImageWebPCoder" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SDWebImage/SDWebImageWebPCoder.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.8.4;
+			};
+		};
 		3D700A3C26DE5600008F0A96 /* XCRemoteSwiftPackageReference "SVGKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SVGKit/SVGKit.git";
@@ -1001,6 +1025,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 3D5EF9B526F71CDD00A3A21B /* XCRemoteSwiftPackageReference "web3.swift" */;
 			productName = web3.swift;
+		};
+		3D5F59DE26FF3E1B00C992D2 /* SDWebImageVideoCoder */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 3D5F59DD26FF3E1A00C992D2 /* XCRemoteSwiftPackageReference "SDWebImageVideoCoder" */;
+			productName = SDWebImageVideoCoder;
+		};
+		3D5F59E126FF3FC600C992D2 /* SDWebImageWebPCoder */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 3D5F59E026FF3FC600C992D2 /* XCRemoteSwiftPackageReference "SDWebImageWebPCoder" */;
+			productName = SDWebImageWebPCoder;
 		};
 		3D700A3D26DE5600008F0A96 /* SVGKit */ = {
 			isa = XCSwiftPackageProductDependency;

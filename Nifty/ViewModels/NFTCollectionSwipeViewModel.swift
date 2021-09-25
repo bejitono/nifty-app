@@ -128,48 +128,4 @@ final class NFTCollectionSwipeViewModel: ObservableObject {
             }
             .store(in: &cancellables)
     }
-    
-    private func mediaPublisher(for nfts: [NFT]) -> AnyPublisher<NFT, Error> {
-        Publishers.Sequence(
-            sequence: nfts.map {
-                self.mediaPublisher(for: $0)
-                    .replaceError(with: $0.failed())
-                    .eraseToAnyPublisher()
-            }
-        )
-        .flatMap(maxPublishers: .max(1)) { $0 }
-        .eraseToAnyPublisher()
-    }
-
-    private func mediaPublisher(for nft: NFT) -> AnyPublisher<NFT, Error> {
-        guard let metadata = nft.metadata, let imageURL = URL(string: metadata.imageURL) else {
-            return Fail(error: NFTError.couldNotGetImageURL).eraseToAnyPublisher()
-        }
-        
-        var url: URL
-        if let videoURLString = nft.metadata?.animationURL,
-           let videoURL = URL(string: videoURLString),
-           supportedVideoFileExtensions().contains(videoURL.pathExtension) {
-            url = videoURL
-        } else {
-            url = imageURL
-        }
-        
-        var nft = nft
-        // add time limit and retry
-        
-        return mediaRepository.fetchMedia(url: url)
-            .flatMap { media -> AnyPublisher<NFT, Error> in
-                nft.media = media
-                return Just(nft).setFailureType(to: Error.self).eraseToAnyPublisher()
-            }
-            .eraseToAnyPublisher()
-    }
-    
-    private func supportedVideoFileExtensions() -> [String] {
-        let avTypes = AVURLAsset.audiovisualTypes()
-        var avExtensions = avTypes.map({ UTTypeCopyPreferredTagWithClass($0 as CFString, kUTTagClassFilenameExtension)?.takeRetainedValue() as String? ?? "" })
-        avExtensions = avExtensions.filter { !$0.isEmpty }
-        return avExtensions
-    }
 }

@@ -7,6 +7,8 @@
 
 import SDWebImage
 import SDWebImageSVGCoder
+import SDWebImageVideoCoder
+import SDWebImageWebPCoder
 import SwiftUI
 
 enum Tab: String {
@@ -30,6 +32,8 @@ struct NiftyApp: App {
     init() {
         self.user = UserCache().get()
         SDImageCodersManager.shared.addCoder(SDImageSVGCoder.shared)
+        SDImageCodersManager.shared.addCoder(SDImageVideoCoder.shared)
+        SDImageCodersManager.shared.addCoder(SDImageWebPCoder.shared)
     }
     
     var body: some Scene {
