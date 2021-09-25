@@ -7,7 +7,7 @@
 
 import SDWebImage
 import SDWebImageSVGCoder
-import SDWebImageVideoCoder
+import SDWebImageVideoCoder // TODO: remove and use avkit instead, performance is very slow
 import SDWebImageWebPCoder
 import SwiftUI
 
