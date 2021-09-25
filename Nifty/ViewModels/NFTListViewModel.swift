@@ -19,7 +19,9 @@ final class NFTListViewModel: ObservableObject {
     @Published var sharedMedia: MediaViewModel?
     @Published private var nfts: [NFT] = []
     private var currentOffset = 0
+    private let limit = 20
     private var isFetching = false
+    private var finished = false
     
     private let user: User
     private let nftRepository: NFTFetcheable & NFTPersistable
@@ -72,7 +74,7 @@ final class NFTListViewModel: ObservableObject {
         // TODO: check if all nfts are fetched when it reaches its end (less nfts available then limit 20)
         guard !isFetching, let index: Int = nftsViewModel.firstIndex(of: currentNFT) else { return }
         let reachedThreshold = Double(index) / Double(nftsViewModel.count) > 0.7
-        if reachedThreshold {
+        if reachedThreshold && !finished {
             fetchNFTs(offset: currentOffset)
         }
     }
@@ -83,14 +85,19 @@ final class NFTListViewModel: ObservableObject {
     
     private func fetchNFTs(offset: Int) {
 //        let address = "0xD3e9D60e4E4De615124D5239219F32946d10151D" // alex masm"0xD3e9D60e4E4De615124D5239219F32946d10151D" //"0x57C2955C0d0fC319dDF6110eEdFCC81AF3caDD72" //"0xb8c2C29ee19D8307cb7255e1Cd9CbDE883A267d5" //paul "0xdfDf2D882D9ebce6c7EAc3DA9AB66cbfDa263781"//lots of nfts and lots with errors: "0xECc953EFBd82D7Dea4aa0F7Bc3329Ea615e0CfF2" //"0x7CeA66d7bC4856F90b94A3C1ea0229B86aa3697a"
-        let limit = 20
         isFetching = true
         
         nftRepository.fetchNFTs(forAddress: user.wallet.address, offset: currentOffset, limit: limit)
-            .map { nfts -> [NFT] in
-                self.currentOffset += limit
+            .map { [weak self] nfts -> [NFT] in
+                guard let self = self else { return [] }
+                self.currentOffset += self.limit
                 self.isFetching = false
                 self.nfts.append(contentsOf: nfts)
+                // If we get less nfts back then the one's specificed
+                // in the limit, then we can stop fetching
+                if nfts.count < self.limit {
+                    self.finished = true
+                }
                 return nfts
             }
             .flatMap(mediaPublisher)
