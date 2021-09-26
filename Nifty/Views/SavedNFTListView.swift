@@ -10,46 +10,57 @@ import SwiftUI
 struct SavedNFTListView: View {
     
     @ObservedObject var viewModel: SavedNFTListViewModel
+    @State var show: Bool = false
     
     init(viewModel: SavedNFTListViewModel = SavedNFTListViewModel()) {
         self.viewModel = viewModel
     }
     
     var body: some View {
-        VStack {
-            HStack {
-                Title("Saved NFTs")
-                Spacer()
-                Image(systemName: "trash")
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .frame(width: 25, height: 25)
-                    //                    .foregroundColor(.white)
-                    .padding()
-                    .onTapGesture {
-                        withAnimation(.easeOut) {
-                            viewModel.deleteSavedNFTs()
+        NavigationView {
+            ZStack {
+                AppGradient()
+                ScrollView {
+                    LazyVStack(spacing: 40) {
+                        ForEach(viewModel.nftViewModels, id: \.id) { nft in
+                            SavedNFTView(nft: nft)
+                                .equatable()
+                                .cardStyle()
+                                .onTapGesture {
+                                    show.toggle()
+                                    vibrate(.heavy)
+                                    //
+                                }
                         }
                     }
-            }
-            .frame(height: 15)
-            .padding()
-            ScrollView {
-                LazyVStack(spacing: 40) {
-                    ForEach(viewModel.nftViewModels, id: \.id) { nft in
-                        SavedNFTView(nft: nft)
-                            .equatable()
-                            .cardStyle()
-                            .onTapGesture {
-                                vibrate(.heavy)
-                                //
-                            }
-                    }
+                    .padding(EdgeInsets(top: 30, leading: 10, bottom: 30, trailing: 10))
                 }
-                .padding(EdgeInsets(top: 30, leading: 10, bottom: 30, trailing: 10))
+                .onAppear {
+                    viewModel.fetchSavedNFTs()
+                }
             }
-            .onAppear {
-                viewModel.fetchSavedNFTs()
+            .navigationTitle("Saved NFTs")
+            .navigationBarItems(
+                trailing: Button(action: {
+                    withAnimation(.easeOut) {
+                        viewModel.deleteSavedNFTs()
+                    }
+                }, label: {
+                    Image(systemName: "trash")
+                })
+            )
+            BottomCardView(show: $show, model: $viewModel.nftViewModels) { nft in
+                Text("sdfsdf")
+                Text("sdfsdf")
+                Text("sdfsdf")
+                Text("sdfsdf")
+                Text("sdfsdf")
+                Text("sdfsdf")
+                Text("sdfsdf")
+                Text("sdfsdf")
+                Text("sdfsdf")
+                Text("sdfsdf")
+                
             }
         }
     }
