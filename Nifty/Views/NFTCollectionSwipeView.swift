@@ -15,24 +15,18 @@ struct NFTCollectionSwipeView: View {
     @State var swipeDirection: SwipeDirection = .none
     
     @ObservedObject var viewModel: NFTCollectionSwipeViewModel
-    @Binding var flow: NFTCollectionFlow
     
-    init(flow: Binding<NFTCollectionFlow>,
-         viewModel: NFTCollectionSwipeViewModel = NFTCollectionSwipeViewModel(
+    init(
+        viewModel: NFTCollectionSwipeViewModel = NFTCollectionSwipeViewModel(
             contractAddress: "0xc3f733ca98e0dad0386979eb96fb1722a1a05e69"//"0x3b1bb53b1a42ff61b7399fc196469a742cd3e98d"
-    )) {
-        self._flow = flow
+        )
+    ) {
         self.viewModel = viewModel
     }
     
     var body: some View {
-        VStack {
-            // TODO: Change to normal view push
-            BackButtonView()
-                .onTapGesture {
-                    self.flow = .list
-                }
-                .padding([.bottom], 70)
+        ZStack {
+            AppGradient()
             ZStack {
                 // TODO: make data source generic
                 ForEach(Array(viewModel.currentNFTs.enumerated()), id: \.element) { index, nft in
@@ -173,6 +167,6 @@ private extension CGFloat {
 
 struct NFTCollectionSwipeView_Previews: PreviewProvider {
     static var previews: some View {
-        NFTCollectionSwipeView(flow: .constant(.list))
+        NFTCollectionSwipeView()
     }
 }

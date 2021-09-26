@@ -34,6 +34,7 @@ struct NiftyApp: App {
         SDImageCodersManager.shared.addCoder(SDImageSVGCoder.shared)
         SDImageCodersManager.shared.addCoder(SDImageVideoCoder.shared)
         SDImageCodersManager.shared.addCoder(SDImageWebPCoder.shared)
+        UITabBar.appearance().isHidden = true
     }
     
     var body: some Scene {
@@ -43,10 +44,9 @@ struct NiftyApp: App {
                 if let user = newWalletViewModel.user {
                     TabView(selection: $selectedTab) {
                         nftFactory.buildNFTList(user: user).tag(Tab.nfts)
-                        nftCollectionFactory.buildNFTCollectionFlow(user: user).tag(Tab.collections)
+                        nftCollectionFactory.buildNFTCollectionList(user: user).tag(Tab.collections)
                         savedNFTFactory.buildSavedNFTList().tag(Tab.savedNFTs)
                     }
-                    .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
                     .ignoresSafeArea(.all, edges: .bottom)
                     
                     VStack {
