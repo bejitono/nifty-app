@@ -48,7 +48,8 @@ struct SavedNFTListView: View {
                             }
                             Title(nft.name)
                             Text(nft.description)
-                            if let url = URL(string: nft.permalink) {
+                            if let url = URL(string: nft.permalink
+                                             + AppConstants.referralQueryItem) {
                                 Link(destination: url) {
                                     Text("View on Opensea")
                                         .foregroundColor(.white)
