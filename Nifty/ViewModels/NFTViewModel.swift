@@ -16,6 +16,7 @@ struct NFTViewModel: Identifiable, Hashable, Equatable {
     var description: String?
     let imageURL: String?
     let animationURL: String?
+    let permalink: String
     var media: MediaViewModel?
     var attributes: [NFTAttributeViewModel]
     var isLoading: Bool
@@ -27,6 +28,7 @@ struct NFTViewModel: Identifiable, Hashable, Equatable {
          description: String? = nil,
          imageURL: String? = nil,
          animationURL: String? = nil,
+         permalink: String = "",
          media: MediaViewModel? = nil,
          attributes: [NFTAttributeViewModel] = [],
          isLoading: Bool = true) {
@@ -37,6 +39,7 @@ struct NFTViewModel: Identifiable, Hashable, Equatable {
         self.description = description
         self.imageURL = imageURL
         self.animationURL = animationURL
+        self.permalink = permalink
         self.media = media
         self.attributes = attributes
         self.isLoading = isLoading
@@ -53,7 +56,7 @@ extension NFTViewModel {
             description: model.metadata?.description,
             imageURL: model.metadata?.imageURL,
             animationURL: model.metadata?.animationURL,
-            media: model.media.flatMap(MediaViewModel.init),
+            permalink: model.permalink, media: model.media.flatMap(MediaViewModel.init),
             attributes: model.metadata?.attributes.compactMap(NFTAttributeViewModel.init) ?? [],
             isLoading: model.media == nil
         )

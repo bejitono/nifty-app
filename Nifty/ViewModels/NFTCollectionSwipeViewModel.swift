@@ -81,7 +81,8 @@ final class NFTCollectionSwipeViewModel: ObservableObject {
                 name: nft.name,
                 description: nft.description,
                 imageURL: nft.imageURL,
-                animationURL: nft.animationURL
+                animationURL: nft.animationURL,
+                permalink: nft.permalink
             )
             likedNFTs.append(nft)
         case .none:

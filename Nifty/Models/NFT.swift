@@ -16,6 +16,7 @@ struct NFT: Equatable {
     let tokenID: String
     let tokenName: String
     let tokenSymbol: String
+    let permalink: String
     var metadata: ERC721Metadata?
     var media: Media?
 }
@@ -41,6 +42,7 @@ extension NFT {
             tokenID: self.tokenID,
             tokenName: self.tokenName,
             tokenSymbol: self.tokenSymbol,
+            permalink: self.permalink,
             metadata: nil,
             media: nil
         )
@@ -59,6 +61,7 @@ extension NFT {
         self.tokenID = dto.tokenID
         self.tokenName = dto.tokenName
         self.tokenSymbol = dto.tokenSymbol
+        self.permalink = dto.permalink
     }
     
     init(_ dto: NFTCacheDto,
@@ -71,6 +74,7 @@ extension NFT {
         self.tokenSymbol = dto.tokenSymbol
         self.media = Media(dto.media, mediaURL)
         self.metadata = ERC721Metadata(dto.metadata)
+        self.permalink = dto.permalink
     }
     
     init(_ dto: OpenSeaNFTDto) {
@@ -80,6 +84,7 @@ extension NFT {
         self.tokenID = dto.tokenId
         self.tokenName = dto.contract.name ?? ""
         self.tokenSymbol = dto.contract.symbol ?? ""
+        self.permalink = dto.permalink
         self.metadata = ERC721Metadata(
             name: dto.name ?? "",
             imageURL: dto.imageURL ?? "",
@@ -104,6 +109,7 @@ struct NFTDto: Codable {
     let tokenSymbol: String
     let tokenDecimal: String
     let transactionIndex: String
+    let permalink: String
 }
 
 struct EtherscanResponse<T: Codable>: Codable {
@@ -117,6 +123,7 @@ struct NFTCacheDto: Codable {
     let tokenID: String
     let tokenName: String
     let tokenSymbol: String
+    let permalink: String
     var metadata: ERC721MetadataCacheDto?
     var media: MediaCacheDto?
 }
@@ -130,6 +137,7 @@ extension NFTCacheDto {
         self.tokenID = model.tokenID
         self.tokenName = model.tokenName
         self.tokenSymbol = model.tokenSymbol
+        self.permalink = model.permalink
         self.media = MediaCacheDto(model.media)
         self.metadata = ERC721MetadataCacheDto(model.metadata)
     }
@@ -154,6 +162,7 @@ struct OpenSeaNFTDto: Codable {
     let animationURL: String?
     let imageURL: String?
     let imagePreview: String?
+    let permalink: String
     let contract: Contract
     let owner: Owner
     let traits: [Trait]
@@ -220,6 +229,7 @@ struct OpenSeaNFTDto: Codable {
         case contract = "asset_contract"
         case owner
         case traits
+        case permalink
     }
 }
 
@@ -233,6 +243,7 @@ extension NFTCache {
         description: String?,
         imageURL: String?,
         animationURL: String?,
+        permalink: String,
         context: NSManagedObjectContext = PersistenceStore.shared.mainContext
     ) {
         self.init(context: context)
@@ -243,6 +254,7 @@ extension NFTCache {
         self.nftDescription = description
         self.imageURL = imageURL
         self.animationURL = animationURL
+        self.permalink = permalink
     }
     
     convenience init(nft: NFT) {
@@ -252,7 +264,8 @@ extension NFTCache {
             name: nft.metadata?.name ?? "",
             description: nft.metadata?.description,
             imageURL: nft.metadata?.imageURL,
-            animationURL: nft.metadata?.animationURL
+            animationURL: nft.metadata?.animationURL,
+            permalink: nft.permalink
         )
     }
 }

@@ -16,7 +16,8 @@ protocol NFTPersistable {
         name: String,
         description: String?,
         imageURL: String?,
-        animationURL: String?
+        animationURL: String?,
+        permalink: String
     ) throws
     
     func fetchNFTs() throws -> [NFTViewModel] // TODO: change to nft
@@ -29,7 +30,7 @@ protocol NFTFetcheable {
 }
 
 protocol NFTCollectionFetcheable {
-    func fetchCollection(forAddress address: String, offset: Int, limit: Int) -> AnyPublisher<[NFTCollection], Error>
+    func fetchCollections(forAddress address: String, offset: Int, limit: Int) -> AnyPublisher<[NFTCollection], Error>
     func fetchNFTs(forContractAddress contractAddress: String, offset: Int, limit: Int) -> AnyPublisher<[NFT], Error>
 }
 
@@ -56,7 +57,8 @@ final class NFTRepository: NFTFetcheable,
         name: String,
         description: String?,
         imageURL: String?,
-        animationURL: String?
+        animationURL: String?,
+        permalink: String
     ) throws {
         let _ = NFTCache(
             id: id,
@@ -65,7 +67,8 @@ final class NFTRepository: NFTFetcheable,
             name: name,
             description: description,
             imageURL: imageURL,
-            animationURL: animationURL
+            animationURL: animationURL,
+            permalink: permalink
         )
         try persistenceStore.save()
     }
@@ -118,8 +121,8 @@ final class NFTRepository: NFTFetcheable,
         openSeaRepository.fetchNFTs(forContractAddress: contractAddress, offset: offset, limit: limit)
     }
     
-    func fetchCollection(forAddress address: String, offset: Int, limit: Int) -> AnyPublisher<[NFTCollection], Error> {
-        openSeaRepository.fetchCollection(forAddress: address, offset: offset, limit: limit)
+    func fetchCollections(forAddress address: String, offset: Int, limit: Int) -> AnyPublisher<[NFTCollection], Error> {
+        openSeaRepository.fetchCollections(forAddress: address, offset: offset, limit: limit)
     }
     
     

@@ -46,7 +46,7 @@ final class NFTCollectionListViewModel: ObservableObject {
         let limit = 50
         isFetching = true
         
-        nftRepository.fetchCollection(
+        nftRepository.fetchCollections(
             forAddress: user.wallet.address,
             offset: currentOffset,
             limit: limit

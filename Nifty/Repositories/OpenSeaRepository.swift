@@ -36,7 +36,7 @@ final class OpenSeaRepository: NFTFetcheable, NFTCollectionFetcheable {
             .eraseToAnyPublisher()
     }
     
-    func fetchCollection(forAddress address: String, offset: Int, limit: Int) -> AnyPublisher<[NFTCollection], Error> {
+    func fetchCollections(forAddress address: String, offset: Int, limit: Int) -> AnyPublisher<[NFTCollection], Error> {
         let components = buildNFTCollectionsFetchURLComponents(withAddress: address, offset: offset, limit: limit)
         return networkClient
             .request(with: components)
