@@ -8,9 +8,10 @@
         <attribute name="name" attributeType="String"/>
         <attribute name="nftDescription" attributeType="String"/>
         <attribute name="permalink" attributeType="String"/>
+        <attribute name="timestamp" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="tokenId" attributeType="String"/>
     </entity>
     <elements>
-        <element name="NFTCache" positionX="-63" positionY="-18" width="128" height="149"/>
+        <element name="NFTCache" positionX="-63" positionY="-18" width="128" height="164"/>
     </elements>
 </model>

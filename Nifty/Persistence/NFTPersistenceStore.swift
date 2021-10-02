@@ -107,8 +107,8 @@ final class PersistenceStore: PersistenceStoreProtocol {
         let entityName = String(describing: Resource.self)
         let fetchRequest = NSFetchRequest<Resource>(entityName: entityName)
 
-        let idSortDescriptor = NSSortDescriptor(key: "identifier", ascending: false)
-        fetchRequest.sortDescriptors = [idSortDescriptor]
+        let timeSortDescriptor = NSSortDescriptor(key: "timestamp", ascending: false)
+        fetchRequest.sortDescriptors = [timeSortDescriptor]
         fetchRequest.fetchLimit = fetchLimit
 
         context.performAndWait {

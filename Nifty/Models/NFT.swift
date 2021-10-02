@@ -255,6 +255,7 @@ extension NFTCache {
         self.imageURL = imageURL
         self.animationURL = animationURL
         self.permalink = permalink
+        self.timestamp = Date()
     }
     
     convenience init(nft: NFT) {
