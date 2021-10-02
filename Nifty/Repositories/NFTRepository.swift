@@ -91,6 +91,7 @@ final class NFTRepository: NFTFetcheable,
                 description: nft.nftDescription,
                 imageURL: nft.imageURL,
                 animationURL: nft.animationURL,
+                permalink: nft.permalink ?? "",
                 media: nil,
                 attributes: [],
                 isLoading: false

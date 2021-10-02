@@ -11,8 +11,6 @@ struct NFTCollectionListView: View {
     
     @ObservedObject var viewModel: NFTCollectionListViewModel
     
-    @State var text: String = ""
-    
     init(viewModel: NFTCollectionListViewModel = NFTCollectionListViewModel(user: User(wallet: Wallet(address: "0xD3e9D60e4E4De615124D5239219F32946d10151D")))) {
         self.viewModel = viewModel
     }
@@ -49,10 +47,10 @@ struct NFTCollectionListView: View {
                 .navigationTitle("Explore Collections")
                 if #available(iOS 15.0, *) {
                     list
-                    .searchable(
-                        text: $text,
-                        placement: .navigationBarDrawer(displayMode: .always)
-                    )
+//                    .searchable(
+//                        text: $viewModel.searchText,
+//                        placement: .navigationBarDrawer(displayMode: .always)
+//                    )
                 } else {
                     list
                 }

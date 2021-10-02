@@ -86,6 +86,6 @@ private extension CGFloat {
 
 struct NFTView_Previews: PreviewProvider {
     static var previews: some View {
-        NFTView(nft: NFTViewModel(contractAddress: "0x0000"))
+        NFTView(nft: NFTViewModel(contractAddress: "0x0000", permalink: ""))
     }
 }

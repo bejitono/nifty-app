@@ -10,7 +10,6 @@ import SwiftUI
 struct SavedNFTListView: View {
     
     @ObservedObject var viewModel: SavedNFTListViewModel
-    @State var show: Bool = false
     
     init(viewModel: SavedNFTListViewModel = SavedNFTListViewModel()) {
         self.viewModel = viewModel
@@ -27,9 +26,8 @@ struct SavedNFTListView: View {
                                 .equatable()
                                 .cardStyle()
                                 .onTapGesture {
-                                    show.toggle()
                                     vibrate(.heavy)
-                                    //
+                                    viewModel.handleTapOn(nft: nft)
                                 }
                         }
                     }
@@ -37,6 +35,39 @@ struct SavedNFTListView: View {
                 }
                 .onAppear {
                     viewModel.fetchSavedNFTs()
+                }
+                BottomCardView(
+                    show: $viewModel.showDetails,
+                    model: $viewModel.nftDetails
+                ) { nft in
+                    ScrollView {
+                        VStack(alignment: .leading, spacing: 10) {
+                            HStack {
+                                PillView(text: "#\(nft.tokenId)")
+                                Spacer()
+                            }
+                            Title(nft.name)
+                            Text(nft.description)
+                            if let url = URL(string: nft.permalink) {
+                                Link(destination: url) {
+                                    Text("View on Opensea")
+                                        .foregroundColor(.white)
+                                        .bold()
+                                }
+                                .buttonStyle(PrimaryButtonStyle(wide: true))
+                                .padding(.top, 20)
+                            }
+
+                        }
+                        .frame(
+                            minWidth: 0,
+                            maxWidth: .infinity,
+                            minHeight: 0,
+                            maxHeight: .infinity,
+                            alignment: .topLeading
+                        )
+                    }
+                    
                 }
             }
             .navigationTitle("Saved NFTs")
@@ -49,19 +80,6 @@ struct SavedNFTListView: View {
                     Image(systemName: "trash")
                 })
             )
-            BottomCardView(show: $show, model: $viewModel.nftViewModels) { nft in
-                Text("sdfsdf")
-                Text("sdfsdf")
-                Text("sdfsdf")
-                Text("sdfsdf")
-                Text("sdfsdf")
-                Text("sdfsdf")
-                Text("sdfsdf")
-                Text("sdfsdf")
-                Text("sdfsdf")
-                Text("sdfsdf")
-                
-            }
         }
     }
     

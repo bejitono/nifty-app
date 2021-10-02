@@ -11,6 +11,8 @@ import Foundation
 final class SavedNFTListViewModel: ObservableObject {
     
     @Published var nftViewModels: [SavedNFTViewModel] = []
+    @Published var showDetails: Bool = false
+    @Published var nftDetails: SavedNFTViewModel = .empty
 //    @Published private var nfts: [NFT] = []
     
     private let nftRepository: NFTPersistable
@@ -27,8 +29,11 @@ final class SavedNFTListViewModel: ObservableObject {
             nftViewModels = nfts.map { nft in
                 SavedNFTViewModel(
                     name: nft.name,
+                    description: nft.description ?? "",
+                    tokenId: nft.tokenId,
                     imageURL: nft.imageURL,
-                    contractAddress: nft.contractAddress
+                    contractAddress: nft.contractAddress,
+                    permalink: nft.permalink
                 )
             }
         } catch {
@@ -43,5 +48,10 @@ final class SavedNFTListViewModel: ObservableObject {
         } catch {
             // handle error
         }
+    }
+    
+    func handleTapOn(nft: SavedNFTViewModel) {
+        nftDetails = nft
+        showDetails = true
     }
 }

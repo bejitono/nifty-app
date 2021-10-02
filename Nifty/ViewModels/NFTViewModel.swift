@@ -28,7 +28,7 @@ struct NFTViewModel: Identifiable, Hashable, Equatable {
          description: String? = nil,
          imageURL: String? = nil,
          animationURL: String? = nil,
-         permalink: String = "",
+         permalink: String,
          media: MediaViewModel? = nil,
          attributes: [NFTAttributeViewModel] = [],
          isLoading: Bool = true) {
@@ -63,6 +63,6 @@ extension NFTViewModel {
     }
     
     static var empty: NFTViewModel {
-        NFTViewModel(contractAddress: "")
+        NFTViewModel(contractAddress: "", permalink: "")
     }
 }

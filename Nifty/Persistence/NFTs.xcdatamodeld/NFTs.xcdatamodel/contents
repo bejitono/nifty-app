@@ -7,7 +7,7 @@
         <attribute name="imageURL" optional="YES" attributeType="String"/>
         <attribute name="name" attributeType="String"/>
         <attribute name="nftDescription" attributeType="String"/>
-        <attribute name="permalink" optional="YES" attributeType="String"/>
+        <attribute name="permalink" attributeType="String"/>
         <attribute name="tokenId" attributeType="String"/>
     </entity>
     <elements>
