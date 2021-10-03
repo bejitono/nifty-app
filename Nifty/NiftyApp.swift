@@ -46,7 +46,7 @@ struct NiftyApp: App {
                     TabView(selection: $selectedTab) {
                         nftFactory.buildNFTList(user: user, showTab: $showTab).tag(Tab.nfts)
                         nftCollectionFactory.buildNFTCollectionList(user: user, showTab: $showTab).tag(Tab.collections)
-                        savedNFTFactory.buildSavedNFTList().tag(Tab.savedNFTs)
+                        savedNFTFactory.buildSavedNFTList(showTab: $showTab).tag(Tab.savedNFTs)
                     }
                     .ignoresSafeArea(.all, edges: .bottom)
                     

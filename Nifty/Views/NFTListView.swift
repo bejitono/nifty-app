@@ -113,7 +113,8 @@ struct NFTListView: View {
                     }
                 }
             }
-        }.onChange(of: viewModel.showDetails) { showDetails in
+        }
+        .onChange(of: viewModel.showDetails) { showDetails in
             showTab = !showDetails
         }
     }

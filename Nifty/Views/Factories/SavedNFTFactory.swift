@@ -9,9 +9,9 @@ import SwiftUI
 
 struct SavedNFTFactory {
     
-    func buildSavedNFTList() -> some View {
+    func buildSavedNFTList(showTab: Binding<Bool>) -> some View {
         let viewModel = SavedNFTListViewModel()
-        let view = SavedNFTListView(viewModel: viewModel)
+        let view = SavedNFTListView(showTab: showTab, viewModel: viewModel)
         return view
     }
 }

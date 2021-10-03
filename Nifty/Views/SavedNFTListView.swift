@@ -10,9 +10,11 @@ import SwiftUI
 struct SavedNFTListView: View {
     
     @ObservedObject var viewModel: SavedNFTListViewModel
+    @Binding var showTab: Bool
     
-    init(viewModel: SavedNFTListViewModel = SavedNFTListViewModel()) {
+    init(showTab: Binding<Bool>, viewModel: SavedNFTListViewModel = SavedNFTListViewModel()) {
         self.viewModel = viewModel
+        self._showTab = showTab
     }
     
     var body: some View {
@@ -82,6 +84,9 @@ struct SavedNFTListView: View {
                 })
             )
         }
+        .onChange(of: viewModel.showDetails) { showDetails in
+            showTab = !showDetails
+        }
     }
     
     func vibrate(_ type: UIImpactFeedbackGenerator.FeedbackStyle) {
@@ -92,7 +97,7 @@ struct SavedNFTListView: View {
 
 struct SavedNFTListView_Previews: PreviewProvider {
     static var previews: some View {
-        SavedNFTListView()
+        SavedNFTListView(showTab: .constant(true))
     }
 }
 
