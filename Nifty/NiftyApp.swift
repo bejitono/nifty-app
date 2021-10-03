@@ -44,7 +44,7 @@ struct NiftyApp: App {
                 AppGradient()
                 if let user = newWalletViewModel.user {
                     TabView(selection: $selectedTab) {
-                        nftFactory.buildNFTList(user: user).tag(Tab.nfts)
+                        nftFactory.buildNFTList(user: user, showTab: $showTab).tag(Tab.nfts)
                         nftCollectionFactory.buildNFTCollectionList(user: user, showTab: $showTab).tag(Tab.collections)
                         savedNFTFactory.buildSavedNFTList().tag(Tab.savedNFTs)
                     }

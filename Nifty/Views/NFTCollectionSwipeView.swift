@@ -77,6 +77,7 @@ struct NFTCollectionSwipeView: View {
                                 }
                         )
                 }
+                .padding(.top, 40)
             }
             .offset(x: 0, y: 25 * CGFloat(viewModel.currentNFTs.count) * -1)
             Spacer()

@@ -9,9 +9,9 @@ import SwiftUI
 
 struct NFTFactory {
     
-    func buildNFTList(user: User) -> some View {
+    func buildNFTList(user: User, showTab: Binding<Bool>) -> some View {
         let viewModel = NFTListViewModel(user: user)
-        let view = NFTListView(viewModel: viewModel)
+        let view = NFTListView(showTab: showTab, viewModel: viewModel)
         return view
     }
 }

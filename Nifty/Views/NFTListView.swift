@@ -11,9 +11,14 @@ import SVGKit
 struct NFTListView: View {
     
     @ObservedObject var viewModel: NFTListViewModel
+    @Binding var showTab: Bool
+    @State private var scrollPosition = CGFloat.zero
     
-    init(viewModel: NFTListViewModel = NFTListViewModel(user: User(wallet: Wallet(address: "0xD3e9D60e4E4De615124D5239219F32946d10151D")))) {
+    init(
+        showTab: Binding<Bool>,
+        viewModel: NFTListViewModel = NFTListViewModel(user: User(wallet: Wallet(address: "0xD3e9D60e4E4De615124D5239219F32946d10151D")))) {
         self.viewModel = viewModel
+        self._showTab = showTab
     }
     
     var body: some View {
@@ -22,6 +27,7 @@ struct NFTListView: View {
                 AppGradient()
                 VStack {
                     ScrollView {
+                        ZStack {
                         LazyVStack(spacing: 40) {
                             // TODO: view for empty and error state
                             ForEach(viewModel.nftsViewModel, id: \.id) { nft in
@@ -29,6 +35,7 @@ struct NFTListView: View {
                                     .equatable()
                                     .cardStyle()
                                     .onAppear {
+//                                        showTab = true
                                         viewModel.fetchNFTsIfNeeded(for: nft)
                                     }
                                     .onTapGesture {
@@ -38,8 +45,22 @@ struct NFTListView: View {
                             }
                         }
                         .padding(EdgeInsets(top: 30, leading: 10, bottom: 30, trailing: 10))
+                            GeometryReader { proxy in
+                                let offset = proxy.frame(in: .named("scroll")).minY
+                                Color.clear.preference(key: ScrollViewOffsetPreferenceKey.self, value: offset)
+                            }
+                        }
                     }
                     .navigationTitle("My NFTs")
+                    .coordinateSpace(name: "scroll")
+                    .onPreferenceChange(ScrollViewOffsetPreferenceKey.self) { newPosition in
+//                        defer { scrollPosition = newPosition }
+//                        if scrollPosition > newPosition {
+//                            print("down")
+//                        } else {
+//                            print("up")
+//                        }
+                    }
                 }
                 BottomCardView(
                     show: $viewModel.showDetails,
@@ -92,8 +113,11 @@ struct NFTListView: View {
                     }
                 }
             }
+        }.onChange(of: viewModel.showDetails) { showDetails in
+            showTab = !showDetails
         }
     }
+    
     
     func svgImage(contentsOfFile: String) -> UIImage {
         guard let svgImage = SVGKImage(contentsOfFile: contentsOfFile) else {
@@ -118,6 +142,14 @@ private extension CGFloat {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        NFTListView()
+        NFTListView(showTab: .constant(true))
+    }
+}
+
+struct ScrollViewOffsetPreferenceKey: PreferenceKey {
+    typealias Value = CGFloat
+    static var defaultValue = CGFloat.zero
+    static func reduce(value: inout Value, nextValue: () -> Value) {
+        value += nextValue()
     }
 }
