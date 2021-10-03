@@ -28,23 +28,22 @@ struct NFTListView: View {
                 VStack {
                     ScrollView {
                         ZStack {
-                        LazyVStack(spacing: 40) {
-                            // TODO: view for empty and error state
-                            ForEach(viewModel.nftsViewModel, id: \.id) { nft in
-                                NFTView(nft: nft)
-                                    .equatable()
-                                    .cardStyle()
-                                    .onAppear {
-//                                        showTab = true
-                                        viewModel.fetchNFTsIfNeeded(for: nft)
-                                    }
-                                    .onTapGesture {
-                                        vibrate(.heavy)
-                                        viewModel.handleTapOn(nft: nft)
-                                    }
+                            LazyVStack(spacing: 40) {
+                                // TODO: view for empty and error state
+                                ForEach(viewModel.nftsViewModel, id: \.id) { nft in
+                                    NFTView(nft: nft)
+                                        .equatable()
+                                        .cardStyle()
+                                        .onAppear {
+                                            viewModel.fetchNFTsIfNeeded(for: nft)
+                                        }
+                                        .onTapGesture {
+                                            vibrate(.heavy)
+                                            viewModel.handleTapOn(nft: nft)
+                                        }
+                                }
                             }
-                        }
-                        .padding(EdgeInsets(top: 30, leading: 10, bottom: 30, trailing: 10))
+                            .padding(EdgeInsets(top: 30, leading: 10, bottom: 30, trailing: 10))
                             GeometryReader { proxy in
                                 let offset = proxy.frame(in: .named("scroll")).minY
                                 Color.clear.preference(key: ScrollViewOffsetPreferenceKey.self, value: offset)
@@ -53,14 +52,7 @@ struct NFTListView: View {
                     }
                     .navigationTitle("My NFTs")
                     .coordinateSpace(name: "scroll")
-                    .onPreferenceChange(ScrollViewOffsetPreferenceKey.self) { newPosition in
-//                        defer { scrollPosition = newPosition }
-//                        if scrollPosition > newPosition {
-//                            print("down")
-//                        } else {
-//                            print("up")
-//                        }
-                    }
+                    .hideTabbar(show: $showTab, scrollPosition: $scrollPosition)
                 }
                 BottomCardView(
                     show: $viewModel.showDetails,
@@ -144,13 +136,5 @@ private extension CGFloat {
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         NFTListView(showTab: .constant(true))
-    }
-}
-
-struct ScrollViewOffsetPreferenceKey: PreferenceKey {
-    typealias Value = CGFloat
-    static var defaultValue = CGFloat.zero
-    static func reduce(value: inout Value, nextValue: () -> Value) {
-        value += nextValue()
     }
 }

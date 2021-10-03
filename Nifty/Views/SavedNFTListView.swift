@@ -12,6 +12,8 @@ struct SavedNFTListView: View {
     @ObservedObject var viewModel: SavedNFTListViewModel
     @Binding var showTab: Bool
     
+    @State private var scrollPosition = CGFloat.zero
+    
     init(showTab: Binding<Bool>, viewModel: SavedNFTListViewModel = SavedNFTListViewModel()) {
         self.viewModel = viewModel
         self._showTab = showTab
@@ -22,19 +24,26 @@ struct SavedNFTListView: View {
             ZStack {
                 AppGradient()
                 ScrollView {
-                    LazyVStack(spacing: 40) {
-                        ForEach(viewModel.nftViewModels, id: \.id) { nft in
-                            SavedNFTView(nft: nft)
-                                .equatable()
-                                .cardStyle()
-                                .onTapGesture {
-                                    vibrate(.heavy)
-                                    viewModel.handleTapOn(nft: nft)
-                                }
+                    ZStack {
+                        LazyVStack(spacing: 40) {
+                            ForEach(viewModel.nftViewModels, id: \.id) { nft in
+                                SavedNFTView(nft: nft)
+                                    .equatable()
+                                    .cardStyle()
+                                    .onTapGesture {
+                                        vibrate(.heavy)
+                                        viewModel.handleTapOn(nft: nft)
+                                    }
+                            }
+                        }
+                        .padding(EdgeInsets(top: 30, leading: 10, bottom: 30, trailing: 10))
+                        GeometryReader { proxy in
+                            let offset = proxy.frame(in: .named("scroll")).minY
+                            Color.clear.preference(key: ScrollViewOffsetPreferenceKey.self, value: offset)
                         }
                     }
-                    .padding(EdgeInsets(top: 30, leading: 10, bottom: 30, trailing: 10))
                 }
+                .hideTabbar(show: $showTab, scrollPosition: $scrollPosition)
                 .onAppear {
                     viewModel.fetchSavedNFTs()
                 }
@@ -73,7 +82,7 @@ struct SavedNFTListView: View {
                     
                 }
             }
-            .navigationTitle("Saved NFTs")
+            .navigationTitle("Favorites")
             .navigationBarItems(
                 trailing: Button(action: {
                     withAnimation(.easeOut) {
