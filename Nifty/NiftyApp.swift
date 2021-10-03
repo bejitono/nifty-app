@@ -20,7 +20,8 @@ enum Tab: String {
 @main
 struct NiftyApp: App {
     
-    @State var selectedTab: Tab = .nfts
+    @State private var showTab = true
+    @State private var selectedTab: Tab = .nfts
     // Should have a separate view model instead of using new wallet VM directly
     @ObservedObject var newWalletViewModel: NewWalletViewModel = NewWalletViewModel()
     
@@ -44,14 +45,14 @@ struct NiftyApp: App {
                 if let user = newWalletViewModel.user {
                     TabView(selection: $selectedTab) {
                         nftFactory.buildNFTList(user: user).tag(Tab.nfts)
-                        nftCollectionFactory.buildNFTCollectionList(user: user).tag(Tab.collections)
+                        nftCollectionFactory.buildNFTCollectionList(user: user, showTab: $showTab).tag(Tab.collections)
                         savedNFTFactory.buildSavedNFTList().tag(Tab.savedNFTs)
                     }
                     .ignoresSafeArea(.all, edges: .bottom)
                     
                     VStack {
                         Spacer()
-                        TabBar(selectedTab: $selectedTab)
+                        TabBar(selectedTab: $selectedTab, show: $showTab)
                     }
                     .padding([.bottom], 20)
                 } else {

@@ -9,10 +9,12 @@ import SwiftUI
 
 struct NFTCollectionListView: View {
     
+    @Binding var showTab: Bool // Should ideally not be aware of the tab view
     @ObservedObject var viewModel: NFTCollectionListViewModel
     
-    init(viewModel: NFTCollectionListViewModel = NFTCollectionListViewModel(user: User(wallet: Wallet(address: "0xD3e9D60e4E4De615124D5239219F32946d10151D")))) {
+    init(showTab: Binding<Bool>, viewModel: NFTCollectionListViewModel = NFTCollectionListViewModel(user: User(wallet: Wallet(address: "0xD3e9D60e4E4De615124D5239219F32946d10151D")))) {
         self.viewModel = viewModel
+        self._showTab = showTab
     }
     
     var body: some View {
@@ -24,18 +26,20 @@ struct NFTCollectionListView: View {
                         ForEach(viewModel.collectionViewModels, id: \.id) { collection in
                             NavigationLink(
                                 destination: NFTCollectionSwipeView(
-                                    viewModel: NFTCollectionSwipeViewModel(contractAddress: collection.contractAddress)
+                                    viewModel: NFTCollectionSwipeViewModel(collectionName: collection.name, contractAddress: collection.contractAddress)
                                 )
                             ) {
                                 NFTCollectionView(collection: collection)
                                     .equatable()
                                     .cardStyle()
                                     .onAppear {
+                                        showTab = true
                                         viewModel.fetchCollectionIfNeeded(for: collection)
                                     }
                             }
                             .simultaneousGesture(
                                 TapGesture().onEnded {
+                                    showTab = false
                                     vibrate(.heavy)
                                 }
                             )
@@ -66,6 +70,6 @@ struct NFTCollectionListView: View {
 
 struct NFTCollectionListView_Previews: PreviewProvider {
     static var previews: some View {
-        NFTCollectionListView()
+        NFTCollectionListView(showTab: .constant(true))
     }
 }

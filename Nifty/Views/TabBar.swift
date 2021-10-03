@@ -10,6 +10,7 @@ import SwiftUI
 struct TabBar: View {
     
     @Binding var selectedTab: Tab
+    @Binding var show: Bool
     
     @State private var nftListActive = true
     @State private var swipeCollectionsActive = false
@@ -58,6 +59,8 @@ struct TabBar: View {
             y: .shadowYOffset
         )
         .padding([.leading, .trailing], 30)
+        .offset(y: show ? 0 : 120)
+        .animation(.easeInOut, value: show)
     }
 }
 
@@ -86,6 +89,6 @@ private extension CGFloat {
 
 struct TabBar_Previews: PreviewProvider {
     static var previews: some View {
-        TabBar(selectedTab: .constant(.nfts))
+        TabBar(selectedTab: .constant(.nfts), show: .constant(true))
     }
 }

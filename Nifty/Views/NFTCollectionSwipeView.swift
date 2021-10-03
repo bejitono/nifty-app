@@ -14,11 +14,11 @@ struct NFTCollectionSwipeView: View {
     @State var movingItem: Int?
     @State var swipeDirection: SwipeDirection = .none
     
-    @ObservedObject var viewModel: NFTCollectionSwipeViewModel
+    @ObservedObject private var viewModel: NFTCollectionSwipeViewModel
     
     init(
         viewModel: NFTCollectionSwipeViewModel = NFTCollectionSwipeViewModel(
-            contractAddress: "0xc3f733ca98e0dad0386979eb96fb1722a1a05e69"//"0x3b1bb53b1a42ff61b7399fc196469a742cd3e98d"
+            collectionName: "Test", contractAddress: "0xc3f733ca98e0dad0386979eb96fb1722a1a05e69"//"0x3b1bb53b1a42ff61b7399fc196469a742cd3e98d"
         )
     ) {
         self.viewModel = viewModel
@@ -81,6 +81,15 @@ struct NFTCollectionSwipeView: View {
             .offset(x: 0, y: 25 * CGFloat(viewModel.currentNFTs.count) * -1)
             Spacer()
         }
+        .navigationBarTitle(viewModel.collectionName)
+        .navigationBarTitle(viewModel.collectionName)
+//        .navigationBarBackButtonHidden(true)
+//        .navigationBarItems(leading: Button(action : {
+//            self.mode.wrappedValue.dismiss()
+//        }){
+//            Image(systemName: "arrow.left")
+//                .foregroundColor(.black)
+//        })
     }
     
     private func scale(index: Int, total: Int) -> CGFloat {

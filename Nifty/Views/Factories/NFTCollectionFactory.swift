@@ -9,9 +9,9 @@ import SwiftUI
 
 struct NFTCollectionFactory {
     
-    func buildNFTCollectionList(user: User) -> some View {
+    func buildNFTCollectionList(user: User, showTab: Binding<Bool>) -> some View {
         let viewModel = NFTCollectionListViewModel(user: user)
-        let view = NFTCollectionListView(viewModel: viewModel)
+        let view = NFTCollectionListView(showTab: showTab, viewModel: viewModel)
         return view
     }
 }

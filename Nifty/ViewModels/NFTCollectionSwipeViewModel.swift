@@ -19,6 +19,7 @@ enum SwipeDirection {
 final class NFTCollectionSwipeViewModel: ObservableObject {
     
     var index = 0
+    let collectionName: String
     @Published var currentNFTs: [NFTViewModel] = []
     @Published private var nftViewModels: [NFTViewModel] = []
     @Published private var nfts: [NFT] = []
@@ -33,10 +34,12 @@ final class NFTCollectionSwipeViewModel: ObservableObject {
     private var cancellables = Set<AnyCancellable>()
     
     init(
+        collectionName: String,
         contractAddress: String,
         nftRepository: NFTCollectionFetcheable & NFTPersistable = NFTRepository(),
         mediaRepository: MediaFetcheable = MediaRepository()
     ) {
+        self.collectionName = collectionName
         self.contractAddress = contractAddress
         self.nftRepository = nftRepository
         self.mediaRepository = mediaRepository
