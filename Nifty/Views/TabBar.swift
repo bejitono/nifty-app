@@ -19,7 +19,7 @@ struct TabBar: View {
     var body: some View {
         VStack {
             HStack {
-                TabBarImageView(name: "tray.full.fill", active: $nftListActive)
+                TabBarImageView(name: "rectangle.stack.fill", active: $nftListActive)
                     .onTapGesture {
                         nftListActive = true
                         swipeCollectionsActive = false
@@ -27,7 +27,7 @@ struct TabBar: View {
                         selectedTab = .nfts
                     }
                 Spacer()
-                TabBarImageView(name: "rectangle.stack.fill", active: $swipeCollectionsActive)
+                TabBarImageView(name: "magnifyingglass", active: $swipeCollectionsActive)
                     .onTapGesture {
                         nftListActive = false
                         swipeCollectionsActive = true
@@ -35,7 +35,7 @@ struct TabBar: View {
                         selectedTab = .collections
                     }
                 Spacer()
-                TabBarImageView(name: "bag.fill", active: $savedNFTsActive)
+                TabBarImageView(name: "heart.fill", active: $savedNFTsActive)
                     .onTapGesture {
                         nftListActive = false
                         swipeCollectionsActive = false
