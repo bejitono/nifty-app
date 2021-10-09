@@ -23,29 +23,35 @@ struct SavedNFTListView: View {
         NavigationView {
             ZStack {
                 AppGradient()
-                ScrollView {
-                    ZStack {
-                        LazyVStack(spacing: 40) {
-                            ForEach(viewModel.nftViewModels, id: \.id) { nft in
-                                SavedNFTView(nft: nft)
-                                    .equatable()
-                                    .cardStyle()
-                                    .onTapGesture {
-                                        vibrate(.heavy)
-                                        viewModel.handleTapOn(nft: nft)
-                                    }
+                if $viewModel.nftViewModels.wrappedValue.isEmpty {
+                    VStack(spacing: 10) {
+                        Text("Looks empty 👻")
+                        Text("When you swipe through collections your liked NFTs will appear here.")
+                    }
+                    .padding(20)
+                    .multilineTextAlignment(.center)
+                } else {
+                    ScrollView {
+                        ZStack {
+                            LazyVStack(spacing: 40) {
+                                ForEach(viewModel.nftViewModels, id: \.id) { nft in
+                                    SavedNFTView(nft: nft)
+                                        .equatable()
+                                        .cardStyle()
+                                        .onTapGesture {
+                                            vibrate(.heavy)
+                                            viewModel.handleTapOn(nft: nft)
+                                        }
+                                }
+                            }
+                            .padding(EdgeInsets(top: 30, leading: 10, bottom: 30, trailing: 10))
+                            GeometryReader { proxy in
+                                let offset = proxy.frame(in: .named("scroll")).minY
+                                Color.clear.preference(key: ScrollViewOffsetPreferenceKey.self, value: offset)
                             }
                         }
-                        .padding(EdgeInsets(top: 30, leading: 10, bottom: 30, trailing: 10))
-                        GeometryReader { proxy in
-                            let offset = proxy.frame(in: .named("scroll")).minY
-                            Color.clear.preference(key: ScrollViewOffsetPreferenceKey.self, value: offset)
-                        }
                     }
-                }
-                .hideTabbar(show: $showTab, scrollPosition: $scrollPosition)
-                .onAppear {
-                    viewModel.fetchSavedNFTs()
+                    .hideTabbar(show: $showTab, scrollPosition: $scrollPosition)
                 }
                 BottomCardView(
                     show: $viewModel.showDetails,
@@ -92,6 +98,9 @@ struct SavedNFTListView: View {
                     Image(systemName: "trash")
                 })
             )
+            .onAppear {
+                viewModel.fetchSavedNFTs()
+            }
         }
         .onChange(of: viewModel.showDetails) { showDetails in
             showTab = !showDetails
