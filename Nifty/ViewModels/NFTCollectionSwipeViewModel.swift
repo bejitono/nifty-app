@@ -51,7 +51,7 @@ final class NFTCollectionSwipeViewModel: ObservableObject {
             }
             .sink { [weak self] viewModels in
                 guard let self = self else { return }
-                self.nftViewModels = viewModels.reversed()
+                self.nftViewModels = viewModels
             }
             .store(in: &cancellables)
         
@@ -67,7 +67,7 @@ final class NFTCollectionSwipeViewModel: ObservableObject {
                         self.index = index
                     }
                 }
-                self.currentNFTs = initialNFTs
+                self.currentNFTs = initialNFTs.reversed()
             }
             .store(in: &cancellables)
     }
