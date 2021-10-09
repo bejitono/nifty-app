@@ -23,50 +23,59 @@ struct NFTCollectionListView: View {
         NavigationView {
             ZStack {
                 AppGradient()
-                let list = ScrollView {
-                    ZStack {
-                        LazyVStack(spacing: 40) {
-                            ForEach(viewModel.collectionViewModels, id: \.id) { collection in
-                                NavigationLink(
-                                    destination: NFTCollectionSwipeView(
-                                        viewModel: NFTCollectionSwipeViewModel(collectionName: collection.name, contractAddress: collection.contractAddress)
-                                    )
-                                ) {
-                                    NFTCollectionView(collection: collection)
-                                        .equatable()
-                                        .cardStyle()
-                                        .onAppear {
-                                            viewModel.fetchCollectionIfNeeded(for: collection)
+                VStack {
+                    switch viewModel.state {
+                    case .loading:
+                        ProgressView()
+                    case .error(message: let message):
+                        ErrorView(message: message, onTapTryAgain: viewModel.refetch)
+                    case .loaded(collections: let collections):
+                        let list = ScrollView {
+                            ZStack {
+                                LazyVStack(spacing: 40) {
+                                    ForEach(collections, id: \.id) { collection in
+                                        NavigationLink(
+                                            destination: NFTCollectionSwipeView(
+                                                viewModel: NFTCollectionSwipeViewModel(collectionName: collection.name, contractAddress: collection.contractAddress)
+                                            )
+                                        ) {
+                                            NFTCollectionView(collection: collection)
+                                                .equatable()
+                                                .cardStyle()
+                                                .onAppear {
+                                                    viewModel.fetchCollectionIfNeeded(for: collection)
+                                                }
                                         }
-                                }
-                                .simultaneousGesture(
-                                    TapGesture().onEnded {
-                                        showTab = false
-                                        vibrate(.heavy)
+                                        .simultaneousGesture(
+                                            TapGesture().onEnded {
+                                                showTab = false
+                                                vibrate(.heavy)
+                                            }
+                                        )
+                                        .buttonStyle(.plain)
                                     }
-                                )
-                                .buttonStyle(.plain)
+                                }
+                                .padding(EdgeInsets(top: 30, leading: 10, bottom: 30, trailing: 10))
+                                GeometryReader { proxy in
+                                    let offset = proxy.frame(in: .named("scroll")).minY
+                                    Color.clear.preference(key: ScrollViewOffsetPreferenceKey.self, value: offset)
+                                }
                             }
                         }
-                        .padding(EdgeInsets(top: 30, leading: 10, bottom: 30, trailing: 10))
-                        GeometryReader { proxy in
-                            let offset = proxy.frame(in: .named("scroll")).minY
-                            Color.clear.preference(key: ScrollViewOffsetPreferenceKey.self, value: offset)
+                        .hideTabbar(show: $showTab, scrollPosition: $scrollPosition)
+                        
+                        if #available(iOS 15.0, *) {
+                            list
+                            //                    .searchable(
+                            //                        text: $viewModel.searchText,
+                            //                        placement: .navigationBarDrawer(displayMode: .always)
+                            //                    )
+                        } else {
+                            list
                         }
                     }
                 }
                 .navigationTitle("Explore Collections")
-                .hideTabbar(show: $showTab, scrollPosition: $scrollPosition)
-                
-                if #available(iOS 15.0, *) {
-                    list
-//                    .searchable(
-//                        text: $viewModel.searchText,
-//                        placement: .navigationBarDrawer(displayMode: .always)
-//                    )
-                } else {
-                    list
-                }
             }
         }
     }

@@ -19,7 +19,6 @@ final class NFTListViewModel: ObservableObject {
     }
     
     @Published var state: State = .loading
-    @Published var nftsViewModel: [NFTViewModel] = []
     @Published var showDetails: Bool = false
     @Published var nftDetails: NFTViewModel = .empty
     @Published var showShareMedia: Bool = false
@@ -27,6 +26,7 @@ final class NFTListViewModel: ObservableObject {
     
     @Published private var nfts: [NFT] = []
     
+    private var nftsViewModel: [NFTViewModel] = []
     private var currentOffset = 0
     private let limit = 20
     private var isFetching = false
@@ -63,7 +63,9 @@ final class NFTListViewModel: ObservableObject {
                 $0.map(NFTViewModel.init)
             }
             .sink { [weak self] nfts in
-                self?.state = .loaded(nfts: nfts)
+                guard let self = self else { return }
+                self.nftsViewModel = nfts
+                self.state = .loaded(nfts: self.nftsViewModel)
             }
             .store(in: &cancellables)
     }

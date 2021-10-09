@@ -10,8 +10,17 @@ import Foundation
 
 final class NFTCollectionListViewModel: ObservableObject {
     
-    @Published var collectionViewModels: [NFTCollectionViewModel] = []
+    enum State {
+        case loading
+        case error(message: String)
+        case loaded(collections: [NFTCollectionViewModel])
+    }
+    
+    @Published var state: State = .loading
+    @Published var searchText = ""
+    
     @Published private var collections: [NFTCollection] = []
+    private var collectionViewModels: [NFTCollectionViewModel] = []
     private var currentOffset = 0
     private var isFetching = false
     private var reachedEnd = false
@@ -31,7 +40,12 @@ final class NFTCollectionListViewModel: ObservableObject {
             .map {
                 $0.map(NFTCollectionViewModel.init)
             }
-            .assign(to: &$collectionViewModels)
+            .sink { [weak self] collections in
+                guard let self = self else { return }
+                self.collectionViewModels = collections
+                self.state = .loaded(collections: self.collectionViewModels)
+            }
+            .store(in: &cancellables)
     }
     
     func fetchCollectionIfNeeded(for collection: NFTCollectionViewModel) {
@@ -40,6 +54,10 @@ final class NFTCollectionListViewModel: ObservableObject {
         if reachedThreshold {
             fetchCollections(offset: currentOffset)
         }
+    }
+    
+    func refetch() {
+        fetchCollections(offset: currentOffset)
     }
     
     func fetchCollections(offset: Int) {
@@ -51,13 +69,12 @@ final class NFTCollectionListViewModel: ObservableObject {
             offset: currentOffset,
             limit: limit
         )
-        .sink { completion in
+        .sink { [weak self] completion in
             switch completion {
             case .finished:
                 break
-            case .failure(let error):
-                // TODO: handle error
-                print("***\(error)")
+            case .failure:
+                self?.state = .error(message: "Something went wrong. Please try again later.")
             }
         } receiveValue: { [weak self] fetchedCollections in
             guard let self = self else { return }
