@@ -63,6 +63,7 @@
 		3D8FBF8226F257CC0051B8B8 /* NFTs.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 3D8FBF8026F257CC0051B8B8 /* NFTs.xcdatamodeld */; };
 		3D92920926CD1B5E00F4A772 /* AttributeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D92920826CD1B5E00F4A772 /* AttributeView.swift */; };
 		3D9A409B26C9FC180063B448 /* PillView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D9A409A26C9FC180063B448 /* PillView.swift */; };
+		3DB4A4C32711865300AA2F74 /* ErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DB4A4C22711865300AA2F74 /* ErrorView.swift */; };
 		3DC19B3327084C8500B9530A /* PrimaryButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DC19B3227084C8500B9530A /* PrimaryButtonStyle.swift */; };
 		3DC19B362708524800B9530A /* View+Vibration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DC19B352708524800B9530A /* View+Vibration.swift */; };
 		3DC1A27626C8B7C2005767B5 /* NFTAttributeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DC1A27526C8B7C2005767B5 /* NFTAttributeViewModel.swift */; };
@@ -153,6 +154,7 @@
 		3D8FBF8126F257CC0051B8B8 /* NFTs.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = NFTs.xcdatamodel; sourceTree = "<group>"; };
 		3D92920826CD1B5E00F4A772 /* AttributeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttributeView.swift; sourceTree = "<group>"; };
 		3D9A409A26C9FC180063B448 /* PillView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PillView.swift; sourceTree = "<group>"; };
+		3DB4A4C22711865300AA2F74 /* ErrorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorView.swift; sourceTree = "<group>"; };
 		3DC19B3227084C8500B9530A /* PrimaryButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrimaryButtonStyle.swift; sourceTree = "<group>"; };
 		3DC19B352708524800B9530A /* View+Vibration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Vibration.swift"; sourceTree = "<group>"; };
 		3DC1A27526C8B7C2005767B5 /* NFTAttributeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NFTAttributeViewModel.swift; sourceTree = "<group>"; };
@@ -339,6 +341,7 @@
 				3D8FBF7C26F2508E0051B8B8 /* BackButtonView.swift */,
 				3D0F46DA26C7DA250044E89A /* BottomCardView.swift */,
 				3D0F46DC26C7DB4C0044E89A /* BlurView.swift */,
+				3DB4A4C22711865300AA2F74 /* ErrorView.swift */,
 				3D8F0D4526CDDED9006ABEB4 /* MultilineHStack.swift */,
 				3D9A409A26C9FC180063B448 /* PillView.swift */,
 				3D0F46D826C7C9820044E89A /* PlayerLoopView.swift */,
@@ -631,6 +634,7 @@
 				3DC1A27626C8B7C2005767B5 /* NFTAttributeViewModel.swift in Sources */,
 				3D8F0D4F26D2555F006ABEB4 /* ZoomableScrollView.swift in Sources */,
 				3D773FF626E0DF3900BEA63F /* NFTCollectionSwipeView.swift in Sources */,
+				3DB4A4C32711865300AA2F74 /* ErrorView.swift in Sources */,
 				3D86BF0726C4F7E000BF2FB0 /* ERC721Metadata.swift in Sources */,
 				3D773FED26E0C6AE00BEA63F /* NFTCollectionViewModel.swift in Sources */,
 				3D700A4026DE560E008F0A96 /* SVGImageView.swift in Sources */,
