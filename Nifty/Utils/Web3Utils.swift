@@ -14,7 +14,7 @@ protocol Web3Utils {
 struct Web3UtilsImpl: Web3Utils {
     
     func isValidEthereumAddress(_ hex: String) -> Bool {
-        guard let _ = try? EthAddress(hex: hex, eip55: true) else { return false }
+        guard let _ = try? EthAddress(hex: hex, eip55: false) else { return false }
         return true
     }
 }
