@@ -26,7 +26,7 @@ struct NewWalletView: View {
                 )
             }
             Button("Paste") {
-                print("pasted")
+                viewModel.handlePaste(address: UIPasteboard.general.string)
             }
             Spacer()
         }

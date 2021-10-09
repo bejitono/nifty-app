@@ -36,6 +36,11 @@ final class NewWalletViewModel: ObservableObject {
         web3Utils.isValidEthereumAddress(hex)
     }
     
+    func handlePaste(address: String?) {
+        guard let address = address else { return }
+        self.address = address
+    }
+    
     func onNewAddressInput(_ address: String) {
         if buttonState == .invalid {
             buttonState = .valid

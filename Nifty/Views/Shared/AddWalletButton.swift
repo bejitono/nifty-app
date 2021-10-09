@@ -20,7 +20,7 @@ struct AddWalletButton: View {
     
     var body: some View {
         Button(action: {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.09) {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.055) {
                 onPress()
             }
         }) {

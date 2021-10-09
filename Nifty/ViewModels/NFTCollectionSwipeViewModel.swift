@@ -55,7 +55,7 @@ final class NFTCollectionSwipeViewModel: ObservableObject {
             }
             .store(in: &cancellables)
         
-        // Initially assign 4 nfts to current stack
+        // Initially assign 4 nfts to current card swipe stack
         $nftViewModels
             .prefix(2)
             .sink { [weak self] viewModels in
