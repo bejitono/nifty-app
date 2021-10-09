@@ -12,12 +12,21 @@ import MobileCoreServices
 
 final class NFTListViewModel: ObservableObject {
     
+    enum State {
+        case loading
+        case error(message: String)
+        case loaded(nfts: [NFTViewModel])
+    }
+    
+    @Published var state: State = .loading
     @Published var nftsViewModel: [NFTViewModel] = []
     @Published var showDetails: Bool = false
     @Published var nftDetails: NFTViewModel = .empty
     @Published var showShareMedia: Bool = false
     @Published var sharedMedia: MediaViewModel?
+    
     @Published private var nfts: [NFT] = []
+    
     private var currentOffset = 0
     private let limit = 20
     private var isFetching = false
@@ -53,7 +62,10 @@ final class NFTListViewModel: ObservableObject {
             .map {
                 $0.map(NFTViewModel.init)
             }
-            .assign(to: &$nftsViewModel)
+            .sink { [weak self] nfts in
+                self?.state = .loaded(nfts: nfts)
+            }
+            .store(in: &cancellables)
     }
     
     func handleTapOn(nft: NFTViewModel) {
@@ -101,18 +113,16 @@ final class NFTListViewModel: ObservableObject {
                 return nfts
             }
             .flatMap(mediaPublisher)
-            .sink { completion in
+            .sink { [weak self] completion in
+                guard let self = self else { return }
                 switch completion {
                 case .finished:
                     break
-                case .failure(let error):
-                    // TODO: handle error
-                    print("***\(error)")
+                case .failure:
+                    self.state = .error(message: "Something went wrong. Please try again later.")
                 }
             } receiveValue: { [weak self] fetchedNFT in
                 guard let self = self else { return }
-                print("****** received value: \(fetchedNFT)")
-                print("hi")
                 self.nfts = self.nfts.compactMap { nft in
                     if nft.hash == fetchedNFT.hash {
                         guard let media = fetchedNFT.media else { return nil }
@@ -158,7 +168,7 @@ final class NFTListViewModel: ObservableObject {
         var url: URL
         if let videoURLString = nft.metadata?.animationURL,
            let videoURL = URL(string: videoURLString),
-           supportedVideoFileExtensions().contains(videoURL.pathExtension) {
+           supportedVideoFileExtensions.contains(videoURL.pathExtension) {
             url = videoURL
         } else {
             url = imageURL
@@ -197,7 +207,7 @@ final class NFTListViewModel: ObservableObject {
 //            .eraseToAnyPublisher()
     }
     
-    private func supportedVideoFileExtensions() -> [String] {
+    private var supportedVideoFileExtensions: [String] {
         let avTypes = AVURLAsset.audiovisualTypes()
         var avExtensions = avTypes.map({ UTTypeCopyPreferredTagWithClass($0 as CFString, kUTTagClassFilenameExtension)?.takeRetainedValue() as String? ?? "" })
         avExtensions = avExtensions.filter { !$0.isEmpty }

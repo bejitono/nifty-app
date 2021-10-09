@@ -26,34 +26,23 @@ struct NFTListView: View {
             ZStack {
                 AppGradient()
                 VStack {
-                    ScrollView {
-                        ZStack {
-                            LazyVStack(spacing: 40) {
-                                // TODO: view for empty and error state
-                                ForEach(viewModel.nftsViewModel, id: \.id) { nft in
-                                    NFTView(nft: nft)
-                                        .equatable()
-                                        .cardStyle()
-                                        .onAppear {
-                                            viewModel.fetchNFTsIfNeeded(for: nft)
-                                        }
-                                        .onTapGesture {
-                                            vibrate(.heavy)
-                                            viewModel.handleTapOn(nft: nft)
-                                        }
-                                }
-                            }
-                            .padding(EdgeInsets(top: 30, leading: 10, bottom: 30, trailing: 10))
-                            GeometryReader { proxy in
-                                let offset = proxy.frame(in: .named("scroll")).minY
-                                Color.clear.preference(key: ScrollViewOffsetPreferenceKey.self, value: offset)
-                            }
-                        }
+                    switch viewModel.state {
+                    case .loading:
+                        ProgressView()
+                    case .error(let message):
+                        ErrorView(message: message, onTapTryAgain: viewModel.refetch)
+                    case .loaded(nfts: let nfts):
+                        NFTScrollView(
+                            nfts: nfts,
+                            onAppear: viewModel.fetchNFTsIfNeeded,
+                            onTapGesture: viewModel.handleTapOn
+                        )
+                        .hideTabbar(show: $showTab, scrollPosition: $scrollPosition)
                     }
-                    .navigationTitle("My NFTs")
-                    .coordinateSpace(name: "scroll")
-                    .hideTabbar(show: $showTab, scrollPosition: $scrollPosition)
                 }
+                .navigationTitle("My NFTs")
+                .coordinateSpace(name: "scroll")
+                
                 BottomCardView(
                     show: $viewModel.showDetails,
                     model: $viewModel.nftDetails
