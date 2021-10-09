@@ -11,6 +11,7 @@ struct SavedNFTListView: View {
     
     @ObservedObject var viewModel: SavedNFTListViewModel
     @Binding var showTab: Bool
+    @Environment(\.openURL) var openURL
     
     @State private var scrollPosition = CGFloat.zero
     
@@ -67,7 +68,10 @@ struct SavedNFTListView: View {
                             Text(nft.description)
                             if let url = URL(string: nft.permalink
                                              + AppConstants.referralQueryItem) {
-                                Link(destination: url) {
+                                Button {
+                                    openURL(url)
+                                    viewModel.onLinkTap()
+                                } label: {
                                     Text("View on Opensea")
                                         .foregroundColor(.white)
                                         .bold()
@@ -75,7 +79,6 @@ struct SavedNFTListView: View {
                                 .buttonStyle(PrimaryButtonStyle(wide: true))
                                 .padding(.top, 20)
                             }
-
                         }
                         .frame(
                             minWidth: 0,

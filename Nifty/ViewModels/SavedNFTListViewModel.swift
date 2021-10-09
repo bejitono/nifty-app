@@ -54,4 +54,11 @@ final class SavedNFTListViewModel: ObservableObject {
         nftDetails = nft
         showDetails = true
     }
+    
+    func onLinkTap() {
+        // Slight delay to not close bototm card while url is opened
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            self.showDetails = false
+        }
+    }
 }
