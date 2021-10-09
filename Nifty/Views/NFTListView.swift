@@ -125,6 +125,40 @@ struct NFTListView: View {
     }
 }
 
+struct NFTScrollView: View {
+    
+    let nfts: [NFTViewModel]
+    let onAppear: (NFTViewModel) -> Void
+    let onTapGesture: (NFTViewModel) -> Void
+    
+    var body: some View {
+        ScrollView {
+            ZStack {
+                LazyVStack(spacing: 40) {
+                    // TODO: view for empty and error state
+                    ForEach(nfts, id: \.id) { nft in
+                        NFTView(nft: nft)
+                            .equatable()
+                            .cardStyle()
+                            .onAppear {
+                                onAppear(nft)
+                            }
+                            .onTapGesture {
+                                vibrate(.heavy)
+                                onTapGesture(nft)
+                            }
+                    }
+                }
+                .padding(EdgeInsets(top: 30, leading: 10, bottom: 30, trailing: 10))
+                GeometryReader { proxy in
+                    let offset = proxy.frame(in: .named("scroll")).minY
+                    Color.clear.preference(key: ScrollViewOffsetPreferenceKey.self, value: offset)
+                }
+            }
+        }
+    }
+}
+
 // MARK: - Constants
 
 private extension CGFloat {
