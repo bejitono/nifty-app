@@ -64,6 +64,7 @@
 		3D92920926CD1B5E00F4A772 /* AttributeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D92920826CD1B5E00F4A772 /* AttributeView.swift */; };
 		3D9A409B26C9FC180063B448 /* PillView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D9A409A26C9FC180063B448 /* PillView.swift */; };
 		3DB4A4C32711865300AA2F74 /* ErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DB4A4C22711865300AA2F74 /* ErrorView.swift */; };
+		3DB4A4C527118DC900AA2F74 /* NavigationLinkStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DB4A4C427118DC900AA2F74 /* NavigationLinkStyle.swift */; };
 		3DC19B3327084C8500B9530A /* PrimaryButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DC19B3227084C8500B9530A /* PrimaryButtonStyle.swift */; };
 		3DC19B362708524800B9530A /* View+Vibration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DC19B352708524800B9530A /* View+Vibration.swift */; };
 		3DC1A27626C8B7C2005767B5 /* NFTAttributeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DC1A27526C8B7C2005767B5 /* NFTAttributeViewModel.swift */; };
@@ -155,6 +156,7 @@
 		3D92920826CD1B5E00F4A772 /* AttributeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttributeView.swift; sourceTree = "<group>"; };
 		3D9A409A26C9FC180063B448 /* PillView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PillView.swift; sourceTree = "<group>"; };
 		3DB4A4C22711865300AA2F74 /* ErrorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorView.swift; sourceTree = "<group>"; };
+		3DB4A4C427118DC900AA2F74 /* NavigationLinkStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationLinkStyle.swift; sourceTree = "<group>"; };
 		3DC19B3227084C8500B9530A /* PrimaryButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrimaryButtonStyle.swift; sourceTree = "<group>"; };
 		3DC19B352708524800B9530A /* View+Vibration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Vibration.swift"; sourceTree = "<group>"; };
 		3DC1A27526C8B7C2005767B5 /* NFTAttributeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NFTAttributeViewModel.swift; sourceTree = "<group>"; };
@@ -221,6 +223,7 @@
 			children = (
 				3D773FF826E0E06800BEA63F /* CardModifier.swift */,
 				3D79057D2709A68B0025E681 /* HideTabbarOnScrollViewModifier.swift */,
+				3DB4A4C427118DC900AA2F74 /* NavigationLinkStyle.swift */,
 				3DC19B3227084C8500B9530A /* PrimaryButtonStyle.swift */,
 				3D8F0D5026D27A13006ABEB4 /* View+ViewModifiers.swift */,
 				3D5F59E926FF4CC300C992D2 /* RoundedCornerModifier.swift */,
@@ -633,6 +636,7 @@
 				3D773FF926E0E06800BEA63F /* CardModifier.swift in Sources */,
 				3DC1A27626C8B7C2005767B5 /* NFTAttributeViewModel.swift in Sources */,
 				3D8F0D4F26D2555F006ABEB4 /* ZoomableScrollView.swift in Sources */,
+				3DB4A4C527118DC900AA2F74 /* NavigationLinkStyle.swift in Sources */,
 				3D773FF626E0DF3900BEA63F /* NFTCollectionSwipeView.swift in Sources */,
 				3DB4A4C32711865300AA2F74 /* ErrorView.swift in Sources */,
 				3D86BF0726C4F7E000BF2FB0 /* ERC721Metadata.swift in Sources */,
