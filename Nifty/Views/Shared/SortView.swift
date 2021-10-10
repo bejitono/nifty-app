@@ -13,7 +13,7 @@ final class SortViewModel: ObservableObject {
     
     init() {
         let user: User? = UserCache().get()
-        let sortType = user?.settings.sort ?? .tokenIdAsc
+        let sortType = user?.settings.sort ?? .priceDesc
         select(sortType)
     }
     

@@ -30,6 +30,7 @@ final class NFTCollectionSwipeViewModel: ObservableObject {
     private var isFetching = false
     private let nftRepository: NFTCollectionFetcheable & NFTPersistable
     private let mediaRepository: MediaFetcheable
+    private let userCache: UserCache
     private let contractAddress: String
     private var cancellables = Set<AnyCancellable>()
     
@@ -37,14 +38,22 @@ final class NFTCollectionSwipeViewModel: ObservableObject {
         collectionName: String,
         contractAddress: String,
         nftRepository: NFTCollectionFetcheable & NFTPersistable = NFTRepository(),
-        mediaRepository: MediaFetcheable = MediaRepository()
+        mediaRepository: MediaFetcheable = MediaRepository(),
+        userCache: UserCache = UserCache()
     ) {
         self.collectionName = collectionName
         self.contractAddress = contractAddress
         self.nftRepository = nftRepository
         self.mediaRepository = mediaRepository
-        fetchNFTs(offset: currentOffset)
-        // being called many times
+        self.userCache = userCache
+        
+        let user: User? = userCache.get()
+        let sortType = user?.settings.sort ?? .priceDesc
+        fetchNFTs(
+            offset: currentOffset,
+            sort: sortType
+        )
+        
         $nfts
             .map {
                 $0.map(NFTViewModel.init)
@@ -57,7 +66,6 @@ final class NFTCollectionSwipeViewModel: ObservableObject {
         
         // Initially assign 4 nfts to current card swipe stack
         $nftViewModels
-            .prefix(2)
             .sink { [weak self] viewModels in
                 guard let self = self else { return }
                 var initialNFTs: [NFTViewModel] = []
@@ -103,6 +111,19 @@ final class NFTCollectionSwipeViewModel: ObservableObject {
         }
     }
     
+    func updateSort(_ type: SortItem.SortType) {
+        resetState()
+        fetchNFTs(offset: currentOffset, sort: type)
+        if let user: User = userCache.get() {
+            userCache.set(
+                User(
+                    wallet: user.wallet,
+                    settings: Settings(sort: type)
+                )
+            )
+        }
+    }
+    
     private func fetchNFTsIfNeeded(for currentNFT: NFTViewModel) {
         guard !isFetching, let index: Int = nftViewModels.firstIndex(of: currentNFT) else { return }
         let reachedThreshold = Double(index) / Double(nftViewModels.count) > 0.7
@@ -111,11 +132,11 @@ final class NFTCollectionSwipeViewModel: ObservableObject {
         }
     }
     
-    private func fetchNFTs(offset: Int) {
+    private func fetchNFTs(offset: Int, sort: SortItem.SortType = .priceDesc) {
         let limit = 20
         isFetching = true
         
-        nftRepository.fetchNFTs(forContractAddress: contractAddress, offset: offset, limit: limit)
+        nftRepository.fetchNFTs(forContractAddress: contractAddress, offset: offset, limit: limit, sort: sort)
             .sink { completion in
                 switch completion {
                 case .finished:
@@ -131,5 +152,12 @@ final class NFTCollectionSwipeViewModel: ObservableObject {
                 self.nfts.append(contentsOf: nfts)
             }
             .store(in: &cancellables)
+    }
+    
+    private func resetState() {
+        currentOffset = 0
+        nftViewModels = []
+        currentNFTs = []
+        nfts = []
     }
 }

@@ -53,7 +53,10 @@ final class NewWalletViewModel: ObservableObject {
         if isValidEthereumAddress(address) {
             buttonState = .valid
             // handle new address
-            let user = User(wallet: Wallet(address: address))
+            let user = User(
+                wallet: Wallet(address: address),
+                settings: Settings(sort: .priceDesc)
+            )
             userCache.set(user)
             self.user = user
             return
@@ -71,7 +74,10 @@ final class NewWalletViewModel: ObservableObject {
                 guard let self = self else { return }
                 // handle new address
                 print("from ens: ", ethAddress)
-                let user = User(wallet: Wallet(address: ethAddress))
+                let user = User(
+                    wallet: Wallet(address: ethAddress),
+                    settings: Settings(sort: .priceDesc)
+                )
                 self.userCache.set(user)
                 self.user = user
             }

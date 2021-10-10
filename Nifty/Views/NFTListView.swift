@@ -16,7 +16,7 @@ struct NFTListView: View {
     
     init(
         showTab: Binding<Bool>,
-        viewModel: NFTListViewModel = NFTListViewModel(user: User(wallet: Wallet(address: "0xD3e9D60e4E4De615124D5239219F32946d10151D")))) {
+        viewModel: NFTListViewModel = NFTListViewModel(user: User(wallet: Wallet(address: "0xD3e9D60e4E4De615124D5239219F32946d10151D"), settings: Settings(sort: .tokenIdAsc)))) {
         self.viewModel = viewModel
         self._showTab = showTab
     }

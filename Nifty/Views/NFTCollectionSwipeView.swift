@@ -13,6 +13,7 @@ struct NFTCollectionSwipeView: View {
     @State var side = CGSize.zero
     @State var movingItem: Int?
     @State var swipeDirection: SwipeDirection = .none
+    @State private var showSortView = false
     
     @ObservedObject private var viewModel: NFTCollectionSwipeViewModel
     
@@ -83,14 +84,19 @@ struct NFTCollectionSwipeView: View {
             Spacer()
         }
         .navigationBarTitle(viewModel.collectionName)
-        .navigationBarTitle(viewModel.collectionName)
-//        .navigationBarBackButtonHidden(true)
-//        .navigationBarItems(leading: Button(action : {
-//            self.mode.wrappedValue.dismiss()
-//        }){
-//            Image(systemName: "arrow.left")
-//                .foregroundColor(.black)
-//        })
+        .navigationBarItems(
+            trailing:
+                Button(action: {
+                    showSortView = true
+                }, label: {
+                    Image(systemName: Images.sort)
+                })
+                .sheet(isPresented: $showSortView) {
+                    SortView(show: $showSortView) { type in
+                        viewModel.updateSort(type)
+                    }
+                }
+        )
     }
     
     private func scale(index: Int, total: Int) -> CGFloat {
