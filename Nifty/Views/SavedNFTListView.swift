@@ -36,13 +36,16 @@ struct SavedNFTListView: View {
                         ZStack {
                             LazyVStack(spacing: 40) {
                                 ForEach(viewModel.nftViewModels, id: \.id) { nft in
-                                    SavedNFTView(nft: nft)
-                                        .equatable()
-                                        .cardStyle()
-                                        .onTapGesture {
-                                            vibrate(.heavy)
-                                            viewModel.handleTapOn(nft: nft)
-                                        }
+                                    Button { } label: {
+                                        SavedNFTView(nft: nft)
+                                            .equatable()
+                                            .cardStyle()
+                                            .onTapGesture {
+                                                vibrate(.heavy)
+                                                viewModel.handleTapOn(nft: nft)
+                                            }
+                                    }
+                                    .buttonStyle(CardButtonStyle())
                                 }
                             }
                             .padding(EdgeInsets(top: 30, leading: 10, bottom: 30, trailing: 10))

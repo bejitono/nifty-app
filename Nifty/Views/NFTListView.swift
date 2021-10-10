@@ -107,11 +107,6 @@ struct NFTListView: View {
         }
         return svgImage.uiImage
     }
-    
-    func vibrate(_ type: UIImpactFeedbackGenerator.FeedbackStyle) {
-        let generator = UIImpactFeedbackGenerator(style: type)
-        generator.impactOccurred()
-    }
 }
 
 struct NFTScrollView: View {
@@ -124,18 +119,20 @@ struct NFTScrollView: View {
         ScrollView {
             ZStack {
                 LazyVStack(spacing: 40) {
-                    // TODO: view for empty and error state
                     ForEach(nfts, id: \.id) { nft in
-                        NFTView(nft: nft)
-                            .equatable()
-                            .cardStyle()
-                            .onAppear {
-                                onAppear(nft)
-                            }
-                            .onTapGesture {
-                                vibrate(.heavy)
-                                onTapGesture(nft)
-                            }
+                        Button { } label: {
+                            NFTView(nft: nft)
+                                .equatable()
+                                .cardStyle()
+                                .onAppear {
+                                    onAppear(nft)
+                                }
+                                .onTapGesture {
+                                    vibrate(.heavy)
+                                    onTapGesture(nft)
+                                }
+                        }
+                        .buttonStyle(CardButtonStyle())
                     }
                 }
                 .padding(EdgeInsets(top: 30, leading: 10, bottom: 30, trailing: 10))

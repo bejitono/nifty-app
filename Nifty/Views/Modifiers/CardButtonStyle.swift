@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct NavigationLinkStyle: ButtonStyle {
+struct CardButtonStyle: ButtonStyle {
     
     func makeBody(configuration: Configuration) -> some View {
         configuration.label

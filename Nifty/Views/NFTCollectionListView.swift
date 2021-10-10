@@ -55,7 +55,7 @@ struct NFTCollectionListView: View {
                                                 vibrate(.heavy)
                                             }
                                         )
-                                        .buttonStyle(NavigationLinkStyle())
+                                        .buttonStyle(CardButtonStyle())
                                     }
                                 }
                                 .padding(EdgeInsets(top: 30, leading: 10, bottom: 30, trailing: 10))
