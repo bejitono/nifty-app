@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3D0B26252712D7C90071FA68 /* LazyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D0B26242712D7C90071FA68 /* LazyView.swift */; };
 		3D0F46D926C7C9820044E89A /* PlayerLoopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D0F46D826C7C9820044E89A /* PlayerLoopView.swift */; };
 		3D0F46DB26C7DA250044E89A /* BottomCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D0F46DA26C7DA250044E89A /* BottomCardView.swift */; };
 		3D0F46DD26C7DB4C0044E89A /* BlurView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D0F46DC26C7DB4C0044E89A /* BlurView.swift */; };
@@ -65,6 +66,7 @@
 		3D9A409B26C9FC180063B448 /* PillView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D9A409A26C9FC180063B448 /* PillView.swift */; };
 		3DB4A4C32711865300AA2F74 /* ErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DB4A4C22711865300AA2F74 /* ErrorView.swift */; };
 		3DB4A4C527118DC900AA2F74 /* NavigationLinkStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DB4A4C427118DC900AA2F74 /* NavigationLinkStyle.swift */; };
+		3DB4A4C92711C5E900AA2F74 /* FilterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DB4A4C82711C5E900AA2F74 /* FilterView.swift */; };
 		3DC19B3327084C8500B9530A /* PrimaryButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DC19B3227084C8500B9530A /* PrimaryButtonStyle.swift */; };
 		3DC19B362708524800B9530A /* View+Vibration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DC19B352708524800B9530A /* View+Vibration.swift */; };
 		3DC1A27626C8B7C2005767B5 /* NFTAttributeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DC1A27526C8B7C2005767B5 /* NFTAttributeViewModel.swift */; };
@@ -106,6 +108,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		3D0B26242712D7C90071FA68 /* LazyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LazyView.swift; sourceTree = "<group>"; };
 		3D0F46D826C7C9820044E89A /* PlayerLoopView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerLoopView.swift; sourceTree = "<group>"; };
 		3D0F46DA26C7DA250044E89A /* BottomCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomCardView.swift; sourceTree = "<group>"; };
 		3D0F46DC26C7DB4C0044E89A /* BlurView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlurView.swift; sourceTree = "<group>"; };
@@ -157,6 +160,7 @@
 		3D9A409A26C9FC180063B448 /* PillView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PillView.swift; sourceTree = "<group>"; };
 		3DB4A4C22711865300AA2F74 /* ErrorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorView.swift; sourceTree = "<group>"; };
 		3DB4A4C427118DC900AA2F74 /* NavigationLinkStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationLinkStyle.swift; sourceTree = "<group>"; };
+		3DB4A4C82711C5E900AA2F74 /* FilterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterView.swift; sourceTree = "<group>"; };
 		3DC19B3227084C8500B9530A /* PrimaryButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrimaryButtonStyle.swift; sourceTree = "<group>"; };
 		3DC19B352708524800B9530A /* View+Vibration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Vibration.swift"; sourceTree = "<group>"; };
 		3DC1A27526C8B7C2005767B5 /* NFTAttributeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NFTAttributeViewModel.swift; sourceTree = "<group>"; };
@@ -294,6 +298,7 @@
 				3D8F0D5226D27A9B006ABEB4 /* NewWalletView.swift */,
 				3D24A7FD26E35364004BC218 /* TabBar.swift */,
 				3D67B8E226F25F8600EB102D /* SavedNFTListView.swift */,
+				3DB4A4C82711C5E900AA2F74 /* FilterView.swift */,
 				3DC19B342708523400B9530A /* Extensions */,
 				3DF8939C26FF1D8E00B66A01 /* Factories */,
 				3D773FF726E0E05500BEA63F /* Modifiers */,
@@ -352,6 +357,7 @@
 				3D700A3F26DE560E008F0A96 /* SVGImageView.swift */,
 				3D8F0D4726CDE3F2006ABEB4 /* Title.swift */,
 				3D8F0D4E26D2555F006ABEB4 /* ZoomableScrollView.swift */,
+				3D0B26242712D7C90071FA68 /* LazyView.swift */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -638,9 +644,11 @@
 				3D8F0D4F26D2555F006ABEB4 /* ZoomableScrollView.swift in Sources */,
 				3DB4A4C527118DC900AA2F74 /* NavigationLinkStyle.swift in Sources */,
 				3D773FF626E0DF3900BEA63F /* NFTCollectionSwipeView.swift in Sources */,
+				3DB4A4C92711C5E900AA2F74 /* FilterView.swift in Sources */,
 				3DB4A4C32711865300AA2F74 /* ErrorView.swift in Sources */,
 				3D86BF0726C4F7E000BF2FB0 /* ERC721Metadata.swift in Sources */,
 				3D773FED26E0C6AE00BEA63F /* NFTCollectionViewModel.swift in Sources */,
+				3D0B26252712D7C90071FA68 /* LazyView.swift in Sources */,
 				3D700A4026DE560E008F0A96 /* SVGImageView.swift in Sources */,
 				3DF893A026FF1EB700B66A01 /* NFTCollectionFactory.swift in Sources */,
 				3DF9F4B926BF6F9D00C23005 /* Web3Repository.swift in Sources */,

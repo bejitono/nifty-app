@@ -31,7 +31,7 @@ protocol NFTFetcheable {
 
 protocol NFTCollectionFetcheable {
     func fetchCollections(forAddress address: String, offset: Int, limit: Int) -> AnyPublisher<[NFTCollection], Error>
-    func fetchNFTs(forContractAddress contractAddress: String, offset: Int, limit: Int) -> AnyPublisher<[NFT], Error>
+    func fetchNFTs(forContractAddress contractAddress: String, offset: Int, limit: Int, sort: SortItem.SortType) -> AnyPublisher<[NFT], Error>
 }
 
 final class NFTRepository: NFTFetcheable,
@@ -118,8 +118,13 @@ final class NFTRepository: NFTFetcheable,
         openSeaRepository.fetchNFTs(forAddress: address, offset: offset, limit: limit)
     }
     
-    func fetchNFTs(forContractAddress contractAddress: String, offset: Int, limit: Int) -> AnyPublisher<[NFT], Error> {
-        openSeaRepository.fetchNFTs(forContractAddress: contractAddress, offset: offset, limit: limit)
+    func fetchNFTs(
+        forContractAddress contractAddress: String,
+        offset: Int,
+        limit: Int,
+        sort: SortItem.SortType
+    ) -> AnyPublisher<[NFT], Error> {
+        openSeaRepository.fetchNFTs(forContractAddress: contractAddress, offset: offset, limit: limit, sort: sort)
     }
     
     func fetchCollections(forAddress address: String, offset: Int, limit: Int) -> AnyPublisher<[NFTCollection], Error> {
