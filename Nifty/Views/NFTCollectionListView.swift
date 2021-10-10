@@ -14,7 +14,7 @@ struct NFTCollectionListView: View {
     
     @State private var scrollPosition = CGFloat.zero
     
-    init(showTab: Binding<Bool>, viewModel: NFTCollectionListViewModel = NFTCollectionListViewModel(user: User(wallet: Wallet(address: "0xD3e9D60e4E4De615124D5239219F32946d10151D")))) {
+    init(showTab: Binding<Bool>, viewModel: NFTCollectionListViewModel = NFTCollectionListViewModel(user: User(wallet: Wallet(address: "0xD3e9D60e4E4De615124D5239219F32946d10151D"), settings: Settings(sort: .tokenIdAsc)))) {
         self.viewModel = viewModel
         self._showTab = showTab
     }
@@ -35,9 +35,12 @@ struct NFTCollectionListView: View {
                                 LazyVStack(spacing: 40) {
                                     ForEach(collections, id: \.id) { collection in
                                         NavigationLink(
-                                            destination: NFTCollectionSwipeView(
-                                                viewModel: NFTCollectionSwipeViewModel(collectionName: collection.name, contractAddress: collection.contractAddress)
-                                            )
+                                            destination:
+                                                LazyView(
+                                                    NFTCollectionSwipeView(
+                                                        viewModel: NFTCollectionSwipeViewModel(collectionName: collection.name, contractAddress: collection.contractAddress)
+                                                    )
+                                                )
                                         ) {
                                             NFTCollectionView(collection: collection)
                                                 .equatable()
