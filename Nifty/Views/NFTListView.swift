@@ -145,14 +145,6 @@ struct NFTScrollView: View {
     }
 }
 
-// MARK: - Constants
-
-private extension CGFloat {
-    static let cornerRadius: CGFloat = 20
-    static let shadowYOffset: CGFloat = 15
-    static let shadowXOffset: CGFloat = 0
-}
-
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         NFTListView(showTab: .constant(true))

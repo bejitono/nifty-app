@@ -12,6 +12,7 @@ final class SavedNFTListViewModel: ObservableObject {
     
     @Published var nftViewModels: [SavedNFTViewModel] = []
     @Published var showDetails: Bool = false
+    @Published var showShareMedia: Bool = false
     @Published var nftDetails: SavedNFTViewModel = .empty
 //    @Published private var nfts: [NFT] = []
     
@@ -57,8 +58,13 @@ final class SavedNFTListViewModel: ObservableObject {
     
     func onLinkTap() {
         // Slight delay to not close bototm card while url is opened
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-            self.showDetails = false
-        }
+//        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+//            self.showDetails = false
+//        }
+        showShareMedia = true
+    }
+    
+    func onShareFinished() {
+        showDetails = false
     }
 }

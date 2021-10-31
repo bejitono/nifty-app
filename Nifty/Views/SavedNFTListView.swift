@@ -69,19 +69,15 @@ struct SavedNFTListView: View {
                             }
                             Title(nft.name)
                             Text(nft.description)
-                            if let url = URL(string: nft.permalink
-                                             + AppConstants.referralQueryItem) {
-                                Button {
-                                    openURL(url)
-                                    viewModel.onLinkTap()
-                                } label: {
-                                    Text("View on Opensea")
-                                        .foregroundColor(.white)
-                                        .bold()
-                                }
-                                .buttonStyle(PrimaryButtonStyle(wide: true))
-                                .padding(.top, 20)
+                            Button {
+                                viewModel.onLinkTap()
+                            } label: {
+                                Text("Share")
+                                    .foregroundColor(.white)
+                                    .bold()
                             }
+                            .buttonStyle(PrimaryButtonStyle(wide: true))
+                            .padding(.top, 20)
                         }
                         .frame(
                             minWidth: 0,
@@ -92,6 +88,13 @@ struct SavedNFTListView: View {
                         )
                     }
                     
+                }
+            }
+            .sheet(isPresented: $viewModel.showShareMedia) {
+                if let url = URL(string: viewModel.nftDetails.permalink + AppConstants.referralQueryItem) {
+                    ShareSheet(activityItems: [url]) { _,_,_,_ in
+                        viewModel.onShareFinished()
+                    }
                 }
             }
             .navigationTitle("Favorites")
