@@ -11,6 +11,7 @@
 		3D0F46D926C7C9820044E89A /* PlayerLoopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D0F46D826C7C9820044E89A /* PlayerLoopView.swift */; };
 		3D0F46DB26C7DA250044E89A /* BottomCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D0F46DA26C7DA250044E89A /* BottomCardView.swift */; };
 		3D0F46DD26C7DB4C0044E89A /* BlurView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D0F46DC26C7DB4C0044E89A /* BlurView.swift */; };
+		3D1733B3272F182D00ED2291 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3D1733B2272F182D00ED2291 /* Launch Screen.storyboard */; };
 		3D24A7FC26E35329004BC218 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D24A7FB26E35329004BC218 /* Colors.swift */; };
 		3D24A7FE26E35364004BC218 /* TabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D24A7FD26E35364004BC218 /* TabBar.swift */; };
 		3D5EF9B726F71CDD00A3A21B /* web3.swift in Frameworks */ = {isa = PBXBuildFile; productRef = 3D5EF9B626F71CDD00A3A21B /* web3.swift */; };
@@ -112,6 +113,7 @@
 		3D0F46D826C7C9820044E89A /* PlayerLoopView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerLoopView.swift; sourceTree = "<group>"; };
 		3D0F46DA26C7DA250044E89A /* BottomCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomCardView.swift; sourceTree = "<group>"; };
 		3D0F46DC26C7DB4C0044E89A /* BlurView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlurView.swift; sourceTree = "<group>"; };
+		3D1733B2272F182D00ED2291 /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		3D24A7FB26E35329004BC218 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		3D24A7FD26E35364004BC218 /* TabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBar.swift; sourceTree = "<group>"; };
 		3D5EF9B826F71D0C00A3A21B /* ENSRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ENSRepository.swift; sourceTree = "<group>"; };
@@ -304,6 +306,7 @@
 				3D8FBF7B26F2507C0051B8B8 /* Shared */,
 				3D8F0D4926CF3BED006ABEB4 /* Styles */,
 				3DF9F48E26BF6D6600C23005 /* Preview Content */,
+				3D1733B2272F182D00ED2291 /* Launch Screen.storyboard */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -574,6 +577,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3D1733B3272F182D00ED2291 /* Launch Screen.storyboard in Resources */,
 				3DF9F49026BF6D6600C23005 /* Preview Assets.xcassets in Resources */,
 				3DF9F48D26BF6D6600C23005 /* Assets.xcassets in Resources */,
 			);
