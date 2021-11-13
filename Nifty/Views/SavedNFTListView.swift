@@ -69,15 +69,15 @@ struct SavedNFTListView: View {
                             }
                             Title(nft.name)
                             Text(nft.description)
-                            Button {
-                                viewModel.onLinkTap()
-                            } label: {
-                                Text("Share")
-                                    .foregroundColor(.white)
-                                    .bold()
-                            }
-                            .buttonStyle(PrimaryButtonStyle(wide: true))
-                            .padding(.top, 20)
+//                            Button {
+//                                viewModel.onLinkTap()
+//                            } label: {
+//                                Text("Share")
+//                                    .foregroundColor(.white)
+//                                    .bold()
+//                            }
+//                            .buttonStyle(PrimaryButtonStyle(wide: true))
+//                            .padding(.top, 20)
                         }
                         .frame(
                             minWidth: 0,
