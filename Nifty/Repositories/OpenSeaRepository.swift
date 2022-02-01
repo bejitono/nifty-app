@@ -12,7 +12,7 @@ final class OpenSeaRepository: NFTFetcheable, NFTCollectionFetcheable {
     
     private let networkClient: NetworkClient
     
-    init(networkClient: NetworkClient = NetworkClientImpl()) {
+    init(networkClient: NetworkClient = NetworkClientImpl(interceptor: OpenSeaRequestInterceptor())) {
         self.networkClient = networkClient
     }
     
@@ -159,5 +159,14 @@ final class OpenSeaRepository: NFTFetcheable, NFTCollectionFetcheable {
             return URLQueryItem(name: "order_direction", value: "asc")
             
         }
+    }
+}
+
+struct OpenSeaRequestInterceptor: RequestInterceptable {
+    
+    func intercept(_ request: URLRequest) -> URLRequest {
+        var request = request
+        request.setValue("test", forHTTPHeaderField: "X-API-KEY") // TODO: Add api key
+        return request
     }
 }
