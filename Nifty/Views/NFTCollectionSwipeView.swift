@@ -15,14 +15,14 @@ struct NFTCollectionSwipeView: View {
     @State var swipeDirection: SwipeDirection = .none
     @State private var showSortView = false
     
-    @ObservedObject private var viewModel: NFTCollectionSwipeViewModel
+    @StateObject private var viewModel: NFTCollectionSwipeViewModel
     
     init(
         viewModel: NFTCollectionSwipeViewModel = NFTCollectionSwipeViewModel(
             collectionName: "Test", contractAddress: "0xc3f733ca98e0dad0386979eb96fb1722a1a05e69"//"0x3b1bb53b1a42ff61b7399fc196469a742cd3e98d"
         )
     ) {
-        self.viewModel = viewModel
+        self._viewModel = StateObject(wrappedValue: viewModel)
     }
     
     var body: some View {
