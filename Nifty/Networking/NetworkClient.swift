@@ -22,9 +22,16 @@ protocol NetworkClient {
     ) -> AnyPublisher<(url: URL, response: URLResponse), NetworkError>
 }
 
-final class NetworkClientImpl: NetworkClient { }
+final class NetworkClientImpl: NetworkClient {
+    
+    let interceptor: RequestInterceptable
+    
+    init(interceptor: RequestInterceptable = EmptyRequestInterceptor()) {
+        self.interceptor = interceptor
+    }
+}
 
-extension NetworkClient {
+extension NetworkClientImpl {
     
     func request<T>(
         with components: URLComponents
@@ -34,8 +41,10 @@ extension NetworkClient {
             let error = NetworkError.unknown(description: "Couldn't create URL")
             return Fail(error: error).eraseToAnyPublisher()
         }
+        
+        let request = interceptor.intercept(URLRequest(url: url))
 
-        return URLSession.shared.dataTaskPublisher(for: URLRequest(url: url))
+        return URLSession.shared.dataTaskPublisher(for: request)
             .tryMap(handleResponse)
             .decode(type: T.self, decoder: JSONDecoder())
             .mapError { NetworkError.unknown(description: $0.localizedDescription) }
@@ -67,6 +76,7 @@ extension NetworkClient {
     }
     
     private func handleResponse(data: Data, response: URLResponse) throws -> Data {
+        print("####", String(data: data, encoding: .utf8))
         if let response = response as? HTTPURLResponse,
            !(200...299).contains(response.statusCode) {
             throw NetworkError.httpError(statusCode: response.statusCode)
